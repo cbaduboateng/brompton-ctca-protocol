@@ -1,0 +1,3371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Brompton CTCA Protocol Selector</title>
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1a4b8c">
+
+<!-- iOS PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CTCA Protocols">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="format-detection" content="telephone=no">
+<style>
+  :root {
+    --primary: #1a4b8c;
+    --primary-light: #2563a8;
+    --accent: #0d9488;
+    --accent-light: #14b8a6;
+    --bg: #f0f4f8;
+    --card-bg: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --border: #e2e8f0;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --info: #3b82f6;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 24px 32px;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .header p {
+    font-size: 0.875rem;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Selector Section */
+  .selector-section {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+
+  .selector-section h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .selector-section h2 .step-num {
+    background: var(--primary);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+
+  /* Clinical Indication Grid */
+  .indication-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .indication-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+  }
+
+  .indication-btn:hover {
+    border-color: var(--primary-light);
+    background: #f0f5ff;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .indication-btn.selected {
+    border-color: var(--primary);
+    background: #e8f0fe;
+    box-shadow: 0 0 0 1px var(--primary);
+  }
+
+  .indication-btn .ind-title {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .indication-btn .ind-desc {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  .indication-btn .ind-category {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+
+  .cat-coronary .ind-category { background: #dbeafe; color: #1e40af; }
+  .cat-valve .ind-category { background: #fce7f3; color: #9d174d; }
+  .cat-aortic .ind-category { background: #d1fae5; color: #065f46; }
+  .cat-ep .ind-category { background: #ede9fe; color: #5b21b6; }
+  .cat-other .ind-category { background: #fef3c7; color: #92400e; }
+  .cat-paediatric .ind-category { background: #ccfbf1; color: #0f766e; }
+  .cat-specialist .ind-category { background: #fee2e2; color: #991b1b; }
+
+  /* Verification badge for guideline-based protocols */
+  .verification-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #fde68a;
+    margin-bottom: 12px;
+  }
+  .verification-badge svg { flex-shrink: 0; }
+
+  /* Sub-questions */
+  .sub-question {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 16px;
+    display: none;
+  }
+
+  .sub-question.visible { display: block; }
+
+  .sub-question label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+  }
+
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.9rem;
+    background: white;
+  }
+
+  .radio-option:hover {
+    border-color: var(--accent);
+    background: #f0fdfa;
+  }
+
+  .radio-option.selected {
+    border-color: var(--accent);
+    background: #f0fdfa;
+    font-weight: 600;
+  }
+
+  .radio-option input { display: none; }
+
+  /* Result Card */
+  .result-section {
+    display: none;
+    animation: resultFadeIn 0.25s ease;
+  }
+
+  .result-section.visible { display: block; }
+
+  @keyframes resultFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .protocol-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .protocol-card-header {
+    background: linear-gradient(135deg, var(--accent) 0%, #0f766e 100%);
+    color: white;
+    padding: 24px 28px;
+  }
+
+  .protocol-card-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .protocol-card-header .protocol-name-system {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-family: 'Courier New', monospace;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 6px;
+  }
+
+  .protocol-card-body { padding: 28px; }
+
+  .param-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .param-group {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 18px;
+    border: 1px solid var(--border);
+  }
+
+  .param-group h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .param-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 6px 0;
+    font-size: 0.875rem;
+    gap: 12px;
+  }
+
+  .param-label {
+    color: var(--text-light);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .param-value {
+    color: var(--text);
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .alert-box {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .alert-box.warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+  }
+
+  .alert-box.info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+  }
+
+  .alert-box.danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+  }
+
+  .alert-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* Injection table */
+  .injection-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+
+  .injection-table th, .injection-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .injection-table th {
+    background: #e2e8f0;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .injection-table tr:last-child td { border-bottom: none; }
+
+  /* Deviations list */
+  .deviations-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .deviations-list li {
+    padding: 8px 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .deviations-list li:last-child { border-bottom: none; }
+
+  .deviations-list li::before {
+    content: "•";
+    color: var(--accent);
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: -1px;
+  }
+
+  /* Full-width param group */
+  .param-group.full-width {
+    grid-column: 1 / -1;
+  }
+
+  /* Reset button */
+  .reset-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 24px;
+  }
+
+  .reset-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Print button */
+  .print-btn {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 24px;
+    margin-left: 10px;
+  }
+
+  .print-btn:hover {
+    background: #f0f5ff;
+  }
+
+  /* Quick reference badge */
+  .hr-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .hr-badge.low { background: #d1fae5; color: #065f46; }
+  .hr-badge.mid { background: #fef3c7; color: #92400e; }
+  .hr-badge.high { background: #fecaca; color: #991b1b; }
+
+  .recon-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .recon-list li {
+    padding: 5px 0;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .recon-list li::before {
+    content: "→";
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 12px; }
+    .header { padding: 14px 16px; }
+    .header h1 { font-size: 1.2rem; }
+    .header p { font-size: 0.75rem; }
+    .selector-section { padding: 16px; }
+    .indication-grid { grid-template-columns: 1fr; gap: 8px; }
+    .indication-btn { padding: 12px 14px; }
+    .indication-btn .ind-title { font-size: 0.95rem; }
+    .param-grid { grid-template-columns: 1fr; gap: 12px; }
+    .param-group { padding: 14px; }
+    .param-row { flex-direction: column; gap: 2px; }
+    .param-value { text-align: left; }
+    .radio-group { flex-direction: column; gap: 8px; }
+    .radio-option { padding: 12px 14px; font-size: 0.95rem; }
+    .protocol-card-header { padding: 18px 16px; }
+    .protocol-card-header h2 { font-size: 1.15rem; }
+    .protocol-card-body { padding: 16px; }
+    .reset-btn, .print-btn { width: 100%; margin-left: 0; text-align: center; }
+    .injection-table { font-size: 0.8rem; }
+    .injection-table th, .injection-table td { padding: 6px 8px; }
+  }
+
+  /* Extra small screens (iPhone SE etc) */
+  @media (max-width: 375px) {
+    .header h1 { font-size: 1.05rem; }
+    .indication-btn .ind-desc { font-size: 0.75rem; }
+    .param-group h3 { font-size: 0.7rem; }
+  }
+
+  @media print {
+    .header { position: static; }
+    .selector-section { display: none; }
+    .result-section { display: block !important; }
+    .reset-btn, .print-btn { display: none; }
+    body { background: white; }
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+
+  /* ============================================================
+     CLINICAL QUERY FEATURE
+     ============================================================ */
+  .clinical-query-section {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    border-left: 4px solid var(--accent);
+  }
+
+  .clinical-query-section h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .clinical-query-section .query-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 16px;
+  }
+
+  .query-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 0 16px;
+    transition: all 0.2s;
+  }
+
+  .query-input-wrapper:focus-within {
+    border-color: var(--primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(26, 75, 140, 0.1);
+  }
+
+  .query-input-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--text-light);
+    margin-right: 12px;
+  }
+
+  .query-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-family: inherit;
+    padding: 14px 0;
+    color: var(--text);
+    outline: none;
+    width: 100%;
+  }
+
+  .query-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .query-clear-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 4px;
+    display: none;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .query-clear-btn.visible {
+    display: block;
+  }
+
+  .query-results {
+    margin-top: 16px;
+    display: none;
+  }
+
+  .query-results.visible {
+    display: block;
+  }
+
+  .query-results-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+
+  .query-result-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .query-result-card:hover {
+    border-color: var(--primary-light);
+    background: #f0f5ff;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .query-result-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .query-result-header .ind-category {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .query-confidence {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+  }
+
+  .query-confidence.best {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .query-confidence.good {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  .query-confidence.possible {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .query-result-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .query-matched-terms {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .query-matched-terms mark {
+    background: #fef9c3;
+    color: var(--text);
+    padding: 0 3px;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .query-guideline {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    border-left: 2px solid var(--accent);
+    padding-left: 8px;
+    font-style: italic;
+  }
+
+  .query-no-results {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .query-separator {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    color: var(--text-light);
+    font-size: 0.8rem;
+  }
+
+  .query-separator::before,
+  .query-separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Clinical query responsive */
+  @media (max-width: 768px) {
+    .clinical-query-section { padding: 16px; }
+    .query-input { font-size: 0.95rem; padding: 12px 0; }
+    .query-result-card { padding: 12px 14px; }
+    .query-confidence { font-size: 0.6rem; }
+  }
+
+  @media (max-width: 375px) {
+    .clinical-query-section h2 { font-size: 1rem; }
+    .query-result-title { font-size: 0.9rem; }
+  }
+
+  @media print {
+    .clinical-query-section { display: none; }
+    .query-separator { display: none; }
+    .back-btn { display: none; }
+    .view { display: block !important; animation: none !important; }
+    #browseView { display: none !important; }
+    #detailView { display: block !important; }
+  }
+
+  /* ============================================================
+     MULTI-VIEW SPA
+     ============================================================ */
+  .view {
+    display: none;
+  }
+
+  .view.active {
+    display: block;
+    animation: viewSlideIn 0.28s ease-out;
+  }
+
+  .view.active.no-animate {
+    animation: none;
+  }
+
+  @keyframes viewSlideIn {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes viewSlideBack {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .view.active.slide-back {
+    animation: viewSlideBack 0.28s ease-out;
+  }
+
+  /* Back button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary);
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 20px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .back-btn:hover {
+    border-color: var(--primary-light);
+    background: #f0f5ff;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .back-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .back-btn svg {
+    flex-shrink: 0;
+  }
+
+  /* Detail view header showing selected protocol name */
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .detail-protocol-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .back-btn { padding: 10px 14px; font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Brompton CTCA Protocol Selector</h1>
+  <p>Royal Brompton Hospital &mdash; Siemens SOMATOM Force / Flash CT Scanner</p>
+</div>
+
+<div class="container">
+
+  <!-- ===== VIEW 1: BROWSE ===== -->
+  <div id="browseView" class="view active no-animate">
+
+  <!-- Clinical Query -->
+  <div class="clinical-query-section">
+    <h2>
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      Clinical Query
+    </h2>
+    <p class="query-subtitle">Type a clinical question and get evidence-based protocol recommendations (SCCT / BSCI)</p>
+    <div class="query-input-wrapper">
+      <svg class="query-input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" class="query-input" id="clinicalQueryInput" placeholder="e.g. 'assess CAD', 'pre TAVI planning', 'AF ablation'..." autocomplete="off" autocapitalize="off" spellcheck="false" oninput="onQueryInput(this.value)">
+      <button class="query-clear-btn" id="queryClearBtn" onclick="clearQuery()" aria-label="Clear search">&times;</button>
+    </div>
+    <div class="query-results" id="queryResults"></div>
+  </div>
+
+  <div class="query-separator">Or browse protocols below</div>
+
+  <!-- Step 1: Clinical Indication -->
+  <div class="selector-section">
+    <h2><span class="step-num">1</span> Select Clinical Indication</h2>
+    <div class="indication-grid" id="indicationGrid">
+
+      <!-- Coronary -->
+      <button class="indication-btn cat-coronary" data-protocol="coronary_arteries" onclick="selectIndication(this)">
+        <div class="ind-category">Coronary</div>
+        <div class="ind-title">Coronary Arteries</div>
+        <div class="ind-desc">Rule out CAD, pre-op planning, anomalous origins, Kawasaki's</div>
+      </button>
+      <button class="indication-btn cat-coronary" data-protocol="calcium_score" onclick="selectIndication(this)">
+        <div class="ind-category">Coronary</div>
+        <div class="ind-title">Calcium Score</div>
+        <div class="ind-desc">Rule out CAD &mdash; non-contrast calcium scoring</div>
+      </button>
+      <button class="indication-btn cat-coronary" data-protocol="grafts" onclick="selectIndication(this)">
+        <div class="ind-category">Coronary</div>
+        <div class="ind-title">Grafts (CABG)</div>
+        <div class="ind-desc">Visualise bypass grafts + native coronaries, congenital + coro's</div>
+      </button>
+
+      <!-- Valvular -->
+      <button class="indication-btn cat-valve" data-protocol="tavi_no_coros" onclick="selectIndication(this)">
+        <div class="ind-category">Valve</div>
+        <div class="ind-title">TAVI (No Coronaries)</div>
+        <div class="ind-desc">Severe AS, TAVI planning &mdash; cath within 12 months</div>
+      </button>
+      <button class="indication-btn cat-valve" data-protocol="tavi_plus_coros" onclick="selectIndication(this)">
+        <div class="ind-category">Valve</div>
+        <div class="ind-title">TAVI + Coronaries</div>
+        <div class="ind-desc">Severe AS, TAVI planning &mdash; no cath in last 12 months</div>
+      </button>
+      <button class="indication-btn cat-valve" data-protocol="4d_valve" onclick="selectIndication(this)">
+        <div class="ind-category">Valve</div>
+        <div class="ind-title">4D Valve</div>
+        <div class="ind-desc">Post TAVI assessment &mdash; ?thrombus on leaflets, ?failing TAVI</div>
+      </button>
+      <button class="indication-btn cat-valve" data-protocol="mitral_valve" onclick="selectIndication(this)">
+        <div class="ind-category">Valve</div>
+        <div class="ind-title">Mitral Valve</div>
+        <div class="ind-desc">Assess mitral valve suitability and motility pre-surgery</div>
+      </button>
+      <button class="indication-btn cat-valve" data-protocol="evoque" onclick="selectIndication(this)">
+        <div class="ind-category">Valve</div>
+        <div class="ind-title">EVOQUE</div>
+        <div class="ind-desc">Transcatheter tricuspid valve replacement planning</div>
+      </button>
+      <button class="indication-btn cat-valve" data-protocol="tendyne" onclick="selectIndication(this)">
+        <div class="ind-category">Valve</div>
+        <div class="ind-title">Tendyne GFS</div>
+        <div class="ind-desc">Mitral annulus + LV dimensions, rule out LVOT obstruction (research)</div>
+      </button>
+
+      <!-- Aortic -->
+      <button class="indication-btn cat-aortic" data-protocol="gated_thoracic_aorta" onclick="selectIndication(this)">
+        <div class="ind-category">Aortic</div>
+        <div class="ind-title">Gated Thoracic Aorta</div>
+        <div class="ind-desc">Dilated ascending aorta, Marfans, aneurysm, coarctation, dissection</div>
+      </button>
+      <button class="indication-btn cat-aortic" data-protocol="aortic_pears" onclick="selectIndication(this)">
+        <div class="ind-category">Aortic</div>
+        <div class="ind-title">Aortic PEARS</div>
+        <div class="ind-desc">ExoVasc personalised external aortic root support (dilated aorta)</div>
+      </button>
+      <button class="indication-btn cat-aortic" data-protocol="ross_pears" onclick="selectIndication(this)">
+        <div class="ind-category">Aortic</div>
+        <div class="ind-title">Ross PEARS</div>
+        <div class="ind-desc">ExoVasc support for pulmonary autograft &mdash; Ross-PEARS operation</div>
+      </button>
+      <button class="indication-btn cat-aortic" data-protocol="access_routes" onclick="selectIndication(this)">
+        <div class="ind-category">Aortic</div>
+        <div class="ind-title">Access Routes</div>
+        <div class="ind-desc">Pre-surgery aortic planning, vessel calibre/tortuosity, dissection repair, SCAD</div>
+      </button>
+
+      <!-- EP -->
+      <button class="indication-btn cat-ep" data-protocol="carto" onclick="selectIndication(this)">
+        <div class="ind-category">Electrophysiology</div>
+        <div class="ind-title">CARTO (Gated PV)</div>
+        <div class="ind-desc">Pre AF/AT/VT ablation, Watchman/Lariat, ?LAA thrombus</div>
+      </button>
+      <button class="indication-btn cat-ep" data-protocol="vivo" onclick="selectIndication(this)">
+        <div class="ind-category">Electrophysiology</div>
+        <div class="ind-title">VIVO</div>
+        <div class="ind-desc">Pre-treatment scan for ablation &mdash; must state VIVO protocol</div>
+      </button>
+      <button class="indication-btn cat-ep" data-protocol="inheart" onclick="selectIndication(this)">
+        <div class="ind-category">Electrophysiology</div>
+        <div class="ind-title">INHEART</div>
+        <div class="ind-desc">Pre-ablation planning &mdash; arterial + late enhanced CTCA</div>
+      </button>
+
+      <!-- Other -->
+      <button class="indication-btn cat-other" data-protocol="gated_ctpa" onclick="selectIndication(this)">
+        <div class="ind-category">Other</div>
+        <div class="ind-title">Gated CTPA (No Coro's)</div>
+        <div class="ind-desc">Congenital heart, triple rule out (PE, dissection, CAD)</div>
+      </button>
+
+      <!-- Paediatric -->
+      <button class="indication-btn cat-paediatric" data-protocol="paediatric_cardiac" onclick="selectIndication(this)">
+        <div class="ind-category">Paediatric</div>
+        <div class="ind-title">Paediatric Cardiac CT</div>
+        <div class="ind-desc">CHD, Kawasaki, anomalous coronaries, vascular rings &mdash; weight-based</div>
+      </button>
+
+      <!-- Specialist -->
+      <button class="indication-btn cat-specialist" data-protocol="ecmo_ct" onclick="selectIndication(this)">
+        <div class="ind-category">Specialist</div>
+        <div class="ind-title">ECMO CT</div>
+        <div class="ind-desc">Cannula position, complications, cardiac recovery, pre-decannulation</div>
+      </button>
+    </div>
+  </div>
+
+  </div><!-- /browseView -->
+
+  <!-- ===== VIEW 2: DETAIL ===== -->
+  <div id="detailView" class="view">
+
+  <!-- Back button -->
+  <button class="back-btn" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    Back to Protocols
+  </button>
+
+  <!-- Step 2: Sub-questions -->
+  <div class="selector-section" id="subQuestionsSection" style="display:none">
+    <h2><span class="step-num">2</span> Additional Parameters</h2>
+
+    <div class="sub-question" id="q_hr">
+      <label>What is the patient's resting heart rate?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'hr')"><input type="radio" name="hr" value="lt60"> &lt;60 bpm (regular)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'hr')"><input type="radio" name="hr" value="60-65"> 60&ndash;65 bpm (regular)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'hr')"><input type="radio" name="hr" value="gt65"> &gt;65 bpm or irregular</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_bmi">
+      <label>What is the patient's BMI?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'bmi')"><input type="radio" name="bmi" value="lt20"> &lt;20 (Small)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'bmi')"><input type="radio" name="bmi" value="20-28"> 20&ndash;28 (Average)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'bmi')"><input type="radio" name="bmi" value="28-30"> 28&ndash;30 (Above average)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'bmi')"><input type="radio" name="bmi" value="gt30"> &gt;30 (Large)</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_cath">
+      <label>Has the patient had a coronary angiogram within the last 12 months?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'cath')"><input type="radio" name="cath" value="yes"> Yes &mdash; cath within 12 months</div>
+        <div class="radio-option" onclick="selectRadio(this, 'cath')"><input type="radio" name="cath" value="no"> No &mdash; no recent cath</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_arch">
+      <label>Does the referrer want to include the aortic arch? (for retrograde approach)</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'arch')"><input type="radio" name="arch" value="no"> No &mdash; standard range</div>
+        <div class="radio-option" onclick="selectRadio(this, 'arch')"><input type="radio" name="arch" value="yes"> Yes &mdash; include arch</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_tendyne_bmi">
+      <label>What is the patient's BMI?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'tendyne_bmi')"><input type="radio" name="tendyne_bmi" value="lt30"> &lt;30 (Average)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'tendyne_bmi')"><input type="radio" name="tendyne_bmi" value="gt30"> &gt;30 (Large)</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_mitral_bmi">
+      <label>What is the patient's BMI?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'mitral_bmi')"><input type="radio" name="mitral_bmi" value="lt20"> &lt;20 (Small)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'mitral_bmi')"><input type="radio" name="mitral_bmi" value="20-30"> 20&ndash;30 (Average)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'mitral_bmi')"><input type="radio" name="mitral_bmi" value="gt30"> &gt;30 (Large)</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_paed_weight">
+      <label>What is the patient's weight?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'paed_weight')"><input type="radio" name="paed_weight" value="lt10"> &lt;10 kg (Neonate / Infant)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'paed_weight')"><input type="radio" name="paed_weight" value="10-20"> 10&ndash;20 kg (Infant / Small child)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'paed_weight')"><input type="radio" name="paed_weight" value="20-40"> 20&ndash;40 kg (Child)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'paed_weight')"><input type="radio" name="paed_weight" value="gt40"> &gt;40 kg (Adolescent)</div>
+      </div>
+    </div>
+
+    <div class="sub-question" id="q_ecmo_type">
+      <label>What type of ECMO support?</label>
+      <div class="radio-group">
+        <div class="radio-option" onclick="selectRadio(this, 'ecmo_type')"><input type="radio" name="ecmo_type" value="va"> VA-ECMO (Veno-Arterial)</div>
+        <div class="radio-option" onclick="selectRadio(this, 'ecmo_type')"><input type="radio" name="ecmo_type" value="vv"> VV-ECMO (Veno-Venous)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-section" id="resultSection">
+    <div class="protocol-card">
+      <div class="protocol-card-header">
+        <h2 id="resultTitle"></h2>
+        <div class="protocol-name-system" id="resultSystemName"></div>
+      </div>
+      <div class="protocol-card-body" id="resultBody"></div>
+    </div>
+    <button class="reset-btn" onclick="resetAll()">Start New Selection</button>
+    <button class="print-btn" onclick="window.print()">Print Protocol</button>
+  </div>
+
+  </div><!-- /detailView -->
+
+</div>
+
+<div class="footer">
+  Brompton CTCA Protocol Selector &mdash; For clinical reference only. Always verify parameters on scanner.<br>
+  Protocols authored by Elizabeth Shaw / Natalie Gartland. Approved by Radiology leads. Last updated: 2025.
+</div>
+
+<script>
+// ============================================================
+// PROTOCOL DATABASE
+// ============================================================
+const protocols = {
+
+  coronary_arteries: {
+    title: "Coronary Arteries",
+    systemName: "Coronary_Angio (all BMIs)",
+    category: "Adult > Cardiac Region",
+    indications: ["Rule out CAD", "Pre-operative planning", "Anomalous origins of coronary arteries", "Kawasaki's disease"],
+    note: "Only perform calcium score if protocolled by radiologist.",
+    patientPosition: "Supine, Head first",
+    patientPrep: "Perform baseline BP and SpO2. Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: {
+      betaBlockers: "Yes — if HR >60 bpm and not contra-indicated",
+      gtn: "Depending on Radiologist and if not contra-indicated",
+      note: "Contra-indications on reverse of cardiac patient questionnaire"
+    },
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina. If no calcium score required, right-click on indented CaSc and add control scan. Delete the calcium score after.",
+    calciumScore: "Carina to base of heart (if protocolled by radiologist)",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    getAcquisition: function(hr) {
+      if (hr === 'lt60') {
+        return {
+          mode: "TURBO FLASH",
+          description: "Flash acquisition",
+          range: "Carina to domes of diaphragm (base of heart) — use CaSc to help plan",
+          delay: "Test bolus timing + 5s delay",
+          badge: '<span class="hr-badge low">HR &lt;60 regular</span>'
+        };
+      } else if (hr === '60-65') {
+        return {
+          mode: "END DIASTOLIC — Adaptive Sequential (60%-80%)",
+          description: "Diastolic adaptive sequential",
+          range: "Carina to domes of diaphragm (base of heart) — use CaSc to help plan",
+          delay: "Test bolus timing + 3s delay",
+          trigger: "Set scan and range per HR look-up table (Appendix 1)",
+          badge: '<span class="hr-badge mid">HR 60-65 regular</span>'
+        };
+      } else {
+        return {
+          mode: "END SYSTOLIC — Adaptive Sequential (ms timing)",
+          description: "Systolic adaptive sequential",
+          range: "Carina to domes of diaphragm (base of heart) — use CaSc to help plan",
+          delay: "Test bolus timing + 3s delay",
+          trigger: "Set scan and range per HR look-up table (Appendix 1)",
+          badge: '<span class="hr-badge high">HR &gt;65 or irregular</span>'
+        };
+      }
+    },
+    getInjection: function(bmi) {
+      const isBig = (bmi === '28-30' || bmi === 'gt30');
+      return {
+        protocolName: isBig ? "Cardiac coro large (BMI>28)" : "Cardiac standard (BMI<28)",
+        contrast: "Iomeron 400 (100ml)",
+        saline: "100ml",
+        testBolus: [
+          { rate: "5/6 ml/s", volume: "15ml contrast" },
+          { rate: "5/6 ml/s", volume: "40ml saline" },
+          { rate: "", volume: "HOLD" }
+        ],
+        scan: [
+          { rate: "5/6 ml/s", volume: isBig ? "80ml contrast" : "60ml contrast" },
+          { rate: "5/6 ml/s", volume: "40ml saline" }
+        ]
+      };
+    },
+    dose: [
+      { name: "Flash_CaSc", weight: "70kg", ctdi: "0.5 mGy", dlp: "8 mGycm" },
+      { name: "Fl_CorCTA", weight: "70kg", ctdi: "1.7 mGy", dlp: "30 mGycm" },
+      { name: "DS_CorAdSeq", weight: "70kg", ctdi: "7.6 mGy", dlp: "140 mGycm" },
+      { name: "DS_SysAdSeq", weight: "70kg", ctdi: "7.6 mGy", dlp: "140 mGycm" }
+    ],
+    individualDRL: true,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay). Use this delay in dynamic evaluation.",
+      "If patient >140kg and scan box is yellow: decrease scan length as much as possible.",
+      "Increase gantry rotation time (0.28s to 0.33/0.5s) for large patients.",
+      "Extra contrast required — check with reporting consultant.",
+      "If motion artefact on FLASH and repeat needed: check coverage with consultant, consider padding or 70% phase. Reload 100ml contrast + 50ml saline. Delete test bolus and hold on injector. Add 3s to TB timing. Delete lung recons."
+    ],
+    reconstructions: [
+      "Multiphase first (or thin recons if no multiphase) — heart only, small FOV. Select all possible phases.",
+      "First recon box: same range as multiphase, best phase chosen (manual — best % or ms).",
+      "All other recons: wide FOV covering entire lung fields, start to end of scan.",
+      "Add stent recon if required — Bv49 kernel, cardiac window.",
+      "Send topogram, control scan, test bolus, all recons + one ECG + patient protocol to APS and Impax.",
+      "Export all raw data."
+    ],
+    postCare: "If Beta blockers or GTN administered: perform post-observation BP and SpO2, compare to baseline before removing cannula."
+  },
+
+  calcium_score: {
+    title: "Calcium Score",
+    systemName: "Turbo_Flash_Ca_Score_Sn",
+    category: "Adult > Cardiac Region",
+    indications: ["Rule out CAD"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "Apices to base of lungs",
+    scanRange: "Carina to base of heart",
+    dose: [{ name: "Flash_CaSc", weight: "70kg", ctdi: "0.5 mGy", dlp: "8 mGycm" }],
+    individualDRL: true,
+    deviations: ["If patient cannot understand English, use the 1+2 technique."],
+    reconstructions: [
+      "Send topogram and all recons + one ECG + patient protocol to APS and Impax.",
+      "Export all raw data."
+    ],
+    simple: true
+  },
+
+  grafts: {
+    title: "Grafts (CABG + Native Coronaries)",
+    systemName: "Coronary_Angio",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Visualise coronary artery bypass grafts and native coronary arteries",
+      "Thoracic or congenital heart indications that also want coronary visualisation",
+      "Pre-operative surgery planning"
+    ],
+    note: "Calcium score is NOT indicated in patients who have bypass grafts. DO NOT USE FLASH CORONARY ACQUISITION.",
+    patientPosition: "Supine, Head first",
+    patientPrep: "Perform baseline BP and SpO2. Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: {
+      betaBlockers: "Yes — if HR >60 bpm and not contra-indicated",
+      gtn: "Depending on Radiologist and if not contra-indicated",
+      note: "Contra-indications on reverse of cardiac patient questionnaire"
+    },
+    topogram: "Apices to base of lungs",
+    controlScan: "Right-click and add control scan, then cut out calcium score. Level of carina.",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    getAcquisition: function(hr) {
+      if (hr === 'lt60' || hr === '60-65') {
+        return {
+          mode: "END DIASTOLIC — Adaptive Sequential (60%-80%)",
+          range: "Apices to domes of diaphragm (base of heart)",
+          delay: "Test bolus timing — no extra delay",
+          trigger: "Set scan and range per HR look-up table (Appendix 1)",
+          badge: '<span class="hr-badge mid">HR &lt;65 regular</span>'
+        };
+      } else {
+        return {
+          mode: "END SYSTOLIC — Adaptive Sequential (ms timing)",
+          range: "Apices to domes of diaphragm (base of heart)",
+          delay: "Test bolus timing — no extra delay",
+          trigger: "Set scan and range per HR look-up table (Appendix 1)",
+          badge: '<span class="hr-badge high">HR &gt;65 or irregular</span>'
+        };
+      }
+    },
+    injection: {
+      protocolName: "Grafts",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "80ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" }
+      ]
+    },
+    congenitalInjection: {
+      note: "For congenital heart patients requiring long injection (both R+L heart + coro's):",
+      protocolName: "Cardiac long injection",
+      contrast: "Iomeron 400 (150ml)",
+      saline: "100ml",
+      scan: [
+        { rate: "5/6 ml/s", volume: "80ml contrast" },
+        { rate: "5/6 ml/s", volume: "50ml; 70% contrast / 30% saline" },
+        { rate: "5/6 ml/s", volume: "40ml; 50% contrast / 50% saline" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg and scan box is yellow: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "Multiphase first (or thin recons if no multiphase) — heart only, small FOV.",
+      "First recon: same range as multiphase, best phase (manual).",
+      "All other recons: wide FOV, entire lung fields, start to end of scan.",
+      "Add stent recon if required — B46 kernel, cardiac window.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ],
+    postCare: "If Beta blockers or GTN administered: post-observation BP and SpO2 before removing cannula."
+  },
+
+  tavi_no_coros: {
+    title: "Turbo Flash TAVI (No Coronaries)",
+    systemName: "Turbo_Flash_TAVI",
+    category: "Adult > Cardiac Region",
+    indications: ["Severe AS being considered for TAVI", "Coronary angiogram performed within last 12 months"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "COW to lesser trochanter",
+    calciumScore: "Carina to base of heart",
+    testBolus: {
+      level: "Level of L1",
+      watch: "Descending aorta",
+      dynamicEval: "Add 12s into delay box, ROI in descending aorta"
+    },
+    acquisition: {
+      mode: "Turbo Flash",
+      range: "COW to lesser trochanter",
+      delay: "Test bolus timing + 8s",
+      recons: "First recon (cardiac) over heart; all others from base of skull to lesser trochanter"
+    },
+    injection: {
+      protocolName: "Flash_TAVI",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "3 ml/s", volume: "10ml contrast" },
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" }
+      ]
+    },
+    dose: [{ name: "Fl_GatedBody", ctdi: "3.5 mGy", dlp: "270 mGycm" }],
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "First recon: heart only.",
+      "Lung recon: lung fields only.",
+      "All other recons: wide FOV, entire scan length.",
+      "Send all recons + ECG + patient protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  tavi_plus_coros: {
+    title: "TAVI Plus Coronaries",
+    systemName: "TAVI_plus_Coros",
+    category: "Adult > Cardiac Region",
+    indications: ["Severe AS being considered for TAVI", "Rule out CAD — no cath in last 12 months"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "Base of skull to lesser trochanter",
+    calciumScore: "Carina to base of heart",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Descending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in descending aorta"
+    },
+    acquisition: {
+      mode: "END SYSTOLIC — Adaptive Sequential (ms timing)",
+      ctca: "Carina to domes of diaphragm — use CaSc to help plan",
+      ctcaDelay: "Test bolus + 3s delay. Set scan and range per HR look-up table.",
+      bodyAngio: "Base of skull to lesser trochanter",
+      bodyAngioDelay: "Minimum 6s delay between CTCA and body angio"
+    },
+    injection: {
+      protocolName: "TAVI_Coros",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "10ml contrast" },
+        { rate: "5/6 ml/s", volume: "30ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "30ml saline" },
+        { rate: "5/6 ml/s", volume: "60ml mixed (50% contrast / 50% saline)" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "CTCA recons: heart only.",
+      "Lung recon: lung fields only.",
+      "All other recons: wide FOV, entire scan length.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  "4d_valve": {
+    title: "4D Valve",
+    systemName: "4D_Valve (for all BMIs)",
+    category: "Adult > Cardiac Region",
+    indications: ["Post TAVI assessment", "?Thrombus on leaflets", "?Failing TAVI valve"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: { betaBlockers: "No", gtn: "No" },
+    topogram: "Apices to base of lungs (or apices to femoral heads)",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Adaptive Sequential 0%-100% (full cardiac cycle)",
+      range: "THROUGH THE VALVE ONLY",
+      delay: "Test bolus timing + 3s",
+      notes: [
+        "Only one adaptive sequential block",
+        "Do not change % on trigger card",
+        "All pink recon boxes cover same range — VALVE ONLY",
+        "GET CONSULTANT TO CHECK SCAN RANGE"
+      ]
+    },
+    injection: {
+      protocolName: "Coronary Angio",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" }
+      ]
+    },
+    individualDRL: false,
+    deviations: ["If patient cannot understand English, use the 1+2 technique."],
+    reconstructions: [
+      "Multiphase reconstruction every 5% R-R interval.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  mitral_valve: {
+    title: "Mitral Valve",
+    getSystemName: function(bmi) {
+      if (bmi === 'lt20') return "Mitral_Valve_small (BMI <20)";
+      if (bmi === 'gt30') return "Mitral_Valve_large (BMI >30)";
+      return "Mitral_Valve_average (BMI 20-30)";
+    },
+    category: "Adult > Cardiac Region",
+    indications: ["Assess mitral valve suitability and motility prior to surgery"],
+    note: "Check the Valve SOP for scan requirements.",
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: { betaBlockers: "No", gtn: "No" },
+    topogram: "Apices to base of lungs (or apices to femoral heads)",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Adaptive Sequential 30%-90%",
+      range: "Carina to domes of diaphragm (base of heart)",
+      notes: [
+        "Acquires both end systole and end diastole",
+        "Do not change acquisition scan and range",
+        "All pink recon boxes same range (carina to domes of diaphragm)"
+      ],
+      bodyAngio: "Delete Flash body angio/TAVI if not required. If needed: base of skull to lesser trochanter."
+    },
+    injection: {
+      protocolName: "TAVI_Coros",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "10ml contrast" },
+        { rate: "5/6 ml/s", volume: "30ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "30ml saline" },
+        { rate: "5/6 ml/s", volume: "60ml mixed (50% contrast / 50% saline)" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "Multiphase first — heart only, small FOV. Select every other phase (10%, 20%, etc.).",
+      "First recon: same range as multiphase, best phase (manual).",
+      "All other recons: wide FOV, entire lung fields, start to end of scan.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  evoque: {
+    title: "EVOQUE (Transcatheter Tricuspid Valve)",
+    systemName: "EVOQUE_Average",
+    category: "Adult > Cardiac Region",
+    indications: ["Transcatheter tricuspid valve replacement"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: { betaBlockers: "No", gtn: "No" },
+    topogram: "Apices to lesser trochanters",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Full Retrospective Spiral 0-100%",
+      cardiac: "Carina to domes of diaphragm",
+      cardiacNotes: [
+        "Acquires throughout entire cardiac cycle",
+        "Do not change the percentages",
+        "Pink recon box: carina to base of heart"
+      ],
+      venogram: "Lung apices to lesser trochanters (include femoral veins)",
+      venogramDelay: "90s post contrast — set delay after working out cardiac delay. LINK THE 2 SCANS."
+    },
+    injection: {
+      protocolName: "EVOQUE Injection",
+      contrast: "Iomeron 400 (150ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5 ml/s", volume: "15ml contrast" },
+        { rate: "5 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5 ml/s", volume: "130ml (60% contrast / 40% saline)" },
+        { rate: "5 ml/s", volume: "20ml saline" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique.",
+      "If patient >140kg: decrease scan length.",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "Mediastinal wide FOV for Low Dose Thorax (ribs counting).",
+      "Multiphase: every 10% from 0-100% for cardiac scan.",
+      "Send all recons + ECG + patient protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  tendyne: {
+    title: "Tendyne GFS (Research)",
+    getSystemName: function(bmi) {
+      return bmi === 'gt30' ? "GFS_large (BMI >30)" : "GFS_average (BMI <30)";
+    },
+    category: "Adult > Cardiac Region",
+    indications: ["Assess mitral annulus and LV dimensions", "Rule out LVOT obstruction"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: { betaBlockers: "No", gtn: "No" },
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Full Retrospective Spiral 0-100%",
+      range: "Carina to domes of diaphragm (base of heart)",
+      notes: [
+        "Acquires throughout entire cardiac cycle",
+        "Do not change acquisition scan and range",
+        "All pink recon boxes: carina to base of heart"
+      ],
+      lowDoseThorax: "40s after cardiac scan. Apices to bases (rib counting). PRE-PROCEDURE ONLY."
+    },
+    getInjection: function(bmi) {
+      const isLarge = bmi === 'gt30';
+      return {
+        protocolName: isLarge ? "Cardiac coro large" : "Cardiac standard",
+        contrast: "Iomeron 400 (100ml)",
+        saline: "100ml",
+        testBolus: [
+          { rate: "5/6 ml/s", volume: "15ml contrast" },
+          { rate: "5/6 ml/s", volume: "40ml saline" },
+          { rate: "", volume: "HOLD" }
+        ],
+        scan: [
+          { rate: "5/6 ml/s", volume: isLarge ? "80ml contrast" : "60ml contrast" },
+          { rate: "5/6 ml/s", volume: "40ml saline" }
+        ]
+      };
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique.",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "Mediastinal wide FOV for Low Dose Thorax (rib counting).",
+      "Multiphase: every 10% from 0-100% for cardiac scan.",
+      "Send all recons + ECG + patient protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  gated_thoracic_aorta: {
+    title: "Gated Thoracic Aorta",
+    systemName: "Turbo_Flash_Gated_Thoracic_Aorta",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Dilated ascending aorta",
+      "Marfans syndrome",
+      "Ascending aortic aneurysm",
+      "Coarctation of the aorta",
+      "Dissection of the ascending aorta",
+      "PEARS (Exostent) protocol patients"
+    ],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Descending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in descending aorta"
+    },
+    acquisition: {
+      mode: "Turbo Flash — Gated",
+      range: "Above arch to domes of diaphragm (base of heart)",
+      delay: "Test bolus timing (no extra delay)",
+      recons: "First recon (cardiac) over heart; all others from above arch to base of heart"
+    },
+    injection: {
+      protocolName: "Thoracic Aorta",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" }
+      ]
+    },
+    dose: [{ name: "Fl_Thoracic_Ao", ctdi: "3.5 mGy", dlp: "100 mGycm" }],
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast if needed.",
+      "If referrer wants carotid/COW: scan from COW to base of heart. First recon over heart; lung recon lungs only; all others COW to base with wide FOV."
+    ],
+    reconstructions: [
+      "First recon: above arch to base of heart, small FOV.",
+      "All other recons: wide FOV, entire lung fields.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  aortic_pears: {
+    title: "Aortic PEARS (ExoVasc)",
+    systemName: "Flash_AORTIC_PEARS_CAREKV",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Visualise aorta and aortic valve for Aortic PEARS procedure",
+      "Marfan Syndrome, Loeys-Dietz, Bicuspid Aortic Valve, Idiopathic dilation",
+      "Post-operative dilation (Arterial Switch, free-standing Root Ross)"
+    ],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Perform baseline BP and SpO2. Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: {
+      betaBlockers: "Yes — if HR >60 bpm and not contra-indicated",
+      gtn: "No",
+      note: "Contra-indications on reverse of cardiac patient questionnaire"
+    },
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Flash — Gated",
+      range: "Above arch to domes of diaphragm (base of heart)",
+      delay: "Test bolus timing + 8s",
+      important: "AORTIC VALVE SHOULD BE IMAGED BETWEEN 60-80% R-R INTERVAL. CHECK WITH RADIOLOGIST WHILST PATIENT IS ON TABLE.",
+      exstentNotes: [
+        "Voxel resolution: 0.5mm or 0.6mm or 0.75mm isotropic",
+        "Contiguous thin slices, thinnest possible with minimum overlap",
+        "Smooth kernel [B26F] with cardiac/angio window (Siemens)",
+        "Image from 20mm below lowest sinus (LVOT) to 20mm up brachiocephalic",
+        "Single image block — no registration artefact",
+        "DICOM files to Exstent via dedicated upload link"
+      ]
+    },
+    injection: {
+      protocolName: "GRAFT Study",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "80ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast if needed."
+    ],
+    reconstructions: [
+      "First recon: above arch to base of heart, small FOV.",
+      "All other recons: wide FOV, entire lung fields.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  ross_pears: {
+    title: "Ross PEARS — Pulmonary Artery (ExoVasc)",
+    systemName: "Flash_ROSS_PEARS_Pulmonary_Artery_CAREKV",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Visualise pulmonary valve/artery and aortic root for Ross PEARS procedure",
+      "ExoVasc support for pulmonary autograft in Ross-PEARS operation"
+    ],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: {
+      betaBlockers: "Yes — if HR >60 bpm and not contra-indicated",
+      note: "Contra-indications on reverse of cardiac patient questionnaire"
+    },
+    topogram: "Apices to base of lungs",
+    acquisition: {
+      mode: "USE MILLISECOND TIMINGS AS PER CHART",
+      range: "Above arch to domes of diaphragm (base of heart)",
+      delay: "80 seconds delay",
+      exstentNotes: [
+        "Cardiac gating: 10%-40% R-R (preferably 10%-25%) — ventricular systole",
+        "Voxel resolution: 0.5mm or 0.6mm or 0.75mm isotropic",
+        "Smooth kernel [B26F] with cardiac/angio window",
+        "Image from 20mm below lowest sinus (RVOT) to pulmonary branches",
+        "Also include ascending aorta from LVOT to 20mm up brachiocephalic",
+        "Include spine and sternum for pulmonary marker orientation",
+        "DICOM files to Exstent via dedicated upload link"
+      ]
+    },
+    injection: {
+      protocolName: "Bastion Wheel",
+      note: "See attached Bastion Wheel chart for injection parameters"
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique.",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s)."
+    ],
+    reconstructions: [
+      "First recon: above arch to base of heart, small FOV.",
+      "All other recons: wide FOV, entire lung fields.",
+      "Send topogram and all recons + ECG + protocol to PACS.",
+      "Export all raw data."
+    ]
+  },
+
+  access_routes: {
+    title: "Access Routes",
+    systemName: "Turbo_Flash_Access_Routes",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Pre-surgery planning of the aorta",
+      "Measuring calibre and tortuosity of access vessels",
+      "Post dissection repair",
+      "SCAD (spontaneous coronary artery dissection)"
+    ],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "Base of skull to lesser trochanter",
+    controlScan: "Level of L1",
+    testBolus: {
+      level: "Level of L1",
+      watch: "Descending aorta",
+      dynamicEval: "Add 12s into delay box, ROI in descending aorta"
+    },
+    acquisition: {
+      mode: "Turbo Flash",
+      range: "Base of skull to lesser trochanter",
+      delay: "Test bolus timing + 8s",
+      recons: "First recon (cardiac) over heart; all others from base of skull to lesser trochanter"
+    },
+    injection: {
+      protocolName: "Flash_TAVI",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "3 ml/s", volume: "10ml contrast" },
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" }
+      ]
+    },
+    dose: [{ name: "Fl_GatedBody", ctdi: "3.5 mGy", dlp: "270 mGycm" }],
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant."
+    ],
+    reconstructions: [
+      "First recon: heart only.",
+      "Lung recons: lung fields only.",
+      "All other recons: wide FOV, entire scan length.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  carto: {
+    title: "CARTO (Gated Pulmonary Veins)",
+    systemName: "Carto",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Pre AF ablation",
+      "Pre AT/VT ablation",
+      "Pre/post Watchman or Lariat procedures",
+      "?Thrombus in LAA"
+    ],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: "API ON. EXPIRATION",
+    hrControl: null,
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Gated — Adaptive Sequential",
+      range: "1cm above carina to domes of diaphragm (base of heart)",
+      delay: "Test bolus timing (no extra delay)",
+      recons: "All scan (blue) and recon (pink) boxes cover the same range",
+      delayed: "Delayed scan: 1cm above carina to mid-heart (approx 40mm), 60s after first scan. LAA only."
+    },
+    getAcquisitionArch: function(arch) {
+      if (arch === 'yes') {
+        return {
+          range: "Above arch to domes of diaphragm (base of heart)",
+          note: "DO NOT ADD 3s DELAY TO TB"
+        };
+      }
+      return null;
+    },
+    injection: {
+      protocolName: "Carto",
+      contrast: "Iomeron 400 (100ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "50ml contrast" },
+        { rate: "5/6 ml/s", volume: "50ml (50% contrast / 50% saline)" },
+        { rate: "5/6 ml/s", volume: "25ml saline" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (usually 8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant.",
+      "If referrer wants RA/RV as well as LA: use cardiac long injection."
+    ],
+    reconstructions: [
+      "Heart recon: small FOV, include pulmonary veins. If arch scanned, start from above arch.",
+      "All other recons: large FOV, entire lung fields.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data.",
+      "Burn heart recon onto CD, place in blue box in SS scanner."
+    ]
+  },
+
+  vivo: {
+    title: "VIVO",
+    systemName: "VIVO_average (BMI 20-30)",
+    category: "Adult > Cardiac Region",
+    indications: ["Pre-treatment scan for patients going for ablation", "Request must state VIVO protocol"],
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: "API ON. EXPIRATION",
+    hrControl: { betaBlockers: "No", gtn: "No" },
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Descending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in descending aorta"
+    },
+    acquisition: {
+      mode: "Gated",
+      range: "Above soft tissue of shoulders to lung bases (include top of liver)",
+      delay: "Test bolus timing",
+      recons: "First recon (cardiac) over heart; all others from apices to base of lungs"
+    },
+    injection: {
+      protocolName: "Cardiac long injection",
+      contrast: "Iomeron 400 (150ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml (70% contrast / 30% saline)" },
+        { rate: "5/6 ml/s", volume: "30ml (50% contrast / 50% saline)" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s)."
+    ],
+    reconstructions: [
+      "First recon: above arch to base of heart, small FOV.",
+      "All other recons: wide FOV, entire lung fields.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data.",
+      "Burn heart recon onto CD, place in blue box in SS scanner."
+    ]
+  },
+
+  inheart: {
+    title: "INHEART",
+    systemName: "INHEART",
+    category: "Adult > Cardiac Region",
+    indications: ["Pre-ablation planning"],
+    patientPosition: "Supine, Head first",
+    patientPrep: null,
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "Apices to base of lungs",
+    acquisition: {
+      arterial: {
+        mode: "END DIASTOLIC — Adaptive Sequential",
+        range: "Above aortic arch to domes of diaphragm (base of heart)",
+        notes: "All scans at 60-80% R-R for maximum ventricular filling. 70s delay (Bastion Wheel)."
+      },
+      late: "CTCA at 8 minutes post contrast. HEART ONLY."
+    },
+    injection: {
+      protocolName: "Bastion Wheel",
+      contrast: "Iomeron 400 (150ml)",
+      saline: "100ml",
+      note: "Refer to Bastion Wheel Chart for injection parameters."
+    },
+    individualDRL: false,
+    reconstructions: [
+      "Multiphase first — heart only, small FOV. Select all possible phases.",
+      "First recon: same range as multiphase, best phase (manual).",
+      "All other recons: wide FOV, start to end of scan.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  gated_ctpa: {
+    title: "Gated CTPA (No Coronaries)",
+    systemName: "Gated_CTPA",
+    category: "Adult > Cardiac Region",
+    indications: [
+      "Congenital heart patients requiring cardiovascular anatomy imaging",
+      "Triple rule out — PE, aortic dissection, CAD"
+    ],
+    note: "If coronary visualisation also needed: use Graft study with long cardiac injection protocol.",
+    patientPosition: "Supine, Head first",
+    patientPrep: "Attach ECG monitoring and ensure good signal.",
+    breathHold: 'API ON. Flash Cardiac ("Breath in, breath out and breath in and hold it")',
+    hrControl: null,
+    topogram: "Apices to base of lungs",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Ascending aorta",
+      dynamicEval: "Add 10s into delay box, ROI in ascending aorta"
+    },
+    acquisition: {
+      mode: "Gated — Turbo Flash",
+      range: "Apices to domes of diaphragm (base of heart)",
+      delay: "Test bolus timing + 8s",
+      recons: "First recon (cardiac) over heart; all others from apices to base of heart"
+    },
+    injection: {
+      protocolName: "Cardiac long injection",
+      contrast: "Iomeron 400 (150ml)",
+      saline: "100ml",
+      testBolus: [
+        { rate: "5/6 ml/s", volume: "15ml contrast" },
+        { rate: "5/6 ml/s", volume: "40ml saline" },
+        { rate: "", volume: "HOLD" }
+      ],
+      scan: [
+        { rate: "5/6 ml/s", volume: "60ml contrast" },
+        { rate: "4 ml/s", volume: "40ml (70% contrast / 30% saline)" },
+        { rate: "5 ml/s", volume: "30ml (50% contrast / 50% saline)" }
+      ]
+    },
+    individualDRL: false,
+    deviations: [
+      "If patient cannot understand English, use the 1+2 technique (8s delay).",
+      "If patient >140kg: decrease scan length, increase gantry rotation (0.28→0.33/0.5s).",
+      "Extra contrast — check with reporting consultant.",
+      "If referrer wants COW: scan from COW to base of heart. Heart recon over heart; lung recon lungs only; all others COW to base with wide FOV."
+    ],
+    reconstructions: [
+      "First recon: heart only.",
+      "All other recons: wide FOV, entire lung fields.",
+      "Send topogram, control scan, test bolus, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  // ============================================================
+  // PAEDIATRIC CARDIAC CT (Guideline-based — requires local verification)
+  // Based on: SCCT Paediatric Guidelines, BSCI Standards, Siemens Force protocols
+  // ============================================================
+  paediatric_cardiac: {
+    title: "Paediatric Cardiac CT",
+    systemName: "Paed_Cardiac",
+    category: "Adult > Cardiac Region",
+    requiresVerification: true,
+    verificationNote: "Guideline-based protocol (SCCT/BSCI) — requires local clinical team verification before use.",
+    indications: [
+      "Congenital heart disease (CHD) — pre/post-operative assessment",
+      "Kawasaki disease — coronary artery aneurysm follow-up",
+      "Anomalous coronary artery origins in young patients",
+      "Vascular rings and aortic arch anomalies",
+      "Coarctation of the aorta (post-stent or when MRI not feasible)",
+      "Complex intracardiac anatomy (Fontan, Tetralogy, TGA post-repair)",
+      "Pulmonary artery anatomy / aortopulmonary collaterals"
+    ],
+    note: "Weight-based protocol. The SOMATOM Force dual-source high-pitch Flash mode enables sub-second acquisition, often eliminating need for sedation. PALS-certified personnel must be available. Ensure paediatric emergency equipment is immediately accessible.",
+    patientPosition: "Supine, Head first (feet first if needed for access)",
+    patientPrep: "Attach ECG monitoring (paediatric leads). Ensure appropriate IV access (22–24G). Size-appropriate pulse oximetry. Fasting per ASA guidelines if sedation planned.",
+    breathHold: "Age-dependent — see below",
+    hrControl: {
+      betaBlockers: "Generally NOT used in young children. Consider in adolescents >40 kg with HR >80 bpm — consult paediatric cardiologist.",
+      gtn: "Not routinely used in paediatric patients."
+    },
+    topogram: "Thoracic inlet to below diaphragm (adjust to anatomy of interest)",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina or descending aorta",
+      watch: "Descending aorta (or ascending aorta for coronary studies)",
+      dynamicEval: "Manual bolus tracking preferred in small children due to faster circulation time. Place ROI in descending aorta, threshold 100 HU."
+    },
+    getAcquisitionByWeight: function(weight) {
+      if (weight === 'lt10') {
+        return {
+          label: "Neonate / Infant (<10 kg)",
+          kv: "70 kV",
+          mode: "High-Pitch Flash (Turbo Flash)",
+          notes: "Free-breathing acquisition — no breath-hold required. Dual-source high-pitch mode (~250 ms acquisition). No sedation usually needed if Feed-and-Wrap technique used. Temporal resolution ~75 ms.",
+          gating: "Prospective ECG-triggered. High-pitch mode captures in single heartbeat.",
+          rotation: "0.25s",
+          contrastVolume: "1.5–2 mL/kg",
+          flowRate: "1–1.5 mL/s via 24G cannula",
+          saline: "5–10 mL at same rate",
+          drl: "CTDIvol ≈ 2.3 mGy | DLP ≈ 55 mGy·cm",
+          sedation: "Feed-and-Wrap technique preferred. If needed: chloral hydrate or dexmedetomidine.",
+          recon: "0.6 mm slice, Bv40 kernel, SAFIRE strength 3–4. Small FOV centred on heart."
+        };
+      } else if (weight === '10-20') {
+        return {
+          label: "Infant / Small Child (10–20 kg)",
+          kv: "70–80 kV",
+          mode: "High-Pitch Flash (Turbo Flash)",
+          notes: "Free-breathing preferred. High-pitch Flash mode usually sufficient. Coached quiet breathing if cooperative.",
+          gating: "Prospective ECG-triggered high-pitch.",
+          rotation: "0.25s",
+          contrastVolume: "1.5–2 mL/kg",
+          flowRate: "1.5–2 mL/s via 22–24G cannula",
+          saline: "10–15 mL at same rate",
+          drl: "CTDIvol ≈ 3 mGy | DLP ≈ 70 mGy·cm",
+          sedation: "Often not needed with high-pitch Flash. If needed: propofol infusion 5–10 mg/kg/h or ketamine 0.5–1 mg/kg.",
+          recon: "0.6 mm slice, Bv40 kernel, SAFIRE strength 3. Small FOV centred on heart."
+        };
+      } else if (weight === '20-40') {
+        return {
+          label: "Child (20–40 kg)",
+          kv: "80 kV (100 kV if coronary stenosis assessment needed)",
+          mode: "High-Pitch Flash or Adaptive Sequential",
+          notes: "Coached breath-hold if cooperative (5–10 second hold). Otherwise high-pitch Flash free-breathing.",
+          gating: "Prospective ECG-triggered. Adaptive sequential if heart rate irregular.",
+          rotation: "0.25s",
+          contrastVolume: "1–1.5 mL/kg (max 60 mL)",
+          flowRate: "2–3 mL/s via 22G cannula",
+          saline: "20 mL at same rate",
+          drl: "CTDIvol ≈ 4 mGy | DLP ≈ 100 mGy·cm",
+          sedation: "Usually not required. Distraction/coaching techniques.",
+          recon: "0.6 mm slice, Bv40 kernel, SAFIRE strength 2–3. Medium FOV."
+        };
+      } else {
+        return {
+          label: "Adolescent (>40 kg)",
+          kv: "80–100 kV",
+          mode: "Adaptive Sequential or High-Pitch Flash",
+          notes: "Coached breath-hold (10–15 seconds). Approach similar to adult low-dose protocol.",
+          gating: "Prospective ECG-triggered. Consider retrospective if functional assessment needed.",
+          rotation: "0.25s",
+          contrastVolume: "1 mL/kg (max 80 mL)",
+          flowRate: "3–4 mL/s via 20–22G cannula",
+          saline: "30 mL at same rate",
+          drl: "CTDIvol ≈ 5 mGy | DLP ≈ 150 mGy·cm",
+          sedation: "Not required.",
+          recon: "0.6 mm slice, Bv40 kernel, SAFIRE strength 2. Standard cardiac FOV."
+        };
+      }
+    },
+    injection: {
+      protocolName: "Paediatric Weight-Based",
+      contrast: "Iomeron 350 or 400 — see weight-based parameters above",
+      saline: "Weight-dependent — see above",
+      note: "Use lowest concentration compatible with adequate enhancement. Warm contrast to body temperature. Power injector preferred but hand injection acceptable for <10 kg with very small access."
+    },
+    individualDRL: true,
+    deviations: [
+      "PALS-certified personnel MUST be present for all paediatric scans.",
+      "Paediatric emergency equipment and medications must be immediately available.",
+      "If sedation used: standard monitoring (ECG, SpO2, ETCO2, BP, temp) throughout and during recovery.",
+      "For complex CHD: may need non-gated helical acquisition for full thoracic/vascular anatomy — use lowest possible kV.",
+      "For Kawasaki follow-up: focus on coronary arteries — use coronary-optimised protocol with smallest FOV.",
+      "For vascular rings: non-gated high-pitch Flash often sufficient — coronary detail not required.",
+      "If IV access difficult: consider intraosseous access in emergencies only — discuss with paediatric team.",
+      "For post-Fontan/Glenn: timing differs due to altered circulation — discuss with reporting consultant."
+    ],
+    reconstructions: [
+      "Heart recon: smallest FOV covering anatomy of interest.",
+      "For coronary assessment: thin-slice (0.6 mm) with sharp kernel.",
+      "For CHD anatomy: wide FOV covering entire thorax and relevant vasculature.",
+      "3D volume rendering for complex anatomy — send to 3D lab.",
+      "Send topogram, control scan, all recons + ECG + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  },
+
+  // ============================================================
+  // ECMO CT (Guideline-based — requires local verification)
+  // Based on: RadioGraphics VA-ECMO CTA, Alfred ECMO Guidelines, published literature
+  // ============================================================
+  ecmo_ct: {
+    title: "ECMO CT",
+    systemName: "ECMO_CT",
+    category: "Adult > Cardiac Region",
+    requiresVerification: true,
+    verificationNote: "Guideline-based protocol (RadioGraphics/Alfred ICU) — requires local clinical team and perfusion verification before use.",
+    indications: [
+      "Cannula position verification",
+      "Suspected intracranial haemorrhage (ICH occurs in ~3% of ECMO patients)",
+      "Pulmonary assessment during ECMO support",
+      "Cardiac recovery assessment / pre-decannulation imaging",
+      "Suspected limb ischaemia / vascular complication",
+      "Abdominal complications (mesenteric ischaemia, hepatic dysfunction)",
+      "Oxygenator thrombus assessment (declining gas exchange)"
+    ],
+    note: "CRITICAL: Perfusionist MUST be present for all ECMO CT scans. Never inject contrast into the distal perfusion cannula. Air embolism risk — perfusionist manages all circuit connections. ECMO flow must not drop below 1.5 L/min if patient is not anticoagulated.",
+    patientPosition: "Supine, Head first. Patient transported with full ECMO circuit and perfusionist.",
+    patientPrep: "Continuous monitoring: ECG, invasive BP, SpO2, ETCO2. Perfusionist manages ECMO settings. Ensure adequate battery life on ECMO pump for transport. Confirm IV access SEPARATE from ECMO circuit for peripheral injection if needed.",
+    breathHold: "Usually ventilated — pause ventilation briefly if possible for chest acquisition. Coordinate with ICU team.",
+    hrControl: {
+      betaBlockers: "NOT used — patients are critically ill on ECMO.",
+      gtn: "NOT used."
+    },
+    topogram: "Head to pelvis (comprehensive assessment) or targeted to clinical question",
+    controlScan: "Level of carina",
+    testBolus: {
+      level: "Level of carina",
+      watch: "Main pulmonary artery (VV-ECMO) or ascending aorta (VA-ECMO)",
+      dynamicEval: "Manual ROI-based triggering preferred — standard timing unreliable due to ECMO circuit altering haemodynamics. Place ROI and trigger manually when peak/plateau opacification seen."
+    },
+    getAcquisitionByECMOType: function(type) {
+      if (type === 'va') {
+        return {
+          label: "VA-ECMO (Veno-Arterial)",
+          mode: "Non-gated helical (ECG gating usually not feasible due to poor signal on ECMO)",
+          kv: "120 kV (higher kV needed due to beam hardening from cannulae and suboptimal contrast mixing)",
+          range: "Head to pelvis — comprehensive assessment. Can be limited if specific clinical question.",
+          contrastRoute: "Peripheral IV preferred. Alternatively via ECMO circuit pre-oxygenator port ONLY (perfusionist manages).",
+          flowStrategy: "LOW-FLOW TECHNIQUE: Reduce ECMO pump flow to 500 mL/min for 15–25 seconds during scan acquisition. This allows native cardiac output to opacify vessels. Manual trigger when ROI shows peak enhancement.",
+          contrastVolume: "100–120 mL Iomeron 400",
+          flowRate: "4–5 mL/s via peripheral 18–20G IV",
+          saline: "50 mL at same rate",
+          timing: "Manual ROI triggering — place ROI in main pulmonary artery. Standard timing UNRELIABLE due to retrograde/antegrade blood flow mixing.",
+          artifacts: "Expect: mixing artifacts (contrast + non-contrasted blood), streak from cannulae, inhomogeneous opacification. Non-opacification can mimic thrombus — interpret with caution. Mixing artifacts can mimic dissection.",
+          keyNotes: [
+            "CRITICAL: Reduce ECMO flow to 500 mL/min during scan (prevents thrombus while allowing contrast opacification).",
+            "Perfusionist MUST manage flow changes.",
+            "Simultaneous antegrade (native) and retrograde (ECMO) perfusion creates complex haemodynamics.",
+            "Consider multiphasic acquisition if clinical question requires arterial + venous phases.",
+            "Post-decannulation: 10–15% risk of DVT/PE — consider CTPA."
+          ]
+        };
+      } else {
+        return {
+          label: "VV-ECMO (Veno-Venous)",
+          mode: "Non-gated helical (ECG gating may be feasible if good signal — discuss with team)",
+          kv: "100–120 kV",
+          range: "Chest ± abdomen (or head-to-pelvis if comprehensive assessment needed)",
+          contrastRoute: "Administer via ECMO circuit return cannula (pre-oxygenator inlet) OR peripheral IV. Some recirculation expected via drainage cannula.",
+          flowStrategy: "ECMO flow can usually be MAINTAINED during scan. If pulmonary artery opacification poor: increase contrast volume/rate OR temporarily reduce ECMO flow.",
+          contrastVolume: "80–100 mL Iomeron 400",
+          flowRate: "4–5 mL/s",
+          saline: "50 mL at same rate",
+          timing: "Bolus tracking with ROI in ascending aorta. More predictable timing than VA-ECMO as native cardiac output is primary driver.",
+          artifacts: "Recirculation within ECMO circuit may create biphasic enhancement. Streak artifacts from cannulae. Simultaneous contrast drainage reduces pulmonary artery enhancement.",
+          keyNotes: [
+            "VV-ECMO: Native cardiac output drives contrast delivery — timing more predictable than VA-ECMO.",
+            "If PA opacification needed: inject via circuit return cannula.",
+            "If aortic opacification needed: peripheral IV preferred.",
+            "Recirculation artifact: some contrast withdrawn by drainage cannula — increase volume if needed.",
+            "Post-decannulation: assess for DVT at cannulation sites."
+          ]
+        };
+      }
+    },
+    injection: {
+      protocolName: "ECMO — see type-specific parameters above",
+      contrast: "Iomeron 400 — volume depends on ECMO type (see above)",
+      saline: "50 mL",
+      note: "NEVER inject into distal perfusion cannula. Perfusionist manages all ECMO circuit connections. Air embolism prevention is paramount."
+    },
+    individualDRL: false,
+    deviations: [
+      "CRITICAL: Perfusionist MUST be present and manage all ECMO flow adjustments during scanning.",
+      "Transport checklist: ECMO pump battery, emergency hand crank, monitoring, airway equipment, medications.",
+      "For VA-ECMO: Reduce flow to 500 mL/min ONLY with perfusionist agreement and continuous monitoring.",
+      "ECMO flow must NOT drop below 1.5 L/min if patient is not anticoagulated — thrombus risk.",
+      "Non-contrast CT head: consider as first acquisition if ICH suspected — no contrast timing issues.",
+      "Interpret with extreme caution: mixing artifacts mimic dissection, non-opacification mimics thrombus.",
+      "If cardiac recovery assessment needed: echocardiography is primary modality — CT is supplementary.",
+      "Paediatric ECMO: use weight-based contrast volumes and lower kV (70–80 kV) where possible."
+    ],
+    reconstructions: [
+      "Head: standard non-contrast brain windows (if included).",
+      "Chest: lung windows + mediastinal windows. Assess cannula position.",
+      "Heart: if gated — multiphase for functional assessment. If non-gated — single-phase mediastinal.",
+      "Abdomen: portal venous phase, standard abdominal windows.",
+      "Wide FOV for all reconstructions to include ECMO cannulae in field.",
+      "Send all recons + protocol to APS and Impax.",
+      "Export all raw data."
+    ]
+  }
+};
+
+// ============================================================
+// CLINICAL QUERY — KNOWLEDGE BASE
+// ============================================================
+// Abbreviation expansion dictionary (whole-word matching only)
+const clinicalAbbreviations = {
+  "cad": "coronary artery disease",
+  "af": "atrial fibrillation",
+  "as": "aortic stenosis",
+  "ar": "aortic regurgitation",
+  "mr": "mitral regurgitation",
+  "ms": "mitral stenosis",
+  "tr": "tricuspid regurgitation",
+  "pe": "pulmonary embolism",
+  "cabg": "coronary artery bypass graft",
+  "pvi": "pulmonary vein isolation",
+  "laa": "left atrial appendage",
+  "lvot": "left ventricular outflow tract",
+  "tavr": "tavi",
+  "halt": "leaflet thickening",
+  "vt": "ventricular tachycardia",
+  "at": "atrial tachycardia",
+  "svt": "supraventricular tachycardia",
+  "ccta": "coronary ct angiography",
+  "ctpa": "ct pulmonary angiography",
+  "bav": "bicuspid aortic valve",
+  "acs": "acute coronary syndrome",
+  "nstemi": "non st elevation myocardial infarction",
+  "scd": "sudden cardiac death",
+  "hcm": "hypertrophic cardiomyopathy",
+  "drl": "dose reference level",
+  "ecmo": "ecmo",
+  "chd": "congenital heart disease",
+  "tof": "tetralogy of fallot",
+  "tga": "transposition great arteries",
+  "mapca": "aortopulmonary collaterals",
+  "paeds": "paediatric"
+};
+
+// Protocol-to-clinical-term mapping (SCCT/BSCI evidence-based)
+const clinicalQueryMap = {
+  coronary_arteries: {
+    category: "coronary",
+    catClass: "cat-coronary",
+    title: "Coronary Arteries",
+    terms: [
+      { phrase: "coronary artery disease", weight: 10, abbrevs: ["cad"] },
+      { phrase: "rule out cad", weight: 10 },
+      { phrase: "assess cad", weight: 10 },
+      { phrase: "coronary ct angiography", weight: 10, abbrevs: ["ccta", "ctca"] },
+      { phrase: "chest pain", weight: 7 },
+      { phrase: "stable angina", weight: 8 },
+      { phrase: "atypical chest pain", weight: 8 },
+      { phrase: "intermediate risk chest pain", weight: 7 },
+      { phrase: "pre-op coronary assessment", weight: 6, abbrevs: ["pre op coronary", "preop coronary", "preoperative coronary"] },
+      { phrase: "anomalous coronary", weight: 7, abbrevs: ["coronary anomaly", "anomalous origin"] },
+      { phrase: "kawasaki", weight: 7, abbrevs: ["kawasaki disease"] },
+      { phrase: "pre-surgical coronary clearance", weight: 6 },
+      { phrase: "coronary screening", weight: 6 },
+      { phrase: "angina", weight: 7 },
+      { phrase: "new onset chest pain", weight: 7 },
+      { phrase: "exertional chest pain", weight: 7 },
+      { phrase: "obstructive coronary", weight: 8 }
+    ],
+    guideline: "SCCT 2022 Appropriate Use | NICE CG95 | BSCI Standards 2014"
+  },
+  calcium_score: {
+    category: "coronary",
+    catClass: "cat-coronary",
+    title: "Calcium Score",
+    terms: [
+      { phrase: "calcium score", weight: 10 },
+      { phrase: "agatston", weight: 10, abbrevs: ["agatston score"] },
+      { phrase: "coronary calcification", weight: 9 },
+      { phrase: "cad risk stratification", weight: 8 },
+      { phrase: "asymptomatic cad screening", weight: 7 },
+      { phrase: "calcium scoring", weight: 10 },
+      { phrase: "coronary artery calcium", weight: 9 },
+      { phrase: "cac score", weight: 10 },
+      { phrase: "non-contrast cardiac", weight: 5 }
+    ],
+    guideline: "SCCT 2022 | BSCI Calcium Scoring"
+  },
+  grafts: {
+    category: "coronary",
+    catClass: "cat-coronary",
+    title: "Grafts (CABG)",
+    terms: [
+      { phrase: "cabg assessment", weight: 10, abbrevs: ["cabg"] },
+      { phrase: "bypass graft", weight: 10, abbrevs: ["graft patency", "bypass grafts"] },
+      { phrase: "post cabg", weight: 9, abbrevs: ["post bypass"] },
+      { phrase: "graft occlusion", weight: 8 },
+      { phrase: "native coronaries post surgery", weight: 7 },
+      { phrase: "congenital with coronaries", weight: 6 },
+      { phrase: "coronary bypass", weight: 9 },
+      { phrase: "lima graft", weight: 8 },
+      { phrase: "svg graft", weight: 8, abbrevs: ["saphenous vein graft"] }
+    ],
+    guideline: "SCCT 2022 Appropriate Use"
+  },
+  tavi_no_coros: {
+    category: "valve",
+    catClass: "cat-valve",
+    title: "TAVI (No Coronaries)",
+    terms: [
+      { phrase: "tavi planning", weight: 9 },
+      { phrase: "tavi no coronaries", weight: 10 },
+      { phrase: "tavi with recent cath", weight: 10 },
+      { phrase: "tavr planning", weight: 9 },
+      { phrase: "severe aortic stenosis", weight: 7 },
+      { phrase: "aortic valve replacement", weight: 6 },
+      { phrase: "tavi sizing", weight: 9 },
+      { phrase: "annulus sizing", weight: 6 },
+      { phrase: "tavi", weight: 8 },
+      { phrase: "tavr", weight: 8 }
+    ],
+    guideline: "SCCT/BSCI TAVI Planning Guidelines"
+  },
+  tavi_plus_coros: {
+    category: "valve",
+    catClass: "cat-valve",
+    title: "TAVI + Coronaries",
+    terms: [
+      { phrase: "tavi with coronaries", weight: 10 },
+      { phrase: "tavi no recent cath", weight: 10 },
+      { phrase: "tavi plus coronaries", weight: 10 },
+      { phrase: "tavr with coronaries", weight: 10 },
+      { phrase: "severe aortic stenosis no cath", weight: 9 },
+      { phrase: "tavi and cad", weight: 9 },
+      { phrase: "tavi", weight: 7 },
+      { phrase: "tavr", weight: 7 },
+      { phrase: "tavi coronary assessment", weight: 10 }
+    ],
+    guideline: "SCCT/BSCI TAVI Planning Guidelines"
+  },
+  "4d_valve": {
+    category: "valve",
+    catClass: "cat-valve",
+    title: "4D Valve",
+    terms: [
+      { phrase: "post tavi assessment", weight: 10 },
+      { phrase: "tavi thrombus", weight: 10 },
+      { phrase: "prosthetic valve dysfunction", weight: 9 },
+      { phrase: "halt", weight: 9, abbrevs: ["hypoattenuated leaflet thickening", "leaflet thickening"] },
+      { phrase: "failing tavi", weight: 10 },
+      { phrase: "valve thrombosis", weight: 9 },
+      { phrase: "post tavi", weight: 8 },
+      { phrase: "4d valve", weight: 10 },
+      { phrase: "prosthetic valve", weight: 7 },
+      { phrase: "bioprosthetic valve", weight: 7 },
+      { phrase: "reduced leaflet motion", weight: 8 }
+    ],
+    guideline: "SCCT 2025 Prosthetic Valve Consensus"
+  },
+  mitral_valve: {
+    category: "valve",
+    catClass: "cat-valve",
+    title: "Mitral Valve",
+    terms: [
+      { phrase: "mitral valve assessment", weight: 10 },
+      { phrase: "mitral regurgitation", weight: 9, abbrevs: ["mr assessment"] },
+      { phrase: "mitral stenosis", weight: 9 },
+      { phrase: "mitral repair", weight: 9 },
+      { phrase: "mitral replacement", weight: 9 },
+      { phrase: "pre-surgery mitral", weight: 8 },
+      { phrase: "mitral valve disease", weight: 9 },
+      { phrase: "mitral annulus", weight: 7 },
+      { phrase: "mitral", weight: 6 },
+      { phrase: "mitral prolapse", weight: 8 }
+    ],
+    guideline: "SCCT Structural Heart Disease Guidelines"
+  },
+  evoque: {
+    category: "valve",
+    catClass: "cat-valve",
+    title: "EVOQUE (Tricuspid Valve)",
+    terms: [
+      { phrase: "evoque", weight: 10 },
+      { phrase: "tricuspid valve", weight: 9 },
+      { phrase: "transcatheter tricuspid", weight: 10 },
+      { phrase: "tricuspid regurgitation", weight: 8, abbrevs: ["severe tr"] },
+      { phrase: "tricuspid replacement", weight: 10 },
+      { phrase: "tricuspid intervention", weight: 9 },
+      { phrase: "tricuspid repair", weight: 8 },
+      { phrase: "tr intervention", weight: 9 }
+    ],
+    guideline: "SCCT Structural Heart Disease Guidelines"
+  },
+  tendyne: {
+    category: "valve",
+    catClass: "cat-valve",
+    title: "Tendyne GFS (Research)",
+    terms: [
+      { phrase: "tendyne", weight: 10 },
+      { phrase: "tendyne gfs", weight: 10 },
+      { phrase: "mitral annulus dimensions", weight: 8 },
+      { phrase: "lvot obstruction", weight: 7 },
+      { phrase: "left ventricular outflow tract", weight: 6 },
+      { phrase: "gfs research", weight: 8 }
+    ],
+    guideline: "SCCT Structural Heart | Research Protocol"
+  },
+  gated_thoracic_aorta: {
+    category: "aortic",
+    catClass: "cat-aortic",
+    title: "Gated Thoracic Aorta",
+    terms: [
+      { phrase: "aortic aneurysm", weight: 10 },
+      { phrase: "aortic dissection", weight: 10 },
+      { phrase: "dilated aorta", weight: 9 },
+      { phrase: "marfan", weight: 9, abbrevs: ["marfans", "marfan syndrome"] },
+      { phrase: "aortic coarctation", weight: 9, abbrevs: ["coarctation"] },
+      { phrase: "thoracic aorta", weight: 9 },
+      { phrase: "aortic disease", weight: 8 },
+      { phrase: "aortic root dilation", weight: 8 },
+      { phrase: "ascending aorta", weight: 7 },
+      { phrase: "aortic size", weight: 7 },
+      { phrase: "aortic surveillance", weight: 8 },
+      { phrase: "aortic root", weight: 6 },
+      { phrase: "ehlers danlos", weight: 7 },
+      { phrase: "loeys dietz", weight: 7 },
+      { phrase: "bicuspid aortic valve aorta", weight: 7 }
+    ],
+    guideline: "ACC/AHA 2022 Aortic Disease | BSCI Standards"
+  },
+  aortic_pears: {
+    category: "aortic",
+    catClass: "cat-aortic",
+    title: "Aortic PEARS (ExoVasc)",
+    terms: [
+      { phrase: "aortic pears", weight: 10 },
+      { phrase: "exovasc", weight: 10 },
+      { phrase: "external aortic root support", weight: 10 },
+      { phrase: "personalised external aortic root", weight: 10 },
+      { phrase: "pears", weight: 8 },
+      { phrase: "aortic root support", weight: 8 }
+    ],
+    guideline: "BSCI | ExoVasc Protocol"
+  },
+  ross_pears: {
+    category: "aortic",
+    catClass: "cat-aortic",
+    title: "Ross PEARS (ExoVasc)",
+    terms: [
+      { phrase: "ross pears", weight: 10 },
+      { phrase: "ross procedure support", weight: 10 },
+      { phrase: "pulmonary autograft support", weight: 10 },
+      { phrase: "ross exovasc", weight: 10 },
+      { phrase: "ross procedure", weight: 8 },
+      { phrase: "pulmonary autograft", weight: 7 }
+    ],
+    guideline: "BSCI | ExoVasc Protocol"
+  },
+  access_routes: {
+    category: "aortic",
+    catClass: "cat-aortic",
+    title: "Access Routes",
+    terms: [
+      { phrase: "access routes", weight: 10 },
+      { phrase: "vascular access", weight: 9 },
+      { phrase: "vessel calibre", weight: 9, abbrevs: ["vessel caliber"] },
+      { phrase: "vessel tortuosity", weight: 9 },
+      { phrase: "iliac assessment", weight: 8 },
+      { phrase: "femoral access", weight: 8 },
+      { phrase: "pre-surgery access", weight: 8, abbrevs: ["pre surgery access"] },
+      { phrase: "access planning", weight: 8 },
+      { phrase: "peripheral vasculature", weight: 6 },
+      { phrase: "iliac arteries", weight: 7 }
+    ],
+    guideline: "SCCT TAVI Planning | Vascular Access"
+  },
+  carto: {
+    category: "ep",
+    catClass: "cat-ep",
+    title: "CARTO (Gated PV)",
+    terms: [
+      { phrase: "af ablation", weight: 10, abbrevs: ["atrial fibrillation ablation"] },
+      { phrase: "pulmonary vein isolation", weight: 10, abbrevs: ["pvi"] },
+      { phrase: "pre-ablation", weight: 8, abbrevs: ["pre ablation", "preablation"] },
+      { phrase: "left atrial appendage", weight: 8, abbrevs: ["laa"] },
+      { phrase: "watchman", weight: 8 },
+      { phrase: "carto", weight: 10 },
+      { phrase: "carto mapping", weight: 10 },
+      { phrase: "pulmonary vein anatomy", weight: 8 },
+      { phrase: "at ablation", weight: 8, abbrevs: ["atrial tachycardia ablation"] },
+      { phrase: "vt ablation", weight: 7, abbrevs: ["ventricular tachycardia ablation"] },
+      { phrase: "atrial fibrillation", weight: 7 },
+      { phrase: "ablation planning", weight: 7 },
+      { phrase: "pulmonary vein", weight: 6 }
+    ],
+    guideline: "SCCT EP Guidelines | BSCI AF Ablation"
+  },
+  vivo: {
+    category: "ep",
+    catClass: "cat-ep",
+    title: "VIVO",
+    terms: [
+      { phrase: "vivo", weight: 10 },
+      { phrase: "vivo ablation", weight: 10 },
+      { phrase: "pre-ablation vivo", weight: 10 },
+      { phrase: "ablation treatment planning", weight: 7 },
+      { phrase: "pre-ablation scan", weight: 6 }
+    ],
+    guideline: "SCCT EP Guidelines"
+  },
+  inheart: {
+    category: "ep",
+    catClass: "cat-ep",
+    title: "INHEART",
+    terms: [
+      { phrase: "inheart", weight: 10 },
+      { phrase: "late enhancement ablation", weight: 9 },
+      { phrase: "scar mapping", weight: 8 },
+      { phrase: "ablation late enhancement", weight: 9 },
+      { phrase: "pre-ablation with late enhancement", weight: 10 },
+      { phrase: "myocardial scar", weight: 6 },
+      { phrase: "late enhanced", weight: 7 }
+    ],
+    guideline: "SCCT EP Guidelines | Late Enhancement"
+  },
+  gated_ctpa: {
+    category: "other",
+    catClass: "cat-other",
+    title: "Gated CTPA (No Coro's)",
+    terms: [
+      { phrase: "congenital heart", weight: 9, abbrevs: ["congenital heart disease", "chd"] },
+      { phrase: "triple rule out", weight: 10 },
+      { phrase: "pulmonary embolism", weight: 7, abbrevs: ["pe"] },
+      { phrase: "gated ctpa", weight: 10 },
+      { phrase: "ct pulmonary angiography", weight: 8 },
+      { phrase: "rule out pe", weight: 7 },
+      { phrase: "right ventricular assessment", weight: 6, abbrevs: ["rv assessment"] },
+      { phrase: "congenital anatomy", weight: 8 }
+    ],
+    guideline: "SCCT 2022 | BSCI CTPA Guidelines"
+  },
+  paediatric_cardiac: {
+    category: "paediatric",
+    catClass: "cat-paediatric",
+    title: "Paediatric Cardiac CT",
+    terms: [
+      { phrase: "paediatric cardiac", weight: 10, abbrevs: ["pediatric cardiac", "paeds cardiac"] },
+      { phrase: "congenital heart disease", weight: 9, abbrevs: ["chd", "congenital"] },
+      { phrase: "kawasaki", weight: 10, abbrevs: ["kawasaki disease", "kawasaki follow up"] },
+      { phrase: "paediatric coronary", weight: 9, abbrevs: ["pediatric coronary"] },
+      { phrase: "vascular ring", weight: 9, abbrevs: ["vascular rings", "double aortic arch"] },
+      { phrase: "paediatric coarctation", weight: 8, abbrevs: ["coarctation child", "paeds coarct"] },
+      { phrase: "fontan", weight: 8, abbrevs: ["fontan circuit", "post fontan"] },
+      { phrase: "tetralogy", weight: 8, abbrevs: ["tetralogy of fallot", "tof"] },
+      { phrase: "transposition", weight: 8, abbrevs: ["tga", "transposition great arteries"] },
+      { phrase: "paediatric", weight: 6, abbrevs: ["pediatric", "paeds", "child", "infant", "neonate", "neonatal"] },
+      { phrase: "anomalous coronary child", weight: 8 },
+      { phrase: "aortopulmonary collaterals", weight: 7, abbrevs: ["mapca", "mapcas"] },
+      { phrase: "pulmonary atresia", weight: 7 },
+      { phrase: "truncus arteriosus", weight: 7 },
+      { phrase: "ebstein", weight: 7 }
+    ],
+    guideline: "SCCT Paediatric CT | BSCI Standards | Image Gently"
+  },
+  ecmo_ct: {
+    category: "specialist",
+    catClass: "cat-specialist",
+    title: "ECMO CT",
+    terms: [
+      { phrase: "ecmo", weight: 10 },
+      { phrase: "ecmo ct", weight: 10 },
+      { phrase: "va ecmo", weight: 10, abbrevs: ["veno arterial ecmo", "va-ecmo"] },
+      { phrase: "vv ecmo", weight: 10, abbrevs: ["veno venous ecmo", "vv-ecmo"] },
+      { phrase: "cannula position", weight: 9 },
+      { phrase: "pre-decannulation", weight: 9, abbrevs: ["pre decannulation", "decannulation"] },
+      { phrase: "cardiac recovery ecmo", weight: 9 },
+      { phrase: "ecmo complication", weight: 8, abbrevs: ["ecmo complications"] },
+      { phrase: "oxygenator thrombus", weight: 8 },
+      { phrase: "extracorporeal membrane oxygenation", weight: 9 },
+      { phrase: "ecmo imaging", weight: 8 },
+      { phrase: "limb ischaemia ecmo", weight: 7 }
+    ],
+    guideline: "RadioGraphics VA-ECMO CTA | Alfred ECMO Guidelines"
+  }
+};
+
+// ============================================================
+// CLINICAL QUERY — MATCHING ENGINE
+// ============================================================
+
+// Levenshtein distance for typo tolerance
+function levenshteinDistance(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+// Preprocess query: lowercase, strip punctuation, expand abbreviations
+function preprocessQuery(raw) {
+  const lower = raw.toLowerCase().replace(/[^a-z0-9\s\-]/g, '').trim();
+  const tokens = lower.split(/\s+/);
+  const expanded = tokens.map(t => clinicalAbbreviations[t] || t);
+  return {
+    original: lower,
+    expanded: expanded.join(' '),
+    tokens: tokens,
+    expandedTokens: expanded.join(' ').split(/\s+/)
+  };
+}
+
+// Score a single protocol against the query
+function scoreProtocol(query, entry) {
+  let totalScore = 0;
+  const matchedTerms = [];
+
+  for (const term of entry.terms) {
+    const allPhrases = [term.phrase, ...(term.abbrevs || [])];
+    let bestScore = 0;
+    let bestPhrase = '';
+
+    for (const phrase of allPhrases) {
+      let score = 0;
+      const phraseLower = phrase.toLowerCase();
+
+      // 1. Exact phrase match in expanded or original query
+      if (query.expanded.includes(phraseLower) || query.original.includes(phraseLower)) {
+        score = term.weight * 3;
+      }
+      // 2. All words of phrase present in query
+      else {
+        const phraseWords = phraseLower.split(/[\s\-]+/);
+        const queryWordSet = new Set([...query.expandedTokens, ...query.tokens]);
+
+        const matchCount = phraseWords.filter(pw => {
+          for (const qw of queryWordSet) {
+            if (qw === pw) return true;
+            // Allow prefix match only if lengths differ by ≤2 (e.g. "coronary"/"coronaries" but not "assess"/"assessment")
+            if (pw.length > 3 && qw.length > 3 && Math.abs(pw.length - qw.length) <= 2) {
+              if (qw.startsWith(pw) || pw.startsWith(qw)) return true;
+            }
+          }
+          return false;
+        }).length;
+
+        if (matchCount === phraseWords.length && phraseWords.length > 1) {
+          score = term.weight * 2;
+        } else if (matchCount > 0) {
+          score = term.weight * (matchCount / phraseWords.length);
+        }
+
+        // 3. Levenshtein for typo tolerance (words > 4 chars, proportional threshold)
+        if (score === 0) {
+          for (const qw of query.expandedTokens) {
+            if (qw.length <= 4) continue;
+            for (const pw of phraseWords) {
+              if (pw.length <= 4) continue;
+              const maxDist = Math.max(1, Math.floor(Math.min(qw.length, pw.length) * 0.2));
+              if (levenshteinDistance(qw, pw) <= maxDist) {
+                score = Math.max(score, term.weight * 0.5);
+              }
+            }
+          }
+        }
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestPhrase = phrase;
+      }
+    }
+
+    if (bestScore > 0) {
+      totalScore += bestScore;
+      matchedTerms.push(bestPhrase);
+    }
+  }
+
+  return { totalScore, matchedTerms };
+}
+
+// Run the full clinical query and render results
+function runClinicalQuery(inputValue) {
+  const trimmed = inputValue.trim();
+  const resultsEl = document.getElementById('queryResults');
+  const clearBtn = document.getElementById('queryClearBtn');
+
+  // Show/hide clear button
+  clearBtn.classList.toggle('visible', trimmed.length > 0);
+
+  if (trimmed.length < 2) {
+    resultsEl.classList.remove('visible');
+    resultsEl.innerHTML = '';
+    return;
+  }
+
+  const query = preprocessQuery(trimmed);
+  const scores = [];
+
+  for (const [key, entry] of Object.entries(clinicalQueryMap)) {
+    const result = scoreProtocol(query, entry);
+    if (result.totalScore > 0) {
+      scores.push({
+        protocolKey: key,
+        title: entry.title,
+        category: entry.category,
+        catClass: entry.catClass,
+        guideline: entry.guideline,
+        score: result.totalScore,
+        matchedTerms: result.matchedTerms
+      });
+    }
+  }
+
+  // Sort by score descending, take top 5
+  scores.sort((a, b) => b.score - a.score);
+  const topResults = scores.slice(0, 5);
+
+  renderQueryResults(topResults);
+}
+
+// Render the query results
+function renderQueryResults(results) {
+  const resultsEl = document.getElementById('queryResults');
+
+  if (results.length === 0) {
+    resultsEl.innerHTML = '<div class="query-no-results">No matching protocol found. Try different terms or browse below.</div>';
+    resultsEl.classList.add('visible');
+    return;
+  }
+
+  const maxScore = results[0].score;
+
+  let html = '<div class="query-results-label">Recommended Protocols</div>';
+
+  for (const r of results) {
+    // Confidence level
+    let confClass, confLabel;
+    if (r.score >= 20) {
+      confClass = 'best'; confLabel = 'Best match';
+    } else if (r.score >= 10) {
+      confClass = 'good'; confLabel = 'Good match';
+    } else {
+      confClass = 'possible'; confLabel = 'Possible match';
+    }
+
+    // Category label
+    const catLabels = { coronary: 'Coronary', valve: 'Valve', aortic: 'Aortic', ep: 'EP', other: 'Other', paediatric: 'Paediatric', specialist: 'Specialist' };
+    const catLabel = catLabels[r.category] || 'Other';
+
+    // Matched terms (show up to 3)
+    const termsHtml = r.matchedTerms.slice(0, 3).map(t => `<mark>${escapeHtml(t)}</mark>`).join(', ');
+
+    html += `
+      <div class="query-result-card ${r.catClass}" onclick="selectQueryResult('${r.protocolKey}')">
+        <div class="query-result-header">
+          <span class="ind-category">${catLabel}</span>
+          <span class="query-confidence ${confClass}">${confLabel}</span>
+        </div>
+        <div class="query-result-title">${escapeHtml(r.title)}</div>
+        <div class="query-matched-terms">Matched: ${termsHtml}</div>
+        <div class="query-guideline">${escapeHtml(r.guideline)}</div>
+      </div>`;
+  }
+
+  resultsEl.innerHTML = html;
+  resultsEl.classList.add('visible');
+}
+
+// HTML escape helper
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// Select a result and feed into existing protocol flow
+function selectQueryResult(protocolKey) {
+  const btn = document.querySelector(`.indication-btn[data-protocol="${protocolKey}"]`);
+  if (btn) {
+    selectIndication(btn);
+    // Clear search UI
+    document.getElementById('clinicalQueryInput').value = '';
+    document.getElementById('queryClearBtn').classList.remove('visible');
+    document.getElementById('queryResults').classList.remove('visible');
+    document.getElementById('queryResults').innerHTML = '';
+    // selectIndication already navigates to detail view
+  }
+}
+
+// Clear the query
+function clearQuery() {
+  document.getElementById('clinicalQueryInput').value = '';
+  document.getElementById('queryClearBtn').classList.remove('visible');
+  document.getElementById('queryResults').classList.remove('visible');
+  document.getElementById('queryResults').innerHTML = '';
+  document.getElementById('clinicalQueryInput').focus();
+}
+
+// Debounced input handler
+let queryTimeout = null;
+function onQueryInput(value) {
+  clearTimeout(queryTimeout);
+  queryTimeout = setTimeout(() => runClinicalQuery(value), 250);
+}
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  protocol: null,
+  hr: null,
+  bmi: null,
+  cath: null,
+  arch: null,
+  tendyne_bmi: null,
+  mitral_bmi: null,
+  paed_weight: null,
+  ecmo_type: null
+};
+
+// Stores browse-view scroll position so we can restore it on back
+let browseScrollPos = 0;
+
+// ============================================================
+// HASH ROUTER
+// ============================================================
+function navigateTo(view, options) {
+  options = options || {};
+  // Save scroll position when leaving browse
+  if (getCurrentView() === 'browse') {
+    browseScrollPos = window.scrollY;
+  }
+  location.hash = '/' + view;
+  if (options.slideBack) {
+    const activeView = document.querySelector('.view.active');
+    if (activeView) activeView.classList.add('slide-back');
+  }
+}
+
+function getCurrentView() {
+  const hash = location.hash.slice(2) || 'browse';
+  return hash.startsWith('detail') ? 'detail' : 'browse';
+}
+
+function renderView() {
+  const hash = location.hash.slice(2) || 'browse';
+
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.remove('active', 'no-animate', 'slide-back');
+  });
+
+  if (hash === 'browse' || hash === '') {
+    const el = document.getElementById('browseView');
+    el.classList.add('active', 'slide-back');
+    // Restore scroll position
+    setTimeout(() => window.scrollTo(0, browseScrollPos), 10);
+  } else if (hash.startsWith('detail')) {
+    const el = document.getElementById('detailView');
+    el.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+}
+
+window.addEventListener('hashchange', renderView);
+
+// On initial load
+window.addEventListener('DOMContentLoaded', () => {
+  if (!location.hash || location.hash === '#/' || location.hash === '#/browse') {
+    location.hash = '/browse';
+    const el = document.getElementById('browseView');
+    el.classList.add('active', 'no-animate');
+  } else {
+    renderView();
+  }
+});
+
+// Back button handler
+function goBack() {
+  // Clear protocol state
+  state.protocol = null;
+  state.hr = null; state.bmi = null; state.cath = null; state.arch = null;
+  state.tendyne_bmi = null; state.mitral_bmi = null;
+  state.paed_weight = null; state.ecmo_type = null;
+
+  // Deselect buttons
+  document.querySelectorAll('.indication-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.radio-option').forEach(r => r.classList.remove('selected'));
+  document.querySelectorAll('.sub-question').forEach(q => q.classList.remove('visible'));
+  document.getElementById('subQuestionsSection').style.display = 'none';
+  document.getElementById('resultSection').classList.remove('visible');
+
+  // Navigate back to browse
+  if (history.length > 1) {
+    history.back();
+  } else {
+    navigateTo('browse');
+  }
+}
+
+// ============================================================
+// UI LOGIC
+// ============================================================
+function selectIndication(btn) {
+  document.querySelectorAll('.indication-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.protocol = btn.dataset.protocol;
+  state.hr = null; state.bmi = null; state.cath = null; state.arch = null;
+  state.tendyne_bmi = null; state.mitral_bmi = null;
+  state.paed_weight = null; state.ecmo_type = null;
+
+  // Hide all sub-questions
+  document.querySelectorAll('.sub-question').forEach(q => q.classList.remove('visible'));
+  document.querySelectorAll('.radio-option').forEach(r => r.classList.remove('selected'));
+
+  const subSection = document.getElementById('subQuestionsSection');
+  const needsSub = showSubQuestions(state.protocol);
+  subSection.style.display = needsSub ? 'block' : 'none';
+
+  if (!needsSub) {
+    renderProtocol();
+  } else {
+    document.getElementById('resultSection').classList.remove('visible');
+  }
+
+  // Navigate to detail view
+  navigateTo('detail');
+}
+
+function showSubQuestions(protocol) {
+  let needed = false;
+  if (protocol === 'coronary_arteries') {
+    show('q_hr'); show('q_bmi'); needed = true;
+  } else if (protocol === 'grafts') {
+    show('q_hr'); needed = true;
+  } else if (protocol === 'carto') {
+    show('q_arch'); needed = true;
+  } else if (protocol === 'tendyne') {
+    show('q_tendyne_bmi'); needed = true;
+  } else if (protocol === 'mitral_valve') {
+    show('q_mitral_bmi'); needed = true;
+  } else if (protocol === 'paediatric_cardiac') {
+    show('q_paed_weight'); needed = true;
+  } else if (protocol === 'ecmo_ct') {
+    show('q_ecmo_type'); needed = true;
+  }
+  return needed;
+}
+
+function show(id) {
+  document.getElementById(id).classList.add('visible');
+}
+
+function selectRadio(el, group) {
+  el.parentElement.querySelectorAll('.radio-option').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  state[group] = el.querySelector('input').value;
+  tryRender();
+}
+
+function tryRender() {
+  const p = state.protocol;
+  if (p === 'coronary_arteries' && state.hr && state.bmi) renderProtocol();
+  else if (p === 'grafts' && state.hr) renderProtocol();
+  else if (p === 'carto' && state.arch !== null) renderProtocol();
+  else if (p === 'tendyne' && state.tendyne_bmi) renderProtocol();
+  else if (p === 'mitral_valve' && state.mitral_bmi) renderProtocol();
+  else if (p === 'paediatric_cardiac' && state.paed_weight) renderProtocol();
+  else if (p === 'ecmo_ct' && state.ecmo_type) renderProtocol();
+}
+
+function resetAll() {
+  state = { protocol: null, hr: null, bmi: null, cath: null, arch: null, tendyne_bmi: null, mitral_bmi: null, paed_weight: null, ecmo_type: null };
+  document.querySelectorAll('.indication-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.radio-option').forEach(r => r.classList.remove('selected'));
+  document.querySelectorAll('.sub-question').forEach(q => q.classList.remove('visible'));
+  document.getElementById('subQuestionsSection').style.display = 'none';
+  document.getElementById('resultSection').classList.remove('visible');
+  // Clear clinical query
+  document.getElementById('clinicalQueryInput').value = '';
+  document.getElementById('queryClearBtn').classList.remove('visible');
+  document.getElementById('queryResults').classList.remove('visible');
+  document.getElementById('queryResults').innerHTML = '';
+  // Navigate back to browse view
+  browseScrollPos = 0;
+  navigateTo('browse');
+}
+
+// ============================================================
+// RENDER PROTOCOL
+// ============================================================
+function renderProtocol() {
+  const p = protocols[state.protocol];
+  if (!p) return;
+
+  const titleEl = document.getElementById('resultTitle');
+  const sysEl = document.getElementById('resultSystemName');
+  const bodyEl = document.getElementById('resultBody');
+
+  titleEl.textContent = p.title;
+
+  // System name
+  let sysName = p.systemName;
+  if (p.getSystemName) {
+    if (state.protocol === 'tendyne') sysName = p.getSystemName(state.tendyne_bmi);
+    else if (state.protocol === 'mitral_valve') sysName = p.getSystemName(state.mitral_bmi);
+  }
+  sysEl.textContent = sysName || '';
+
+  let html = '';
+
+  // Verification badge for guideline-based protocols
+  if (p.requiresVerification) {
+    html += `<div class="verification-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      ${p.verificationNote}
+    </div>`;
+  }
+
+  html += '<div class="param-grid">';
+
+  // INDICATIONS
+  html += `<div class="param-group">
+    <h3>Indications</h3>
+    <ul class="recon-list">${p.indications.map(i => `<li>${i}</li>`).join('')}</ul>
+    ${p.note ? `<div class="alert-box warning" style="margin-top:10px"><span class="alert-icon">&#9888;</span><span>${p.note}</span></div>` : ''}
+  </div>`;
+
+  // PATIENT SETUP
+  html += `<div class="param-group">
+    <h3>Patient Setup</h3>
+    <div class="param-row"><span class="param-label">Position</span><span class="param-value">${p.patientPosition}</span></div>
+    ${p.patientPrep ? `<div class="param-row"><span class="param-label">Prep</span><span class="param-value">${p.patientPrep}</span></div>` : ''}
+    <div class="param-row"><span class="param-label">Breath Hold</span><span class="param-value">${p.breathHold}</span></div>`;
+
+  if (p.hrControl) {
+    html += `<div class="param-row"><span class="param-label">Beta Blockers</span><span class="param-value">${p.hrControl.betaBlockers}</span></div>`;
+    if (p.hrControl.gtn !== undefined) {
+      html += `<div class="param-row"><span class="param-label">GTN</span><span class="param-value">${p.hrControl.gtn}</span></div>`;
+    }
+  }
+  html += `</div>`;
+
+  // TOPOGRAM & SCOUTS
+  html += `<div class="param-group">
+    <h3>Topogram & Scouts</h3>
+    <div class="param-row"><span class="param-label">Topogram</span><span class="param-value">${p.topogram}</span></div>`;
+  if (p.controlScan) html += `<div class="param-row"><span class="param-label">Control Scan</span><span class="param-value">${p.controlScan}</span></div>`;
+  if (p.calciumScore) html += `<div class="param-row"><span class="param-label">Calcium Score</span><span class="param-value">${p.calciumScore}</span></div>`;
+  if (p.testBolus) {
+    html += `<div class="param-row"><span class="param-label">Test Bolus Level</span><span class="param-value">${p.testBolus.level}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Watch</span><span class="param-value">${p.testBolus.watch}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Dynamic Eval</span><span class="param-value">${p.testBolus.dynamicEval}</span></div>`;
+  }
+  html += `</div>`;
+
+  // ACQUISITION
+  html += `<div class="param-group full-width"><h3>Scan Acquisition</h3>`;
+
+  // PAEDIATRIC weight-based acquisition
+  if (state.protocol === 'paediatric_cardiac' && p.getAcquisitionByWeight) {
+    const wacq = p.getAcquisitionByWeight(state.paed_weight);
+    html += `<div class="alert-box info" style="margin-bottom:12px"><span class="alert-icon">&#128118;</span><span><strong>${wacq.label}</strong></span></div>`;
+    html += `<div class="param-row"><span class="param-label">Tube Voltage</span><span class="param-value">${wacq.kv}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Mode</span><span class="param-value">${wacq.mode}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">ECG Gating</span><span class="param-value">${wacq.gating}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Rotation Time</span><span class="param-value">${wacq.rotation}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Contrast Volume</span><span class="param-value">${wacq.contrastVolume}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Flow Rate</span><span class="param-value">${wacq.flowRate}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Saline Chase</span><span class="param-value">${wacq.saline}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">DRL</span><span class="param-value">${wacq.drl}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Sedation</span><span class="param-value">${wacq.sedation}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Reconstruction</span><span class="param-value">${wacq.recon}</span></div>`;
+    html += `<div class="alert-box info" style="margin-top:10px"><span class="alert-icon">&#8505;</span><span>${wacq.notes}</span></div>`;
+  }
+  // ECMO type-based acquisition
+  else if (state.protocol === 'ecmo_ct' && p.getAcquisitionByECMOType) {
+    const eacq = p.getAcquisitionByECMOType(state.ecmo_type);
+    html += `<div class="alert-box danger" style="margin-bottom:12px"><span class="alert-icon">&#9888;</span><span><strong>${eacq.label}</strong></span></div>`;
+    html += `<div class="param-row"><span class="param-label">Mode</span><span class="param-value">${eacq.mode}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Tube Voltage</span><span class="param-value">${eacq.kv}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Range</span><span class="param-value">${eacq.range}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Contrast Route</span><span class="param-value">${eacq.contrastRoute}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Contrast Volume</span><span class="param-value">${eacq.contrastVolume}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Flow Rate</span><span class="param-value">${eacq.flowRate}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Saline</span><span class="param-value">${eacq.saline}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Timing</span><span class="param-value">${eacq.timing}</span></div>`;
+    html += `<div class="alert-box warning" style="margin-top:10px"><span class="alert-icon">&#9888;</span><div><strong>Flow Strategy:</strong> ${eacq.flowStrategy}</div></div>`;
+    html += `<div class="alert-box warning" style="margin-top:8px"><span class="alert-icon">&#9888;</span><div><strong>Artifacts:</strong> ${eacq.artifacts}</div></div>`;
+    if (eacq.keyNotes && eacq.keyNotes.length > 0) {
+      html += `<div class="alert-box danger" style="margin-top:10px"><span class="alert-icon">&#9888;</span><div><strong>Key Notes:</strong><ul class="recon-list" style="margin-top:6px">${eacq.keyNotes.map(n => `<li>${n}</li>`).join('')}</ul></div></div>`;
+    }
+  }
+  else if (p.getAcquisition) {
+    const acq = p.getAcquisition(state.hr);
+    html += `<div class="param-row"><span class="param-label">Mode</span><span class="param-value">${acq.badge || ''} ${acq.mode}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Range</span><span class="param-value">${acq.range}</span></div>`;
+    html += `<div class="param-row"><span class="param-label">Delay</span><span class="param-value">${acq.delay}</span></div>`;
+    if (acq.trigger) html += `<div class="param-row"><span class="param-label">Trigger</span><span class="param-value">${acq.trigger}</span></div>`;
+  } else if (p.acquisition) {
+    const acq = p.acquisition;
+    if (acq.mode) html += `<div class="param-row"><span class="param-label">Mode</span><span class="param-value">${acq.mode}</span></div>`;
+    if (acq.range) html += `<div class="param-row"><span class="param-label">Range</span><span class="param-value">${acq.range}</span></div>`;
+    if (acq.cardiac) html += `<div class="param-row"><span class="param-label">Cardiac</span><span class="param-value">${acq.cardiac}</span></div>`;
+    if (acq.ctca) html += `<div class="param-row"><span class="param-label">CTCA</span><span class="param-value">${acq.ctca}</span></div>`;
+    if (acq.ctcaDelay) html += `<div class="param-row"><span class="param-label">CTCA Delay</span><span class="param-value">${acq.ctcaDelay}</span></div>`;
+    if (acq.delay) html += `<div class="param-row"><span class="param-label">Delay</span><span class="param-value">${acq.delay}</span></div>`;
+    if (acq.bodyAngio) html += `<div class="param-row"><span class="param-label">Body Angio</span><span class="param-value">${acq.bodyAngio}</span></div>`;
+    if (acq.bodyAngioDelay) html += `<div class="param-row"><span class="param-label">Body Angio Delay</span><span class="param-value">${acq.bodyAngioDelay}</span></div>`;
+    if (acq.recons) html += `<div class="param-row"><span class="param-label">Recon Layout</span><span class="param-value">${acq.recons}</span></div>`;
+    if (acq.venogram) html += `<div class="param-row"><span class="param-label">Venogram</span><span class="param-value">${acq.venogram}</span></div>`;
+    if (acq.venogramDelay) html += `<div class="param-row"><span class="param-label">Venogram Delay</span><span class="param-value">${acq.venogramDelay}</span></div>`;
+    if (acq.delayed) html += `<div class="param-row"><span class="param-label">Delayed Scan</span><span class="param-value">${acq.delayed}</span></div>`;
+    if (acq.lowDoseThorax) html += `<div class="param-row"><span class="param-label">Low Dose Thorax</span><span class="param-value">${acq.lowDoseThorax}</span></div>`;
+
+    if (acq.notes) {
+      const notes = Array.isArray(acq.notes) ? acq.notes : [acq.notes];
+      html += `<div class="alert-box info" style="margin-top:10px"><span class="alert-icon">&#8505;</span><div>${notes.map(n => `<div>${n}</div>`).join('')}</div></div>`;
+    }
+    if (acq.cardiacNotes) {
+      html += `<div class="alert-box info" style="margin-top:10px"><span class="alert-icon">&#8505;</span><div>${acq.cardiacNotes.map(n => `<div>${n}</div>`).join('')}</div></div>`;
+    }
+    if (acq.important) {
+      html += `<div class="alert-box danger" style="margin-top:10px"><span class="alert-icon">&#9888;</span><span>${acq.important}</span></div>`;
+    }
+    if (acq.exstentNotes) {
+      html += `<div class="alert-box warning" style="margin-top:10px"><span class="alert-icon">&#9733;</span><div><strong>Exstent Requirements:</strong><ul class="recon-list" style="margin-top:6px">${acq.exstentNotes.map(n => `<li>${n}</li>`).join('')}</ul></div></div>`;
+    }
+
+    // INHEART special
+    if (acq.arterial) {
+      html += `<div class="param-row"><span class="param-label">Arterial Mode</span><span class="param-value">${acq.arterial.mode}</span></div>`;
+      html += `<div class="param-row"><span class="param-label">Arterial Range</span><span class="param-value">${acq.arterial.range}</span></div>`;
+      html += `<div class="param-row"><span class="param-label">Notes</span><span class="param-value">${acq.arterial.notes}</span></div>`;
+      html += `<div class="param-row"><span class="param-label">Late Enhanced</span><span class="param-value">${acq.late}</span></div>`;
+    }
+  }
+
+  // CARTO arch modification
+  if (state.protocol === 'carto' && state.arch === 'yes') {
+    const archMod = p.getAcquisitionArch('yes');
+    if (archMod) {
+      html += `<div class="alert-box warning" style="margin-top:10px"><span class="alert-icon">&#9888;</span><span><strong>Arch included:</strong> Scan range from ${archMod.range}. ${archMod.note}</span></div>`;
+    }
+  }
+
+  html += `</div>`;
+
+  // INJECTION PROTOCOL
+  html += `<div class="param-group full-width"><h3>Injection Protocol</h3>`;
+
+  let inj = p.injection;
+  if (p.getInjection) {
+    if (state.protocol === 'coronary_arteries') inj = p.getInjection(state.bmi);
+    else if (state.protocol === 'tendyne') inj = p.getInjection(state.tendyne_bmi);
+  }
+
+  if (inj) {
+    if (inj.protocolName) html += `<div class="param-row"><span class="param-label">Protocol</span><span class="param-value">${inj.protocolName}</span></div>`;
+    if (inj.contrast) html += `<div class="param-row"><span class="param-label">Contrast</span><span class="param-value">${inj.contrast}</span></div>`;
+    if (inj.saline) html += `<div class="param-row"><span class="param-label">Saline</span><span class="param-value">${inj.saline}</span></div>`;
+    if (inj.note) html += `<div class="alert-box info" style="margin-top:8px;margin-bottom:8px"><span class="alert-icon">&#8505;</span><span>${inj.note}</span></div>`;
+
+    if (inj.testBolus) {
+      html += `<table class="injection-table"><thead><tr><th colspan="2">Test Bolus</th></tr><tr><th>Rate</th><th>Volume</th></tr></thead><tbody>`;
+      inj.testBolus.forEach(r => { html += `<tr><td>${r.rate}</td><td>${r.volume}</td></tr>`; });
+      html += `</tbody></table>`;
+    }
+    if (inj.scan) {
+      html += `<table class="injection-table" style="margin-top:10px"><thead><tr><th colspan="2">Scan Injection</th></tr><tr><th>Rate</th><th>Volume</th></tr></thead><tbody>`;
+      inj.scan.forEach(r => { html += `<tr><td>${r.rate}</td><td>${r.volume}</td></tr>`; });
+      html += `</tbody></table>`;
+    }
+
+    html += `<div class="alert-box info" style="margin-top:10px"><span class="alert-icon">&#8505;</span><span>Cannula size and position should be considered when selecting the flow rate.</span></div>`;
+  }
+
+  // Congenital injection for grafts
+  if (p.congenitalInjection) {
+    const ci = p.congenitalInjection;
+    html += `<div class="alert-box warning" style="margin-top:12px"><span class="alert-icon">&#9888;</span><div><strong>${ci.note}</strong><br>Protocol: ${ci.protocolName} | Contrast: ${ci.contrast} | Saline: ${ci.saline}</div></div>`;
+    if (ci.scan) {
+      html += `<table class="injection-table" style="margin-top:8px"><thead><tr><th colspan="2">Congenital Scan Injection</th></tr><tr><th>Rate</th><th>Volume</th></tr></thead><tbody>`;
+      ci.scan.forEach(r => { html += `<tr><td>${r.rate}</td><td>${r.volume}</td></tr>`; });
+      html += `</tbody></table>`;
+    }
+  }
+
+  html += `</div>`;
+
+  // DOSE
+  if (p.dose && p.dose.length > 0) {
+    html += `<div class="param-group"><h3>Dose Reference Levels</h3>`;
+    html += `<table class="injection-table"><thead><tr><th>Protocol</th><th>CTDIvol</th><th>DLP</th></tr></thead><tbody>`;
+    p.dose.forEach(d => {
+      html += `<tr><td>${d.name}${d.weight ? ` (${d.weight})` : ''}</td><td>${d.ctdi}</td><td>${d.dlp}</td></tr>`;
+    });
+    html += `</tbody></table>`;
+    if (p.individualDRL) html += `<div style="margin-top:8px;font-size:0.8rem;color:var(--text-light)">Individual DRLs available</div>`;
+    html += `</div>`;
+  }
+
+  // DEVIATIONS
+  if (p.deviations && p.deviations.length > 0) {
+    html += `<div class="param-group"><h3>Possible Deviations</h3>
+      <ul class="deviations-list">${p.deviations.map(d => `<li>${d}</li>`).join('')}</ul>
+    </div>`;
+  }
+
+  // RECONSTRUCTIONS
+  if (p.reconstructions && p.reconstructions.length > 0) {
+    html += `<div class="param-group full-width"><h3>Reconstructions</h3>
+      <ul class="recon-list">${p.reconstructions.map(r => `<li>${r}</li>`).join('')}</ul>
+    </div>`;
+  }
+
+  // POST CARE
+  if (p.postCare) {
+    html += `<div class="param-group full-width"><h3>Post Patient Care</h3>
+      <div class="alert-box warning"><span class="alert-icon">&#9888;</span><span>${p.postCare}</span></div>
+    </div>`;
+  }
+
+  html += '</div>';
+  bodyEl.innerHTML = html;
+
+  const resultSection = document.getElementById('resultSection');
+  resultSection.classList.add('visible');
+  // Smooth scroll to protocol card within the detail view
+  setTimeout(() => resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ============================================================
+// PWA SERVICE WORKER REGISTRATION
+// ============================================================
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    console.log('SW registered:', reg.scope);
+  }).catch(err => {
+    console.log('SW registration failed:', err);
+  });
+}
+</script>
+</body>
+</html>

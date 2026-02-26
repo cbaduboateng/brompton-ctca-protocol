@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4b8c"/>
+      <stop offset="100%" style="stop-color:#0d9488"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <text x="256" y="200" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="160" font-weight="bold" fill="white">CT</text>
+  <text x="256" y="310" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="80" font-weight="bold" fill="rgba(255,255,255,0.9)">CA</text>
+  <line x1="120" y1="340" x2="392" y2="340" stroke="rgba(255,255,255,0.5)" stroke-width="3"/>
+  <text x="256" y="400" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="40" fill="rgba(255,255,255,0.8)">BROMPTON</text>
+  <!-- Heart icon -->
+  <path d="M256 440 C256 440 200 410 200 385 C200 370 215 360 230 365 C240 368 250 378 256 385 C262 378 272 368 282 365 C297 360 312 370 312 385 C312 410 256 440 256 440Z" fill="rgba(255,255,255,0.7)"/>
+</svg>
