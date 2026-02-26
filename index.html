@@ -859,6 +859,623 @@
   @media (max-width: 768px) {
     .back-btn { padding: 10px 14px; font-size: 0.9rem; }
   }
+
+  /* ============================================================
+     LEARNING CENTRE
+     ============================================================ */
+
+  /* Entry banner on browse view */
+  .learn-entry-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #1a4b8c 100%);
+    color: white;
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-md);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-entry-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .learn-entry-banner:active {
+    transform: translateY(0);
+  }
+
+  .learn-entry-banner .learn-banner-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .learn-entry-banner .learn-banner-text {
+    flex: 1;
+  }
+
+  .learn-entry-banner .learn-banner-text strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .learn-entry-banner .learn-banner-text span {
+    font-size: 0.8rem;
+    opacity: 0.85;
+  }
+
+  .learn-entry-banner .learn-banner-arrow {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  /* Learn Hub filter tabs */
+  .learn-filter-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+  }
+
+  .learn-filter-tabs::-webkit-scrollbar { display: none; }
+
+  .learn-filter-tab {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-filter-tab:hover {
+    border-color: var(--primary-light);
+    color: var(--primary);
+  }
+
+  .learn-filter-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+
+  /* Learn Hub search */
+  .learn-search-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 0 16px;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+  }
+
+  .learn-search-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(26, 75, 140, 0.1);
+  }
+
+  .learn-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    font-family: inherit;
+    padding: 12px 0;
+    color: var(--text);
+    outline: none;
+  }
+
+  .learn-search-input::placeholder { color: #94a3b8; }
+
+  /* Learn Hub card grid */
+  .learn-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .learn-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-card:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .learn-card .learn-card-category {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .learn-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .learn-card .learn-card-summary {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .learn-card .learn-card-question {
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-style: italic;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  /* Learn category group headings in hub */
+  .learn-category-heading {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+    margin-top: 24px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .learn-category-heading:first-child { margin-top: 0; }
+
+  /* Learn Detail header */
+  .learn-detail-header {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    border-left: 4px solid var(--accent);
+  }
+
+  .learn-detail-header .learn-detail-category {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .learn-detail-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .learn-detail-header .learn-detail-summary {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .learn-detail-header .learn-detail-question {
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 600;
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  /* Section quick-nav pills */
+  .learn-section-nav {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 0;
+    margin-bottom: 8px;
+    position: sticky;
+    top: 60px;
+    z-index: 50;
+    background: var(--bg);
+    scrollbar-width: none;
+  }
+
+  .learn-section-nav::-webkit-scrollbar { display: none; }
+
+  .learn-section-nav button {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: var(--card-bg);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-section-nav button:hover,
+  .learn-section-nav button:active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: #f0fdfa;
+  }
+
+  /* Collapsible sections */
+  .learn-section {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .learn-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-section-header:hover {
+    background: #f8fafc;
+  }
+
+  .learn-section-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .learn-section-chevron {
+    transition: transform 0.25s;
+    color: var(--text-light);
+    flex-shrink: 0;
+  }
+
+  .learn-section.open .learn-section-chevron {
+    transform: rotate(180deg);
+  }
+
+  .learn-section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s ease;
+    padding: 0 20px;
+  }
+
+  .learn-section.open .learn-section-body {
+    max-height: 3000px;
+    padding: 0 20px 20px;
+  }
+
+  /* Content styles inside sections */
+  .learn-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .learn-list li {
+    padding: 6px 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--text);
+  }
+
+  .learn-list li::before {
+    content: ""; flex-shrink: 0; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%; margin-top: 8px;
+  }
+
+  .learn-numbered-list {
+    list-style: none;
+    padding: 0;
+    counter-reset: learn-counter;
+  }
+
+  .learn-numbered-list li {
+    padding: 8px 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text);
+    counter-increment: learn-counter;
+  }
+
+  .learn-numbered-list li::before {
+    content: counter(learn-counter);
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .learn-scenario-card {
+    background: #f0fdfa;
+    border: 1px solid #ccfbf1;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .learn-scenario-card strong {
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .learn-rationale-block {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .learn-rationale-block h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  .learn-rationale-block p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  /* Decision guide use/don't use */
+  .learn-decision-use {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .learn-decision-use h4 { color: #166534; }
+
+  .learn-decision-avoid {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+
+  .learn-decision-avoid h4 { color: #991b1b; }
+
+  .learn-decision-use h4,
+  .learn-decision-avoid h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .learn-alternative-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .learn-alternative-card:hover {
+    border-color: var(--accent);
+    background: #f0fdfa;
+  }
+
+  .learn-alternative-card .alt-name {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .learn-alternative-card .alt-reason {
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+
+  /* Guideline reference cards */
+  .learn-guideline-card {
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: #f8fafc;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .learn-guideline-card .guide-name {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .learn-guideline-card .guide-relevance {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  .learn-evidence-summary {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: #1e40af;
+    margin-top: 12px;
+  }
+
+  /* CTA link to protocol parameters */
+  .learn-to-protocol-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 14px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-to-protocol-link:hover {
+    background: #0f766e;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* "Why this protocol?" link in detail view */
+  .learn-why-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0fdfa;
+    border: 2px solid #ccfbf1;
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .learn-why-link:hover {
+    border-color: var(--accent);
+    background: #e6faf7;
+    transform: translateY(-1px);
+  }
+
+  .learn-why-link .why-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .learn-why-link .why-text strong {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .learn-why-link .why-text span {
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .learn-entry-banner { padding: 14px 16px; }
+    .learn-card-grid { grid-template-columns: 1fr; }
+    .learn-card { padding: 14px 16px; }
+    .learn-detail-header { padding: 18px 16px; }
+    .learn-detail-header h2 { font-size: 1.15rem; }
+    .learn-section-header { padding: 14px 16px; }
+    .learn-section.open .learn-section-body { padding: 0 16px 16px; }
+    .learn-section-nav { top: 50px; }
+    .learn-to-protocol-link { width: 100%; }
+  }
+
+  @media (max-width: 375px) {
+    .learn-filter-tab { padding: 6px 12px; font-size: 0.78rem; }
+    .learn-section-nav button { padding: 5px 10px; font-size: 0.7rem; }
+  }
+
+  @media print {
+    .learn-entry-banner { display: none; }
+    .learn-filter-tabs { display: none; }
+    .learn-search-wrapper { display: none; }
+    .learn-section-nav { display: none; }
+    .learn-section { break-inside: avoid; }
+    .learn-section-body { max-height: none !important; padding: 0 20px 20px !important; }
+    .learn-to-protocol-link { display: none; }
+    .learn-why-link { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -889,6 +1506,20 @@
   </div>
 
   <div class="query-separator">Or browse protocols below</div>
+
+  <!-- Learning Centre Entry -->
+  <div class="learn-entry-banner" onclick="navigateTo('learn')">
+    <div class="learn-banner-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    </div>
+    <div class="learn-banner-text">
+      <strong>Protocol Learning Centre</strong>
+      <span>Understand why each protocol is used and when</span>
+    </div>
+    <div class="learn-banner-arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </div>
+  </div>
 
   <!-- Step 1: Clinical Indication -->
   <div class="selector-section">
@@ -1106,6 +1737,47 @@
   </div>
 
   </div><!-- /detailView -->
+
+  <!-- ===== VIEW 3: LEARN HUB ===== -->
+  <div id="learnView" class="view">
+    <button class="back-btn" onclick="navigateTo('browse', {slideBack:true})">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Protocols
+    </button>
+    <div class="selector-section" style="border-left: 4px solid var(--accent);">
+      <h2 style="color:var(--accent);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Protocol Learning Centre
+      </h2>
+      <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Tap a protocol to learn about its clinical purpose, anatomy, key learning points, and when to use it.</p>
+      <!-- Filter tabs -->
+      <div class="learn-filter-tabs" id="learnFilterTabs">
+        <button class="learn-filter-tab active" onclick="filterLearnCategory('all', this)">All</button>
+        <button class="learn-filter-tab" onclick="filterLearnCategory('coronary', this)">Coronary</button>
+        <button class="learn-filter-tab" onclick="filterLearnCategory('valve', this)">Valve</button>
+        <button class="learn-filter-tab" onclick="filterLearnCategory('aortic', this)">Aortic</button>
+        <button class="learn-filter-tab" onclick="filterLearnCategory('ep', this)">EP</button>
+        <button class="learn-filter-tab" onclick="filterLearnCategory('other', this)">Other</button>
+      </div>
+      <!-- Search -->
+      <div class="learn-search-wrapper">
+        <svg style="flex-shrink:0;width:18px;height:18px;color:var(--text-light);margin-right:10px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="learn-search-input" id="learnSearchInput" placeholder="Search protocols..." oninput="searchLearnContent(this.value)" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </div>
+    </div>
+    <!-- Card grid rendered by JS -->
+    <div id="learnCardGrid" class="learn-card-grid"></div>
+  </div><!-- /learnView -->
+
+  <!-- ===== VIEW 4: LEARN DETAIL ===== -->
+  <div id="learnDetailView" class="view">
+    <button class="back-btn" onclick="navigateLearnBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Learning Hub
+    </button>
+    <!-- Content rendered by JS -->
+    <div id="learnDetailContent"></div>
+  </div><!-- /learnDetailView -->
 
 </div>
 
@@ -2931,6 +3603,947 @@ function onQueryInput(value) {
 }
 
 // ============================================================
+// TEACHING CONTENT
+// ============================================================
+const teachingContent = {
+
+  coronary_arteries: {
+    clinicalPurpose: {
+      summary: "Non-invasive assessment of coronary artery anatomy to identify or exclude obstructive coronary artery disease (CAD).",
+      clinicalQuestion: "Does this patient have significant coronary artery stenosis that explains their symptoms or risk profile?",
+      whyDone: [
+        "Identify or exclude obstructive CAD in patients with chest pain of suspected cardiac origin",
+        "Assess anomalous coronary artery origins that may cause myocardial ischaemia or sudden cardiac death",
+        "Plan revascularisation procedures by mapping coronary anatomy pre-operatively",
+        "Follow up Kawasaki disease patients for coronary artery aneurysms"
+      ],
+      patientScenarios: [
+        "55-year-old with atypical chest pain and intermediate pre-test probability of CAD",
+        "Young athlete with exertional syncope — query anomalous coronary origin",
+        "Pre-operative cardiac risk assessment before major non-cardiac surgery"
+      ]
+    },
+    anatomy: {
+      structures: ["Left main stem (LMS)", "Left anterior descending (LAD) and diagonal branches", "Left circumflex (LCx) and obtuse marginal branches", "Right coronary artery (RCA) and posterior descending artery (PDA)", "Coronary sinus and great cardiac vein"],
+      pathology: ["Atherosclerotic plaque (calcified, mixed, and non-calcified)", "Coronary stenosis (>50% significant, >70% severe)", "Anomalous coronary origins (e.g. RCA from left sinus, interarterial course)", "Coronary artery aneurysms (Kawasaki disease)", "Myocardial bridging"]
+    },
+    keyLearningPoints: [
+      "Heart rate control is critical for coronary CT — motion artefact increases dramatically above 65 bpm",
+      "Flash mode (HR <60 bpm) provides lowest radiation dose; adaptive sequential is used for higher rates",
+      "End-systolic imaging (>65 bpm) captures the heart when coronary motion is minimal",
+      "Calcium scoring is only performed if protocolled by the radiologist — adds dose without always adding diagnostic value",
+      "GTN dilates coronary arteries from ~3mm to ~4mm, improving visualisation of stenoses",
+      "Test bolus determines individual peak enhancement timing — critical for precise scan window"
+    ],
+    decisionGuide: {
+      useWhen: ["Chest pain with intermediate pre-test probability of CAD", "Native (non-operated) coronary arteries need assessment", "Anomalous coronary origin suspected"],
+      doNotUseWhen: ["Patient has bypass grafts — use Grafts (CABG) protocol instead", "Only calcium score requested — use Calcium Score protocol", "TAVI planning needed — use TAVI protocols"],
+      alternatives: [
+        { protocol: "calcium_score", reason: "Non-contrast risk stratification only" },
+        { protocol: "grafts", reason: "Patient has had CABG surgery" },
+        { protocol: "tavi_plus_coros", reason: "Coronary assessment needed alongside TAVI planning" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Flash mode at <60 bpm captures the entire heart in under 0.5 seconds during a single diastolic pause, minimising motion artefact and radiation dose. Above 60 bpm the diastolic pause shortens, requiring adaptive sequential acquisition over multiple heartbeats. Above 65 bpm or with irregular rhythm, end-systolic imaging provides the most motion-free window.",
+      contrastProtocol: "Test bolus determines individual circulation time. The +5s delay for Flash accounts for table acceleration time. BMI >28 requires 80ml contrast (vs 60ml) to maintain adequate coronary opacification through a larger blood volume.",
+      breathHold: "The Flash cardiac breath-hold command standardises lung volume and minimises diaphragmatic motion. API (Automatic Patient Instruction) ensures consistent timing across patients."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT 2022 Appropriate Use Criteria", relevance: "Defines which patients benefit most from coronary CTA" },
+        { name: "NICE CG95", relevance: "Recommends CTCA as first-line investigation for stable chest pain" },
+        { name: "BSCI Standards 2014", relevance: "UK national standards for cardiac CT practice and quality" }
+      ],
+      evidenceSummary: "NICE CG95 recommends CTCA as the first-line investigation for patients with stable chest pain and suspected CAD. The SCCT 2022 criteria support its use in low-to-intermediate risk patients. High negative predictive value (>99%) makes it excellent for ruling out significant CAD."
+    }
+  },
+
+  calcium_score: {
+    clinicalPurpose: {
+      summary: "Non-contrast CT to quantify coronary artery calcium as a marker of atherosclerotic burden and cardiovascular risk.",
+      clinicalQuestion: "What is this patient's coronary artery calcium burden and what does it tell us about their cardiovascular risk?",
+      whyDone: [
+        "Quantify coronary calcium (Agatston score) to stratify cardiovascular risk in asymptomatic patients",
+        "Guide statin therapy decisions in intermediate-risk patients",
+        "Provide baseline for monitoring atherosclerotic disease progression",
+        "Screen for CAD before contrast-enhanced CTCA (if protocolled)"
+      ],
+      patientScenarios: [
+        "Asymptomatic 50-year-old with family history of premature CAD and borderline lipid profile",
+        "Patient with diabetes being assessed for cardiovascular risk stratification",
+        "Pre-CTCA screening to assess calcium burden and guide reporting"
+      ]
+    },
+    anatomy: {
+      structures: ["Coronary artery tree (LMS, LAD, LCx, RCA)", "Aortic valve (incidental calcification)", "Mitral annular calcification (incidental)"],
+      pathology: ["Coronary artery calcification (marker of atherosclerosis)", "Agatston score categories: 0 (no plaque), 1-100 (mild), 101-400 (moderate), >400 (severe)", "Distribution pattern — diffuse vs focal calcification"]
+    },
+    keyLearningPoints: [
+      "No contrast agent is used — this is a non-contrast, ECG-gated scan",
+      "Agatston score of 0 has >95% negative predictive value for obstructive CAD in asymptomatic patients",
+      "Calcium scoring does NOT detect non-calcified (soft) plaque — a score of 0 does not exclude all coronary disease",
+      "Scan is acquired at the level of carina to base of heart using Flash mode (lowest dose possible)",
+      "Only performed when specifically protocolled by the radiologist — not routine for all cardiac CTs",
+      "Radiation dose is very low (~1 mSv) making it suitable for screening"
+    ],
+    decisionGuide: {
+      useWhen: ["Asymptomatic cardiovascular risk stratification is needed", "Radiologist has specifically protocolled calcium scoring", "Baseline calcium burden assessment before statin therapy"],
+      doNotUseWhen: ["Symptomatic chest pain — go straight to Coronary Arteries CTCA", "Patient already has known CAD or prior CABG", "Standalone CT calcium score is not routinely added to contrast CTCA without radiologist request"],
+      alternatives: [
+        { protocol: "coronary_arteries", reason: "If contrast-enhanced coronary assessment is needed" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Flash mode provides the lowest possible radiation dose (~0.5 mGy CTDIvol). Since no contrast timing is needed, acquisition is straightforward — triggered by ECG, acquired in a single heartbeat.",
+      contrastProtocol: "No contrast is used. This is a non-contrast scan — calcium is inherently hyperdense (>130 HU) and detectable without contrast enhancement."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT 2022 Calcium Scoring Guidelines", relevance: "Standardised methodology for calcium quantification" },
+        { name: "BSCI Calcium Scoring Standards", relevance: "UK practice standards for calcium score acquisition and reporting" },
+        { name: "ACC/AHA 2019 Primary Prevention", relevance: "Supports calcium scoring in intermediate-risk adults for shared decision-making" }
+      ],
+      evidenceSummary: "Coronary artery calcium scoring is a powerful risk stratification tool. The ACC/AHA 2019 guidelines support its use in adults aged 40-75 at intermediate risk to guide preventive therapy decisions. A score of 0 reclassifies many patients to lower risk."
+    }
+  },
+
+  grafts: {
+    clinicalPurpose: {
+      summary: "Comprehensive assessment of bypass grafts and native coronary arteries in post-CABG patients.",
+      clinicalQuestion: "Are the bypass grafts patent and are there new stenoses in the native coronary arteries?",
+      whyDone: [
+        "Assess bypass graft patency (open vs occluded) in post-CABG patients with recurrent symptoms",
+        "Evaluate native coronary arteries beyond the graft anastomoses",
+        "Plan re-do CABG or percutaneous intervention by mapping all conduits",
+        "Assess congenital heart disease with coronary involvement"
+      ],
+      patientScenarios: [
+        "65-year-old post-CABG with recurrent chest pain — query graft occlusion",
+        "Pre-operative assessment before re-do cardiac surgery to map all conduits",
+        "Young adult with congenital heart disease requiring coronary assessment"
+      ]
+    },
+    anatomy: {
+      structures: ["LIMA (left internal mammary artery) graft to LAD", "SVG (saphenous vein grafts) to RCA, OM, diagonal branches", "RIMA (right internal mammary artery) if used", "Native coronary arteries beyond anastomoses", "Ascending aorta (graft origin sites)"],
+      pathology: ["Graft occlusion (complete blockage)", "Graft stenosis (narrowing, especially at anastomoses)", "Native vessel progression of disease", "Competitive flow (when native vessel is not severely diseased)"]
+    },
+    keyLearningPoints: [
+      "Extended scan range is needed — from above the arch (for mammary graft origins) to the base of the heart",
+      "Both arterial and venous grafts must be identified and traced from origin to anastomosis",
+      "HR-dependent acquisition modes apply — same as coronary arteries protocol",
+      "Larger contrast volume is often needed due to the extended scan range",
+      "Graft assessment is generally easier than native coronaries as grafts are larger and have less motion",
+      "Heavily calcified native vessels may be difficult to assess — report should note limitations"
+    ],
+    decisionGuide: {
+      useWhen: ["Patient has had CABG surgery and needs graft assessment", "Congenital heart disease with coronary assessment needed", "Planning re-do cardiac surgery"],
+      doNotUseWhen: ["Patient has native (non-operated) coronary arteries only — use Coronary Arteries protocol", "Only calcium score needed"],
+      alternatives: [
+        { protocol: "coronary_arteries", reason: "If patient has not had bypass surgery" },
+        { protocol: "tavi_plus_coros", reason: "If TAVI planning is the primary indication" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Same HR-dependent modes as coronary arteries. Flash for <60 bpm, adaptive sequential for 60-65 bpm, systolic for >65 bpm. The key difference is extended scan range to cover graft origins.",
+      contrastProtocol: "Larger contrast volume may be needed to maintain opacification over the longer scan range from arch to diaphragm. Congenital protocols use a modified injection with different flow rates."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT 2022 Appropriate Use", relevance: "Supports CTCA for graft assessment in symptomatic post-CABG patients" },
+        { name: "BSCI Standards", relevance: "UK standards for post-surgical cardiac CT imaging" }
+      ],
+      evidenceSummary: "CTCA has excellent sensitivity and specificity for detecting graft occlusion (>95%). Assessment of native coronary arteries beyond anastomoses is more challenging, particularly with heavy calcification."
+    }
+  },
+
+  tavi_no_coros: {
+    clinicalPurpose: {
+      summary: "CT planning for transcatheter aortic valve implantation (TAVI) when coronary arteries have already been assessed by catheterisation.",
+      clinicalQuestion: "What are the aortic root dimensions, annular measurements, and access route suitability for TAVI?",
+      whyDone: [
+        "Measure aortic annulus dimensions for prosthesis sizing (critical for TAVI success)",
+        "Assess aortic root anatomy including sinuses of Valsalva and coronary ostial heights",
+        "Evaluate peripheral access routes (iliac and femoral arteries) for catheter delivery",
+        "Identify anatomical variants that may complicate the procedure"
+      ],
+      patientScenarios: [
+        "80-year-old with severe aortic stenosis being assessed for TAVI — had catheterisation 6 months ago",
+        "Patient with porcelain aorta unsuitable for surgical AVR being evaluated for TAVI",
+        "Re-do TAVI planning (valve-in-valve) requiring precise measurements"
+      ]
+    },
+    anatomy: {
+      structures: ["Aortic annulus (measured in systole)", "Sinuses of Valsalva", "Sinotubular junction", "Left ventricular outflow tract (LVOT)", "Coronary ostial heights (LMS and RCA)", "Iliac arteries and femoral arteries (access routes)", "Ascending and descending aorta"],
+      pathology: ["Severe aortic stenosis (heavily calcified, bicuspid, or tricuspid valve)", "Annular calcification pattern and distribution", "Low coronary ostial height (<10mm = high risk)", "Peripheral vascular disease affecting access", "Porcelain aorta"]
+    },
+    keyLearningPoints: [
+      "Annular measurements MUST be taken in systole — the annulus expands by 10-15% from diastole to systole",
+      "Coronary ostial height measurement is critical — too low risks coronary obstruction during deployment",
+      "Access route assessment includes minimum vessel diameter, calcification, and tortuosity",
+      "No coronary assessment in this protocol — patient must have had recent catheterisation (<12 months)",
+      "The scan range extends from the thoracic inlet to the femoral heads to capture all access routes",
+      "Both gated cardiac and non-gated body angio phases are acquired in the same session"
+    ],
+    decisionGuide: {
+      useWhen: ["Patient has had coronary catheterisation within the last 12 months", "Only TAVI structural planning and access routes are needed", "Lower radiation dose preferred when coronary data already exists"],
+      doNotUseWhen: ["Patient has NOT had recent catheterisation — use TAVI + Coronaries protocol", "Only aortic root assessment needed without access routes — consider gated thoracic aorta"],
+      alternatives: [
+        { protocol: "tavi_plus_coros", reason: "If coronary arteries also need assessment (no recent cath)" },
+        { protocol: "gated_thoracic_aorta", reason: "If only aortic root measurement is needed" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Flash mode for the cardiac phase captures the aortic root in systole. A separate non-gated body angio phase covers the access routes (iliac/femoral) without the dose penalty of ECG gating.",
+      contrastProtocol: "Biphasic injection: initial cardiac phase with gating, followed by delayed access route scan. Timing optimised for aortic root opacification rather than coronary filling."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT/BSCI TAVI Planning Guidelines", relevance: "Standardised approach to pre-TAVI CT assessment and measurements" },
+        { name: "BSCI Standards for Structural Heart Imaging", relevance: "UK standards for valve intervention planning CT" }
+      ],
+      evidenceSummary: "Pre-procedural CT is the gold standard for TAVI sizing. CT-guided annular sizing has been shown to significantly reduce paravalvular leak compared to echo-only sizing."
+    }
+  },
+
+  tavi_plus_coros: {
+    clinicalPurpose: {
+      summary: "Combined TAVI planning CT with coronary artery assessment for patients without recent catheterisation.",
+      clinicalQuestion: "What are the TAVI planning dimensions AND is there significant coronary artery disease?",
+      whyDone: [
+        "All TAVI planning measurements (annulus, root, access) plus coronary artery assessment in one scan",
+        "Avoids the need for a separate invasive coronary angiogram before TAVI",
+        "Comprehensive one-stop assessment for TAVI candidacy"
+      ],
+      patientScenarios: [
+        "78-year-old with severe AS being assessed for TAVI — no catheterisation in last 12 months",
+        "Patient referred for TAVI with unknown coronary status",
+        "Frail elderly patient where minimising procedures is important"
+      ]
+    },
+    anatomy: {
+      structures: ["All TAVI structures (annulus, root, LVOT, access routes)", "Coronary arteries (LMS, LAD, LCx, RCA)", "Aortic valve leaflets and calcification distribution"],
+      pathology: ["Severe aortic stenosis", "Concomitant coronary artery disease", "Combined aortic/coronary pathology requiring treatment strategy planning"]
+    },
+    keyLearningPoints: [
+      "Combines two scans in one session — coronary assessment AND TAVI planning",
+      "HR control is important for the coronary component — same beta-blocker/GTN protocol as coronary arteries",
+      "The cardiac phase must capture both coronary arteries and aortic root adequately",
+      "Higher contrast volume needed compared to TAVI-only protocol to ensure coronary opacification",
+      "Patient selection: use this when no catheterisation within 12 months",
+      "Reduces total procedures, contrast exposure, and hospital visits for elderly patients"
+    ],
+    decisionGuide: {
+      useWhen: ["TAVI planning needed AND no coronary catheterisation in last 12 months", "One-stop shop assessment preferred for frail/elderly patients"],
+      doNotUseWhen: ["Patient had catheterisation within 12 months — use TAVI (No Coronaries) protocol", "Only coronary assessment needed without TAVI planning"],
+      alternatives: [
+        { protocol: "tavi_no_coros", reason: "If recent catheterisation exists (<12 months)" },
+        { protocol: "coronary_arteries", reason: "If only coronary assessment is needed" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Requires optimised cardiac gating for both coronary motion freeze and aortic root systolic capture. The acquisition window must be wider than TAVI-only to ensure coronary quality.",
+      contrastProtocol: "Higher volume injection protocol to ensure both coronary arteries and aortic root are well opacified simultaneously."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT/BSCI TAVI Planning Guidelines", relevance: "Supports combined coronary + TAVI assessment in a single CT" },
+        { name: "NICE CG95 / ESC 2021", relevance: "CT as alternative to invasive angiography for coronary assessment pre-TAVI" }
+      ],
+      evidenceSummary: "Recent evidence supports CT coronary assessment as a non-inferior alternative to invasive angiography in TAVI candidates. This one-stop approach reduces procedures and is particularly beneficial for frail elderly patients."
+    }
+  },
+
+  "4d_valve": {
+    clinicalPurpose: {
+      summary: "Dynamic 4D assessment of prosthetic aortic valve leaflet motion to detect thrombus or valve dysfunction post-TAVI.",
+      clinicalQuestion: "Are the TAVI prosthesis leaflets moving normally, or is there evidence of thrombus or restricted motion?",
+      whyDone: [
+        "Detect hypoattenuated leaflet thickening (HALT) — a sign of subclinical leaflet thrombosis",
+        "Assess reduced leaflet motion (RELM) that may indicate valve dysfunction",
+        "Evaluate patients with unexplained symptoms post-TAVI (stroke, TIA, rising gradients)",
+        "Monitor anticoagulation response in patients with known leaflet thrombus"
+      ],
+      patientScenarios: [
+        "Patient 6 months post-TAVI with rising transvalvular gradients on echo",
+        "Post-TAVI patient who had a TIA — query leaflet thrombus",
+        "Routine surveillance of bioprosthetic valve function in research protocols"
+      ]
+    },
+    anatomy: {
+      structures: ["TAVI prosthesis leaflets (3 leaflets in most designs)", "Neo-sinuses around the prosthesis", "LVOT below the prosthesis", "Ascending aorta above the prosthesis"],
+      pathology: ["HALT (hypoattenuated leaflet thickening) — thrombus on leaflets", "RELM (reduced leaflet motion) — restricted opening", "Paravalvular leak", "Prosthesis malposition"]
+    },
+    keyLearningPoints: [
+      "4D means the scan captures the entire cardiac cycle — multiple phases reconstructed to show leaflet motion",
+      "Retrospective gating is used to capture all phases — higher dose than prospective gating",
+      "Leaflets should open fully and symmetrically — restricted motion suggests thrombus",
+      "HALT appears as a crescent-shaped hypoattenuated area on the leaflet",
+      "Best assessed on thin-slice reconstructions in multiple cardiac phases",
+      "Anticoagulation (warfarin or DOACs) can resolve subclinical leaflet thrombus"
+    ],
+    decisionGuide: {
+      useWhen: ["Post-TAVI assessment for suspected valve dysfunction", "Rising gradients or new symptoms after TAVI", "Research protocol for valve surveillance"],
+      doNotUseWhen: ["Pre-TAVI planning — use TAVI protocols instead", "Native valve assessment — use standard coronary or mitral valve protocols"],
+      alternatives: [
+        { protocol: "tavi_no_coros", reason: "If planning a new TAVI (not assessing an existing one)" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Retrospective ECG gating captures all cardiac phases (typically 0-95% R-R interval at 5% increments). This is essential for dynamic leaflet motion assessment but carries higher radiation dose.",
+      contrastProtocol: "Optimised for aortic root opacification. Timing focuses on peak enhancement of the aortic root rather than coronary arteries."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Expert Consensus on CT After TAVI", relevance: "Defines HALT/RELM assessment methodology" },
+        { name: "BSCI Structural Heart Standards", relevance: "UK standards for post-procedural valve imaging" }
+      ],
+      evidenceSummary: "Subclinical leaflet thrombosis (HALT) is detected in 10-15% of patients post-TAVI. CT is the only imaging modality that can reliably detect leaflet thrombus. Most cases resolve with anticoagulation."
+    }
+  },
+
+  mitral_valve: {
+    clinicalPurpose: {
+      summary: "Detailed assessment of mitral valve anatomy and motility for pre-surgical planning.",
+      clinicalQuestion: "What is the mitral valve anatomy, and is the patient suitable for surgical repair or replacement?",
+      whyDone: [
+        "Assess mitral valve leaflet morphology and motion pre-operatively",
+        "Evaluate mitral annulus dimensions for prosthesis sizing",
+        "Identify calcification patterns that may affect surgical approach",
+        "Plan transcatheter mitral valve interventions"
+      ],
+      patientScenarios: [
+        "Patient with severe mitral regurgitation being assessed for surgical repair",
+        "Pre-operative mitral valve assessment before minimally invasive surgery",
+        "Planning for transcatheter mitral intervention (MitraClip, TMVR)"
+      ]
+    },
+    anatomy: {
+      structures: ["Anterior and posterior mitral leaflets", "Mitral annulus", "Chordae tendineae (where visible)", "Papillary muscles", "Left atrium and left ventricle"],
+      pathology: ["Mitral regurgitation (prolapse, flail leaflet)", "Mitral stenosis (rheumatic, calcific)", "Mitral annular calcification (MAC)", "Barlow's disease (bileaflet prolapse)"]
+    },
+    keyLearningPoints: [
+      "BMI-dependent protocol — smaller patients need lower kV and contrast volume",
+      "Multi-phase reconstruction needed to assess leaflet motion through the cardiac cycle",
+      "Mitral annulus is saddle-shaped — measurements must account for 3D geometry",
+      "CT complements echocardiography — CT excels at calcification assessment and 3D relationships",
+      "Access route planning may also be needed for transcatheter approaches"
+    ],
+    decisionGuide: {
+      useWhen: ["Pre-surgical mitral valve assessment", "Transcatheter mitral intervention planning", "Mitral annular calcification quantification"],
+      doNotUseWhen: ["Simple coronary assessment only — use Coronary Arteries protocol", "Aortic valve (not mitral) assessment — use TAVI protocols"],
+      alternatives: [
+        { protocol: "coronary_arteries", reason: "If only coronary arteries need assessment" },
+        { protocol: "tavi_no_coros", reason: "If aortic (not mitral) valve planning is needed" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Retrospective gating captures all phases for leaflet motion assessment. BMI-based adjustments optimise image quality vs radiation dose.",
+      contrastProtocol: "BMI-adjusted contrast volumes ensure adequate left heart opacification for valve visualisation."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Structural Heart Guidelines", relevance: "Standards for mitral valve CT assessment" },
+        { name: "BSCI Standards for Valve Imaging", relevance: "UK approach to pre-surgical cardiac CT for valves" }
+      ],
+      evidenceSummary: "CT provides complementary information to echocardiography for mitral valve assessment, particularly for calcification quantification, annular sizing, and 3D spatial relationships critical for surgical planning."
+    }
+  },
+
+  evoque: {
+    clinicalPurpose: {
+      summary: "CT planning for EVOQUE transcatheter tricuspid valve replacement — assessing tricuspid annulus and right heart anatomy.",
+      clinicalQuestion: "What are the tricuspid valve dimensions and is the patient anatomically suitable for EVOQUE TTVR?",
+      whyDone: [
+        "Measure tricuspid annulus for EVOQUE prosthesis sizing",
+        "Assess right heart anatomy and relationship to surrounding structures",
+        "Evaluate the IVC and SVC for catheter access planning",
+        "Identify anatomical contraindications to transcatheter tricuspid replacement"
+      ],
+      patientScenarios: [
+        "Patient with severe tricuspid regurgitation being evaluated for EVOQUE device",
+        "Tricuspid valve replacement planning when surgical risk is prohibitive"
+      ]
+    },
+    anatomy: {
+      structures: ["Tricuspid valve annulus", "Right atrium and right ventricle", "IVC and SVC", "Coronary sinus (proximity to tricuspid annulus)", "Right coronary artery (runs in AV groove near tricuspid)"],
+      pathology: ["Severe tricuspid regurgitation", "Tricuspid annular dilatation", "Right heart dilatation", "Functional vs organic tricuspid disease"]
+    },
+    keyLearningPoints: [
+      "Tricuspid valve imaging requires optimised right heart opacification",
+      "The right coronary artery runs close to the tricuspid annulus — important surgical relationship",
+      "Contrast timing differs from left-heart protocols — needs to capture right heart filling",
+      "This is a newer structural heart intervention with evolving imaging protocols",
+      "Multi-phase acquisition needed for annular dynamics assessment"
+    ],
+    decisionGuide: {
+      useWhen: ["Planning EVOQUE transcatheter tricuspid valve replacement specifically", "Tricuspid annular sizing is needed"],
+      doNotUseWhen: ["Mitral valve assessment — use Mitral Valve protocol", "Aortic valve (TAVI) planning — use TAVI protocols"],
+      alternatives: [
+        { protocol: "mitral_valve", reason: "If mitral (not tricuspid) valve assessment needed" },
+        { protocol: "tavi_no_coros", reason: "If aortic valve intervention planning" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Gated acquisition with contrast timing optimised for right heart opacification. This differs from standard left-heart protocols.",
+      contrastProtocol: "Modified injection timing to ensure adequate right heart and tricuspid valve opacification rather than primarily left-sided structures."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Structural Heart Guidelines", relevance: "Framework for tricuspid valve CT assessment" },
+        { name: "BSCI Emerging Techniques", relevance: "Evolving standards for transcatheter tricuspid interventions" }
+      ],
+      evidenceSummary: "Transcatheter tricuspid valve replacement is an emerging field. CT planning follows similar principles to TAVI but with right-heart optimisation. Protocols are being refined as device experience grows."
+    }
+  },
+
+  tendyne: {
+    clinicalPurpose: {
+      summary: "Research protocol for Tendyne transcatheter mitral valve replacement — assessing mitral annulus, LV dimensions, and LVOT obstruction risk.",
+      clinicalQuestion: "Is this patient anatomically suitable for Tendyne mitral valve replacement, and what is the risk of LVOT obstruction?",
+      whyDone: [
+        "Measure mitral annulus and left ventricular dimensions for Tendyne device sizing",
+        "Assess risk of LVOT obstruction post-deployment (neo-LVOT calculation)",
+        "Evaluate transapical access route suitability",
+        "Part of a research protocol (GFS — Global Feasibility Study)"
+      ],
+      patientScenarios: [
+        "Patient enrolled in Tendyne GFS with severe mitral regurgitation unsuitable for surgical repair",
+        "Pre-procedural assessment for transcatheter mitral replacement via transapical approach"
+      ]
+    },
+    anatomy: {
+      structures: ["Mitral annulus (D-shaped, saddle geometry)", "Left ventricle (dimensions, wall thickness)", "LVOT (outflow tract dimensions)", "LV apex (transapical access point)", "Aorto-mitral angle"],
+      pathology: ["Severe mitral regurgitation", "Mitral annular calcification", "Small LVOT (obstruction risk)", "LV dilatation or hypertrophy"]
+    },
+    keyLearningPoints: [
+      "Neo-LVOT calculation is critical — predicts whether the device will obstruct the outflow tract",
+      "BMI-dependent imaging parameters optimise quality for different body habitus",
+      "Transapical access requires assessment of LV apex position and chest wall thickness",
+      "This is a research protocol — parameters may evolve with study requirements",
+      "Aorto-mitral angle affects device positioning and LVOT risk"
+    ],
+    decisionGuide: {
+      useWhen: ["Tendyne GFS research protocol specifically requested", "Transcatheter mitral replacement planning with LVOT assessment"],
+      doNotUseWhen: ["Standard mitral valve assessment — use Mitral Valve protocol", "TAVI (aortic valve) planning"],
+      alternatives: [
+        { protocol: "mitral_valve", reason: "For standard mitral valve assessment" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Retrospective gating for multi-phase LV and mitral assessment. BMI-based adjustments for image quality optimisation.",
+      contrastProtocol: "Left heart opacification optimised for LV cavity and LVOT visualisation. BMI-adjusted volumes."
+    },
+    guidelines: {
+      references: [
+        { name: "Tendyne GFS Protocol Requirements", relevance: "Research-specific imaging requirements for device sizing" },
+        { name: "SCCT Structural Heart Guidelines", relevance: "General framework for transcatheter mitral CT planning" }
+      ],
+      evidenceSummary: "Tendyne is one of several transcatheter mitral valve replacement devices under investigation. CT-based neo-LVOT prediction is essential to avoid life-threatening outflow obstruction post-deployment."
+    }
+  },
+
+  gated_thoracic_aorta: {
+    clinicalPurpose: {
+      summary: "ECG-gated CT of the thoracic aorta for accurate measurement of aortic dimensions, particularly the ascending aorta and root.",
+      clinicalQuestion: "What are the true aortic dimensions, and is the dilatation progressing or at a threshold requiring intervention?",
+      whyDone: [
+        "Measure ascending aorta and root dimensions accurately (gating eliminates cardiac motion artefact)",
+        "Monitor aortic aneurysm progression in connective tissue disorders (Marfan, Ehlers-Danlos)",
+        "Assess coarctation of the aorta",
+        "Evaluate aortic dissection (particularly involving the ascending aorta)"
+      ],
+      patientScenarios: [
+        "Young patient with Marfan syndrome — annual aortic surveillance",
+        "45-year-old with incidentally found dilated ascending aorta (48mm) — baseline gated CT",
+        "Acute chest pain with suspected type A aortic dissection involving the root"
+      ]
+    },
+    anatomy: {
+      structures: ["Aortic root (annulus to sinotubular junction)", "Ascending aorta", "Aortic arch and great vessels", "Descending thoracic aorta", "Aortic valve (bicuspid assessment)"],
+      pathology: ["Aortic root dilatation (>40mm = dilated)", "Ascending aortic aneurysm (>45mm in Marfan = consider surgery)", "Aortic dissection (intimal flap, true and false lumen)", "Coarctation (narrowing, usually distal to left subclavian)", "Bicuspid aortic valve (associated with aortopathy)"]
+    },
+    keyLearningPoints: [
+      "ECG gating is essential for ascending aorta measurement — ungated CT overestimates dimensions due to cardiac motion",
+      "Measurements should be made at reproducible anatomical landmarks for serial comparison",
+      "Double-oblique measurements perpendicular to the aortic centreline are the gold standard",
+      "Marfan patients have specific surgical thresholds different from degenerative aneurysms",
+      "No coronary assessment in this protocol — it focuses on the aorta",
+      "Beta-blockers help with image quality but are less critical than for coronary imaging"
+    ],
+    decisionGuide: {
+      useWhen: ["Accurate ascending aortic measurement is needed (gating required for root/ascending)", "Aortic surveillance in connective tissue disorders", "Suspected ascending aortic dissection"],
+      doNotUseWhen: ["Only descending aorta needs assessment — standard CTA may suffice", "Coronary assessment is the primary indication — use Coronary Arteries protocol"],
+      alternatives: [
+        { protocol: "aortic_pears", reason: "If ExoVasc PEARS procedure is planned" },
+        { protocol: "access_routes", reason: "If full aortic and peripheral access mapping needed" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "ECG-gated Flash or sequential acquisition eliminates pulsation artefact from the ascending aorta. This allows accurate measurements that would be unreliable on ungated CT.",
+      contrastProtocol: "Contrast timing optimised for aortic opacification rather than coronary arteries. Test bolus monitored in the ascending aorta."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Aortic Imaging Guidelines", relevance: "Standardised approach to thoracic aortic CT" },
+        { name: "ESC 2014 Aortic Diseases", relevance: "European guidelines for aortic disease management and surveillance intervals" },
+        { name: "BSCI Standards", relevance: "UK standards for aortic CT including gated techniques" }
+      ],
+      evidenceSummary: "ECG-gated CT is the gold standard for ascending aortic measurement. Ungated CT can overestimate aortic dimensions by 2-4mm due to cardiac motion, which can significantly impact surgical decision-making at threshold measurements."
+    }
+  },
+
+  aortic_pears: {
+    clinicalPurpose: {
+      summary: "Specialised CT for ExoVasc Personalised External Aortic Root Support (PEARS) — a bespoke mesh sleeve to prevent aortic root dilatation.",
+      clinicalQuestion: "What is the precise 3D geometry of the aortic root for manufacturing a personalised ExoVasc support device?",
+      whyDone: [
+        "Create a patient-specific 3D model of the aortic root for ExoVasc sleeve manufacture",
+        "The PEARS sleeve is a mesh support that wraps around the dilated aortic root to prevent further expansion",
+        "Alternative to prophylactic root replacement in Marfan and related aortopathies"
+      ],
+      patientScenarios: [
+        "Marfan patient with moderate aortic root dilatation being considered for PEARS rather than root replacement",
+        "Patient with aortic root dilatation who wishes to avoid mechanical valve replacement"
+      ]
+    },
+    anatomy: {
+      structures: ["Aortic root from annulus to sinotubular junction (precise 3D geometry)", "Sinuses of Valsalva (individual sinus dimensions)", "Coronary ostia (must be preserved by the sleeve)", "Ascending aorta (extent of support needed)"],
+      pathology: ["Aortic root dilatation in connective tissue disorders", "Progressive root enlargement at risk of dissection", "Moderate dilatation not yet meeting surgical replacement criteria"]
+    },
+    keyLearningPoints: [
+      "Extremely high precision is required — the CT data is used to manufacture a bespoke medical device",
+      "ECG gating is essential for motion-free aortic root images",
+      "Multi-phase reconstruction may be needed to capture root geometry at specific cardiac phases",
+      "The ExoVasc PEARS procedure is performed at a limited number of centres (Brompton is a specialist centre)",
+      "Different from standard aortic CT — the manufacturing process needs specific image quality standards"
+    ],
+    decisionGuide: {
+      useWhen: ["ExoVasc PEARS procedure is specifically planned", "Patient has been assessed by the PEARS surgical team"],
+      doNotUseWhen: ["Standard aortic surveillance — use Gated Thoracic Aorta protocol", "TAVI planning — use TAVI protocols"],
+      alternatives: [
+        { protocol: "gated_thoracic_aorta", reason: "For standard aortic root measurement and surveillance" },
+        { protocol: "ross_pears", reason: "If the Ross-PEARS variant is planned (pulmonary autograft)" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "High-resolution gated acquisition optimised for 3D reconstruction. The data must be suitable for CAD/CAM manufacturing processes.",
+      contrastProtocol: "Optimised for aortic root opacification with clear delineation of the root geometry."
+    },
+    guidelines: {
+      references: [
+        { name: "ExoVasc PEARS Imaging Protocol", relevance: "Device-specific imaging requirements for manufacturing" },
+        { name: "Brompton PEARS Programme", relevance: "Local institutional protocol for PEARS CT acquisition" }
+      ],
+      evidenceSummary: "PEARS is an innovative approach to preventing aortic root complications in connective tissue disorders. Long-term data shows stable aortic dimensions post-procedure with preservation of the native aortic valve."
+    }
+  },
+
+  ross_pears: {
+    clinicalPurpose: {
+      summary: "Specialised CT for Ross-PEARS — ExoVasc support for the pulmonary autograft following the Ross procedure.",
+      clinicalQuestion: "What is the 3D geometry of the pulmonary autograft for manufacturing a personalised support sleeve?",
+      whyDone: [
+        "Create a 3D model of the neo-aortic root (pulmonary autograft) after Ross procedure",
+        "The Ross procedure replaces the aortic valve with the patient's own pulmonary valve",
+        "The autograft can dilate over time — PEARS support prevents this",
+        "Preserves the living autograft valve rather than requiring re-replacement"
+      ],
+      patientScenarios: [
+        "Patient post-Ross procedure with progressive neo-aortic root dilatation",
+        "Young patient wanting to preserve their pulmonary autograft long-term"
+      ]
+    },
+    anatomy: {
+      structures: ["Neo-aortic root (pulmonary autograft in aortic position)", "Pulmonary homograft (in pulmonary position)", "Coronary button reimplantation sites", "Ascending aorta"],
+      pathology: ["Progressive neo-aortic root dilatation post-Ross", "Autograft regurgitation due to root dilatation", "Risk of autograft failure requiring re-operation"]
+    },
+    keyLearningPoints: [
+      "The Ross procedure swaps the pulmonary valve into the aortic position — unique post-surgical anatomy",
+      "Autograft dilatation is the Achilles heel of the Ross procedure — occurs in 10-20% of patients long-term",
+      "Same precision requirements as Aortic PEARS — data used for device manufacture",
+      "Understanding the surgically altered anatomy is critical for accurate imaging"
+    ],
+    decisionGuide: {
+      useWhen: ["Ross-PEARS procedure specifically planned for pulmonary autograft support"],
+      doNotUseWhen: ["Standard aortic PEARS (non-Ross) — use Aortic PEARS protocol", "Standard aortic surveillance — use Gated Thoracic Aorta"],
+      alternatives: [
+        { protocol: "aortic_pears", reason: "For standard PEARS (non-Ross anatomy)" },
+        { protocol: "gated_thoracic_aorta", reason: "For standard aortic surveillance" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Same high-precision gated acquisition as Aortic PEARS, but focused on the neo-aortic root (pulmonary autograft).",
+      contrastProtocol: "Identical to Aortic PEARS — optimised for root geometry delineation."
+    },
+    guidelines: {
+      references: [
+        { name: "ExoVasc PEARS Programme", relevance: "Device manufacturing imaging requirements" },
+        { name: "Brompton Ross Surgery Programme", relevance: "Institutional expertise in Ross procedure follow-up" }
+      ],
+      evidenceSummary: "Ross-PEARS combines two Brompton specialisms: the Ross procedure and ExoVasc PEARS technology. Supporting the pulmonary autograft with an external sleeve may extend autograft longevity and avoid re-operation."
+    }
+  },
+
+  access_routes: {
+    clinicalPurpose: {
+      summary: "CT assessment of aortic and peripheral vascular anatomy for pre-surgical access planning.",
+      clinicalQuestion: "What is the peripheral vascular anatomy, and are the vessels suitable for catheter-based or surgical access?",
+      whyDone: [
+        "Map vessel calibre, tortuosity, and calcification from aorta to femoral arteries",
+        "Plan access routes for structural heart interventions (TAVI, EVAR, etc.)",
+        "Assess for aortic dissection repair planning",
+        "Evaluate iliac artery disease that may preclude transfemoral access",
+        "SCAD (spontaneous coronary artery dissection) imaging"
+      ],
+      patientScenarios: [
+        "Pre-TAVI patient with known peripheral vascular disease — dedicated access assessment",
+        "Aortic dissection patient being planned for endovascular repair",
+        "Iliac assessment for planned transfemoral procedure"
+      ]
+    },
+    anatomy: {
+      structures: ["Descending thoracic aorta", "Abdominal aorta", "Common iliac arteries", "External and internal iliac arteries", "Common femoral arteries", "Aortic bifurcation"],
+      pathology: ["Peripheral vascular disease (calcification, stenosis)", "Iliac tortuosity (may preclude large-bore access)", "Aortic dissection (extent, branch involvement)", "Aneurysmal disease", "SCAD (spontaneous coronary artery dissection)"]
+    },
+    keyLearningPoints: [
+      "Non-gated CTA covers the full aorta and peripheral vessels — no cardiac gating needed",
+      "Minimum vessel diameter is critical for device sheath sizing (typically 5-6mm for TAVI)",
+      "Calcification and tortuosity increase access complications",
+      "Both sides (left and right iliac/femoral) must be assessed — operators choose the best side",
+      "3D centreline reconstructions help measure true vessel diameter and length"
+    ],
+    decisionGuide: {
+      useWhen: ["Dedicated access route assessment is needed", "Pre-surgical aortic and peripheral mapping", "Aortic dissection assessment"],
+      doNotUseWhen: ["Only cardiac/coronary assessment needed — use Coronary Arteries protocol", "Access routes already assessed in a TAVI protocol"],
+      alternatives: [
+        { protocol: "tavi_no_coros", reason: "If TAVI planning (which includes access routes) is the primary indication" },
+        { protocol: "gated_thoracic_aorta", reason: "If only the thoracic aorta needs gated assessment" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Non-gated body CTA provides adequate quality for peripheral vessels without the radiation penalty of ECG gating. Fast acquisition covers the large scan range efficiently.",
+      contrastProtocol: "Optimised for arterial opacification throughout the aorta and peripheral vessels. Bolus tracking or test bolus ensures peak enhancement timing."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Guidelines for Vascular CT", relevance: "Standards for peripheral vascular CT assessment" },
+        { name: "BSCI Standards", relevance: "UK approach to vascular access CT imaging" }
+      ],
+      evidenceSummary: "CT angiography is the gold standard for pre-procedural access route assessment. It has largely replaced diagnostic catheter angiography for vascular mapping."
+    }
+  },
+
+  carto: {
+    clinicalPurpose: {
+      summary: "ECG-gated CT of the pulmonary veins and left atrium for pre-ablation mapping and LAA assessment.",
+      clinicalQuestion: "What is the pulmonary vein anatomy, is there LAA thrombus, and what are the 3D relationships for ablation planning?",
+      whyDone: [
+        "Map pulmonary vein anatomy (number, size, branching pattern) for AF ablation planning",
+        "Detect left atrial appendage (LAA) thrombus before ablation (contraindication to procedure)",
+        "Create 3D models for CARTO electroanatomical mapping systems",
+        "Pre-Watchman/Lariat device planning for LAA occlusion"
+      ],
+      patientScenarios: [
+        "Patient with drug-refractory AF scheduled for pulmonary vein isolation ablation",
+        "Pre-Watchman assessment — LAA sizing and thrombus exclusion",
+        "Patient with AT (atrial tachycardia) or VT requiring 3D mapping"
+      ]
+    },
+    anatomy: {
+      structures: ["Left and right superior pulmonary veins", "Left and right inferior pulmonary veins", "Common pulmonary vein trunk (variant)", "Left atrium and left atrial appendage", "Oesophageal relationship (posterior wall risk)", "Phrenic nerve course (near right PVs)"],
+      pathology: ["Pulmonary vein anatomical variants (common trunk, accessory veins)", "LAA thrombus (contraindication to ablation)", "Left atrial dilatation", "Prior ablation scarring"]
+    },
+    keyLearningPoints: [
+      "Variant PV anatomy is common — 30-40% of patients have a variant pattern",
+      "LAA thrombus exclusion is critical — ablation with thrombus risks stroke",
+      "The oesophagus lies posterior to the LA — important relationship for thermal injury risk",
+      "CT data is imported into the CARTO system to create a 3D shell for navigation",
+      "The arch can optionally be included for retrograde ablation approaches",
+      "Gated acquisition freezes cardiac motion for accurate PV ostial measurements"
+    ],
+    decisionGuide: {
+      useWhen: ["Pre-AF/AT/VT ablation mapping is needed", "LAA thrombus exclusion before cardioversion or ablation", "Watchman/Lariat LAA occlusion planning"],
+      doNotUseWhen: ["The VIVO or INHEART systems are specified instead — use those protocols", "Only coronary assessment needed"],
+      alternatives: [
+        { protocol: "vivo", reason: "If VIVO mapping system is specifically requested" },
+        { protocol: "inheart", reason: "If INHEART mapping system is requested" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "ECG-gated acquisition for motion-free PV imaging. The arch extension (optional) uses the same gated technique to cover retrograde access anatomy.",
+      contrastProtocol: "Timing optimised for left atrial opacification. Dual-phase or delayed imaging may be used for LAA thrombus assessment (thrombus remains hypoattenuated on delayed images)."
+    },
+    guidelines: {
+      references: [
+        { name: "HRS/EHRA/ECAS Expert Consensus on AF Ablation", relevance: "Recommends pre-procedural imaging for PV anatomy" },
+        { name: "SCCT EP Imaging Guidelines", relevance: "Standards for pre-ablation cardiac CT" },
+        { name: "BSCI Standards for EP CT", relevance: "UK approach to electrophysiology CT imaging" }
+      ],
+      evidenceSummary: "Pre-procedural CT significantly reduces ablation time and improves outcomes by providing detailed anatomical information. Knowledge of PV variants and LA anatomy is essential for safe and effective ablation."
+    }
+  },
+
+  vivo: {
+    clinicalPurpose: {
+      summary: "Pre-ablation CT specifically for the VIVO electroanatomical mapping system.",
+      clinicalQuestion: "What is the cardiac anatomy for integration with the VIVO mapping and navigation platform?",
+      whyDone: [
+        "Acquire CT data in the specific format required by the VIVO system",
+        "Create a 3D cardiac model for electrophysiology navigation",
+        "Must be specifically requested — the VIVO protocol has different acquisition requirements"
+      ],
+      patientScenarios: [
+        "Patient scheduled for ablation where the EP team uses the VIVO system",
+        "Referral specifically states 'VIVO protocol required'"
+      ]
+    },
+    anatomy: {
+      structures: ["Same as CARTO — pulmonary veins, left atrium, LAA", "Extended anatomy may be required depending on the arrhythmia substrate"],
+      pathology: ["Same as CARTO — PV variants, LAA thrombus, atrial substrate assessment"]
+    },
+    keyLearningPoints: [
+      "The request MUST specifically state VIVO protocol — do not assume",
+      "Acquisition parameters differ from standard CARTO protocol",
+      "The VIVO system has specific data import requirements",
+      "Always confirm with the EP team which mapping system they are using"
+    ],
+    decisionGuide: {
+      useWhen: ["EP team specifically requests VIVO protocol", "The referral explicitly states VIVO"],
+      doNotUseWhen: ["CARTO system is being used — use CARTO protocol", "INHEART system is being used — use INHEART protocol"],
+      alternatives: [
+        { protocol: "carto", reason: "If CARTO mapping system is used instead" },
+        { protocol: "inheart", reason: "If INHEART system is used" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "System-specific acquisition parameters. The VIVO platform has its own requirements for data compatibility.",
+      contrastProtocol: "Similar to CARTO but may have specific timing requirements for the VIVO import process."
+    },
+    guidelines: {
+      references: [
+        { name: "VIVO System Technical Requirements", relevance: "System-specific imaging parameters" },
+        { name: "BSCI EP Standards", relevance: "UK standards for pre-ablation imaging" }
+      ],
+      evidenceSummary: "Different EP mapping systems have different CT data requirements. Using the wrong protocol may result in incompatible data that cannot be imported. Always verify the system being used."
+    }
+  },
+
+  inheart: {
+    clinicalPurpose: {
+      summary: "Pre-ablation CT for the INHEART system — arterial phase plus late enhanced imaging for substrate assessment.",
+      clinicalQuestion: "What is the cardiac anatomy AND myocardial substrate (scar/fibrosis) for INHEART ablation planning?",
+      whyDone: [
+        "Provide both anatomical (arterial phase) and substrate (late enhanced) data for INHEART",
+        "Late enhancement shows myocardial scar/fibrosis — the substrate for ventricular arrhythmias",
+        "Particularly valuable for VT ablation planning where scar mapping is critical"
+      ],
+      patientScenarios: [
+        "Patient with ischaemic VT scheduled for ablation using INHEART mapping",
+        "Complex arrhythmia requiring both anatomical and substrate information"
+      ]
+    },
+    anatomy: {
+      structures: ["Standard cardiac anatomy (chambers, great vessels, PVs)", "Myocardial wall (for scar assessment on late enhancement)", "Coronary arteries (arterial phase)"],
+      pathology: ["Myocardial scar from prior infarction (VT substrate)", "Fibrosis patterns (ischaemic vs non-ischaemic)", "Arrhythmogenic substrate localisation"]
+    },
+    keyLearningPoints: [
+      "Two-phase protocol: arterial phase (anatomy) + late enhanced phase (substrate)",
+      "Late enhancement CT is analogous to late gadolinium enhancement on MRI",
+      "The late phase is acquired ~7 minutes after contrast injection — iodine accumulates in scar tissue",
+      "This dual-phase approach provides information similar to cardiac MRI but with better spatial resolution",
+      "Particularly valuable when MRI is contraindicated (pacemaker, claustrophobia)"
+    ],
+    decisionGuide: {
+      useWhen: ["INHEART system is specifically requested", "VT ablation requiring substrate mapping", "Dual-phase (anatomy + scar) assessment needed"],
+      doNotUseWhen: ["CARTO or VIVO systems are being used", "Only anatomical mapping is needed — use CARTO"],
+      alternatives: [
+        { protocol: "carto", reason: "If only anatomical mapping needed (CARTO system)" },
+        { protocol: "vivo", reason: "If VIVO system is specified" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Arterial phase: standard gated acquisition. Late enhanced phase: acquired after a delay to allow iodine redistribution into scar tissue — similar principle to gadolinium-enhanced MRI.",
+      contrastProtocol: "Standard arterial phase injection followed by a waiting period (~7 min) then a second delayed scan without additional contrast injection."
+    },
+    guidelines: {
+      references: [
+        { name: "INHEART System Requirements", relevance: "System-specific dual-phase imaging protocol" },
+        { name: "SCCT EP Imaging Guidelines", relevance: "Standards for substrate assessment with CT" }
+      ],
+      evidenceSummary: "CT late enhancement for myocardial scar detection is an emerging technique that provides complementary information to MRI. The INHEART system integrates both anatomical and substrate data for comprehensive ablation planning."
+    }
+  },
+
+  gated_ctpa: {
+    clinicalPurpose: {
+      summary: "ECG-gated CT pulmonary angiography for complex cardiac/pulmonary assessment — triple rule-out or congenital heart disease.",
+      clinicalQuestion: "Does this patient have pulmonary embolism, aortic dissection, OR coronary disease (triple rule-out), or what is the congenital cardiac anatomy?",
+      whyDone: [
+        "Triple rule-out: simultaneously assess coronary arteries, aorta, and pulmonary arteries in acute chest pain",
+        "Congenital heart disease assessment requiring ECG gating for cardiac structures",
+        "Complex cardiac anatomy where standard ungated CTPA is insufficient"
+      ],
+      patientScenarios: [
+        "Acute chest pain with unclear aetiology — need to assess PE, dissection, and CAD simultaneously",
+        "Adult congenital heart disease requiring comprehensive cardiac CT",
+        "Complex pulmonary vascular anatomy needing gated assessment"
+      ]
+    },
+    anatomy: {
+      structures: ["Main, right and left pulmonary arteries", "Segmental and subsegmental pulmonary arteries", "Ascending and descending aorta", "Right ventricle (RV strain assessment)", "Cardiac chambers and septa (congenital)"],
+      pathology: ["Pulmonary embolism (acute or chronic)", "Aortic dissection", "Congenital heart defects (ASD, VSD, complex)", "RV dilatation/strain from PE", "Pulmonary hypertension signs"]
+    },
+    keyLearningPoints: [
+      "Gated CTPA differs from standard CTPA — ECG gating reduces cardiac motion for better cardiac assessment",
+      "No coronary assessment in this protocol despite gating — contrast timing optimised for pulmonary arteries",
+      "Triple rule-out scans have higher radiation dose due to extended range and gating",
+      "Standard CTPA is preferred for isolated PE query — gated CTPA is reserved for complex cases",
+      "Congenital heart disease often requires multi-phase reconstruction for detailed anatomy"
+    ],
+    decisionGuide: {
+      useWhen: ["Triple rule-out is clinically indicated", "Congenital heart disease requires gated cardiac CT", "Complex cardiopulmonary assessment beyond standard CTPA"],
+      doNotUseWhen: ["Simple PE query — standard ungated CTPA is more appropriate", "Only coronary assessment needed — use Coronary Arteries protocol"],
+      alternatives: [
+        { protocol: "coronary_arteries", reason: "If only coronary assessment is needed" },
+        { protocol: "gated_thoracic_aorta", reason: "If only aortic assessment is needed" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "ECG-gated acquisition allows cardiac structure assessment alongside pulmonary angiography. The gating adds dose compared to standard CTPA but provides diagnostic quality for cardiac structures.",
+      contrastProtocol: "Contrast timing targets pulmonary artery opacification rather than left heart/coronary filling. Modified from standard CTPA to account for gated acquisition timing."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Triple Rule-Out Guidelines", relevance: "Appropriate use criteria for combined cardiac/vascular CT" },
+        { name: "BSCI Standards", relevance: "UK standards for cardiac CT in acute settings and congenital disease" }
+      ],
+      evidenceSummary: "Triple rule-out CT can be valuable in selected patients with acute undifferentiated chest pain. However, it should not replace targeted imaging when the clinical probability favours a specific diagnosis."
+    }
+  },
+
+  paediatric_cardiac: {
+    clinicalPurpose: {
+      summary: "Weight-based cardiac CT for paediatric patients — congenital heart disease, Kawasaki, anomalous coronaries, and vascular rings.",
+      clinicalQuestion: "What is the congenital cardiac anatomy, and are there coronary artery abnormalities?",
+      whyDone: [
+        "Assess complex congenital heart disease anatomy where echocardiography is insufficient",
+        "Evaluate coronary arteries in Kawasaki disease (aneurysm detection and surveillance)",
+        "Identify anomalous coronary artery origins in symptomatic children",
+        "Diagnose vascular rings and slings causing airway compression"
+      ],
+      patientScenarios: [
+        "Neonate with complex CHD requiring surgical planning CT",
+        "5-year-old with history of Kawasaki disease — coronary aneurysm surveillance",
+        "Teenager with exertional symptoms — query anomalous coronary origin"
+      ]
+    },
+    anatomy: {
+      structures: ["Cardiac chambers and great vessel connections (for CHD)", "Coronary arteries (anomalies, Kawasaki aneurysms)", "Aortic arch (coarctation, vascular rings)", "Pulmonary arteries and veins", "Systemic and pulmonary venous connections"],
+      pathology: ["Tetralogy of Fallot (TOF)", "Transposition of great arteries (TGA)", "Major aortopulmonary collateral arteries (MAPCAs)", "Kawasaki coronary artery aneurysms", "Vascular rings (double aortic arch, pulmonary sling)", "Anomalous pulmonary venous drainage"]
+    },
+    keyLearningPoints: [
+      "WEIGHT-BASED protocol — kV, contrast volume, and flow rate all scale with patient weight",
+      "Radiation dose must be minimised (ALARA) — paediatric patients are more radiosensitive",
+      "Sedation may be required for younger children who cannot cooperate with breath-holding",
+      "Free-breathing techniques may be needed for neonates and infants",
+      "Image Gently principles should be followed — lowest achievable dose",
+      "Consultation with paediatric cardiologist is essential for scan planning",
+      "This protocol requires local clinical team verification before use"
+    ],
+    decisionGuide: {
+      useWhen: ["Paediatric patient (any age) needs cardiac CT", "Congenital heart disease assessment", "Kawasaki disease coronary surveillance", "Vascular ring assessment"],
+      doNotUseWhen: ["Adult patient — use appropriate adult protocol", "Non-cardiac paediatric CT (use standard paediatric body CT)"],
+      alternatives: [
+        { protocol: "coronary_arteries", reason: "For adult coronary assessment (not paediatric)" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Weight categories determine kV and acquisition mode. Lower kV (70-80kV) for smaller children improves contrast enhancement and reduces dose. Flash mode preferred where possible for lowest dose.",
+      contrastProtocol: "Strictly weight-based: 1-2 ml/kg of contrast at appropriate flow rates for tiny veins. Hand injection may be needed for neonates. Saline chase volumes also weight-adjusted."
+    },
+    guidelines: {
+      references: [
+        { name: "SCCT Paediatric CT Guidelines", relevance: "Standards for paediatric cardiac CT acquisition and dose management" },
+        { name: "Image Gently Campaign", relevance: "Radiation dose reduction principles for paediatric imaging" },
+        { name: "BSCI Paediatric Standards", relevance: "UK standards for paediatric cardiac CT" }
+      ],
+      evidenceSummary: "Cardiac CT is increasingly used in paediatric congenital heart disease as an alternative to invasive catheterisation. Weight-based protocols and modern CT scanners can achieve diagnostic quality at sub-millisievert doses."
+    }
+  },
+
+  ecmo_ct: {
+    clinicalPurpose: {
+      summary: "CT imaging for patients on ECMO (extracorporeal membrane oxygenation) — assessing cannula position, complications, and cardiac recovery.",
+      clinicalQuestion: "Is the ECMO cannula correctly positioned, are there complications, and is there evidence of cardiac recovery?",
+      whyDone: [
+        "Verify cannula position (malposition can cause inadequate support or vascular injury)",
+        "Detect ECMO complications: intracranial haemorrhage (ICH), limb ischaemia, oxygenator thrombus",
+        "Assess cardiac recovery to guide timing of decannulation",
+        "Evaluate for pulmonary complications (PE, consolidation, haemorrhage)"
+      ],
+      patientScenarios: [
+        "Patient on VA-ECMO with suspected ICH — urgent CT head and chest",
+        "VA-ECMO patient being assessed for weaning — cardiac recovery scan",
+        "VV-ECMO patient with declining oxygenation — query oxygenator thrombus or recirculation"
+      ]
+    },
+    anatomy: {
+      structures: ["ECMO cannula positions (arterial and venous)", "Heart chambers (contractility assessment)", "Ascending aorta and great vessels", "Pulmonary arteries (PE assessment)", "Brain (ICH screening)"],
+      pathology: ["Cannula malposition", "Intracranial haemorrhage (3% of ECMO patients)", "Limb ischaemia (distal perfusion assessment)", "Cardiac recovery signs (improving contractility)", "Oxygenator thrombus (gas exchange failure)", "Pulmonary embolism on ECMO"]
+    },
+    keyLearningPoints: [
+      "CRITICAL: Perfusionist MUST be present for all ECMO CT scans",
+      "Never inject contrast into the distal perfusion cannula — air embolism risk",
+      "VA-ECMO uses low-flow technique (reduce ECMO flow to 500 ml/min during scan) for better cardiac opacification",
+      "VV-ECMO maintains flow — more predictable contrast enhancement",
+      "ECMO flow creates unique contrast dynamics — timing differs from standard cardiac CT",
+      "Streak artefact from cannulae must be anticipated and managed",
+      "This protocol requires local clinical team and perfusion verification before use"
+    ],
+    decisionGuide: {
+      useWhen: ["Any CT needed on a patient currently on ECMO support", "Cannula position verification", "Complication assessment (ICH, limb ischaemia, PE)", "Pre-decannulation cardiac recovery assessment"],
+      doNotUseWhen: ["Patient is NOT on ECMO — use standard protocols", "Standard cardiac CT for non-ECMO patients"],
+      alternatives: [
+        { protocol: "coronary_arteries", reason: "For standard (non-ECMO) coronary assessment" },
+        { protocol: "gated_ctpa", reason: "For standard (non-ECMO) pulmonary assessment" }
+      ]
+    },
+    parameterRationale: {
+      acquisitionMode: "Non-gated acquisition due to the complexity of ECMO flow dynamics. 120kV ensures adequate penetration through cannulae and circuit components.",
+      contrastProtocol: "VA-ECMO: Flow reduced to 500 ml/min to allow contrast to reach the heart via native circulation. VV-ECMO: Flow maintained but contrast timing adjusted for the altered venous return pathway."
+    },
+    guidelines: {
+      references: [
+        { name: "RadioGraphics VA-ECMO CTA Guidelines", relevance: "Published approach to CT imaging during VA-ECMO support" },
+        { name: "Alfred ICU ECMO Imaging Protocol", relevance: "Established institutional ECMO imaging guidelines" },
+        { name: "ELSO Guidelines", relevance: "Extracorporeal Life Support Organization imaging recommendations" }
+      ],
+      evidenceSummary: "CT imaging on ECMO requires close coordination with the perfusion team. The altered haemodynamics significantly affect contrast opacification. VA-ECMO low-flow technique has been shown to provide diagnostic quality cardiac imaging."
+    }
+  }
+
+};
+
+// Protocol to category mapping for learning pages
+const protocolCategories = {
+  coronary_arteries: 'coronary', calcium_score: 'coronary', grafts: 'coronary',
+  tavi_no_coros: 'valve', tavi_plus_coros: 'valve', '4d_valve': 'valve',
+  mitral_valve: 'valve', evoque: 'valve', tendyne: 'valve',
+  gated_thoracic_aorta: 'aortic', aortic_pears: 'aortic', ross_pears: 'aortic', access_routes: 'aortic',
+  carto: 'ep', vivo: 'ep', inheart: 'ep',
+  gated_ctpa: 'other', paediatric_cardiac: 'paediatric', ecmo_ct: 'specialist'
+};
+
+const categoryLabelsLearn = {
+  coronary: 'Coronary', valve: 'Valve', aortic: 'Aortic',
+  ep: 'Electrophysiology', other: 'Other', paediatric: 'Paediatric', specialist: 'Specialist'
+};
+
+// Category display order
+const categoryOrder = ['coronary', 'valve', 'aortic', 'ep', 'other', 'paediatric', 'specialist'];
+
+// ============================================================
 // STATE
 // ============================================================
 let state = {
@@ -2953,9 +4566,12 @@ let browseScrollPos = 0;
 // ============================================================
 function navigateTo(view, options) {
   options = options || {};
-  // Save scroll position when leaving browse
-  if (getCurrentView() === 'browse') {
+  // Save scroll position when leaving views
+  const currentView = getCurrentView();
+  if (currentView === 'browse') {
     browseScrollPos = window.scrollY;
+  } else if (currentView === 'learn') {
+    learnScrollPos = window.scrollY;
   }
   location.hash = '/' + view;
   if (options.slideBack) {
@@ -2966,8 +4582,12 @@ function navigateTo(view, options) {
 
 function getCurrentView() {
   const hash = location.hash.slice(2) || 'browse';
-  return hash.startsWith('detail') ? 'detail' : 'browse';
+  if (hash.startsWith('learn')) return 'learn';
+  if (hash.startsWith('detail')) return 'detail';
+  return 'browse';
 }
+
+let learnScrollPos = 0;
 
 function renderView() {
   const hash = location.hash.slice(2) || 'browse';
@@ -2979,13 +4599,28 @@ function renderView() {
   if (hash === 'browse' || hash === '') {
     const el = document.getElementById('browseView');
     el.classList.add('active', 'slide-back');
-    // Restore scroll position
     setTimeout(() => window.scrollTo(0, browseScrollPos), 10);
+  } else if (hash === 'learn') {
+    const el = document.getElementById('learnView');
+    el.classList.add('active', 'slide-back');
+    renderLearnHub();
+    setTimeout(() => window.scrollTo(0, learnScrollPos), 10);
+  } else if (hash.startsWith('learn/')) {
+    const slug = hash.replace('learn/', '');
+    const el = document.getElementById('learnDetailView');
+    el.classList.add('active');
+    renderLearnDetail(slug);
+    window.scrollTo(0, 0);
   } else if (hash.startsWith('detail')) {
     const el = document.getElementById('detailView');
     el.classList.add('active');
     window.scrollTo(0, 0);
   }
+}
+
+// Navigate back from learn detail to learn hub
+function navigateLearnBack() {
+  navigateTo('learn');
 }
 
 window.addEventListener('hashchange', renderView);
@@ -3110,6 +4745,218 @@ function resetAll() {
   // Navigate back to browse view
   browseScrollPos = 0;
   navigateTo('browse');
+}
+
+// ============================================================
+// LEARNING CENTRE — RENDERING
+// ============================================================
+let currentLearnFilter = 'all';
+let currentLearnSearch = '';
+
+function renderLearnHub() {
+  const grid = document.getElementById('learnCardGrid');
+  let html = '';
+  let lastCat = '';
+
+  // Build ordered list
+  const orderedSlugs = Object.keys(teachingContent).sort((a, b) => {
+    const catA = categoryOrder.indexOf(protocolCategories[a]);
+    const catB = categoryOrder.indexOf(protocolCategories[b]);
+    return catA - catB;
+  });
+
+  const searchLower = currentLearnSearch.toLowerCase().trim();
+
+  for (const slug of orderedSlugs) {
+    const cat = protocolCategories[slug];
+    if (currentLearnFilter !== 'all' && !matchesFilter(cat, currentLearnFilter)) continue;
+
+    const teaching = teachingContent[slug];
+    const protocol = protocols[slug];
+    if (!teaching || !protocol) continue;
+
+    // Search filter
+    if (searchLower) {
+      const searchable = (protocol.title + ' ' + teaching.clinicalPurpose.summary + ' ' + teaching.clinicalPurpose.clinicalQuestion + ' ' + (teaching.keyLearningPoints || []).join(' ')).toLowerCase();
+      if (!searchable.includes(searchLower)) continue;
+    }
+
+    // Category heading (when showing all)
+    if (currentLearnFilter === 'all' && cat !== lastCat) {
+      html += `<div class="learn-category-heading" style="grid-column:1/-1">${categoryLabelsLearn[cat] || cat}</div>`;
+      lastCat = cat;
+    }
+
+    html += `<div class="learn-card cat-${cat}" onclick="learnScrollPos=window.scrollY;navigateTo('learn/${slug}')">
+      <div class="learn-card-category ind-category">${categoryLabelsLearn[cat] || cat}</div>
+      <h3>${protocol.title}</h3>
+      <div class="learn-card-summary">${teaching.clinicalPurpose.summary}</div>
+      <div class="learn-card-question">"${teaching.clinicalPurpose.clinicalQuestion}"</div>
+    </div>`;
+  }
+
+  if (!html) {
+    html = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text-light);">No protocols match your search.</div>';
+  }
+
+  grid.innerHTML = html;
+}
+
+function matchesFilter(cat, filter) {
+  if (filter === 'other') return cat === 'other' || cat === 'paediatric' || cat === 'specialist';
+  return cat === filter;
+}
+
+function filterLearnCategory(cat, btn) {
+  currentLearnFilter = cat;
+  document.querySelectorAll('.learn-filter-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderLearnHub();
+}
+
+function searchLearnContent(term) {
+  currentLearnSearch = term;
+  renderLearnHub();
+}
+
+function renderLearnDetail(slug) {
+  const teaching = teachingContent[slug];
+  const protocol = protocols[slug];
+  const container = document.getElementById('learnDetailContent');
+
+  if (!teaching || !protocol) {
+    navigateTo('learn');
+    return;
+  }
+
+  const cat = protocolCategories[slug];
+  let html = '';
+
+  // Header
+  html += `<div class="learn-detail-header">
+    <div class="learn-detail-category ind-category cat-${cat}">${categoryLabelsLearn[cat] || cat}</div>
+    <h2>${protocol.title}</h2>
+    <div class="learn-detail-summary">${teaching.clinicalPurpose.summary}</div>
+    <div class="learn-detail-question">"${teaching.clinicalPurpose.clinicalQuestion}"</div>
+  </div>`;
+
+  // Section nav
+  html += `<div class="learn-section-nav">
+    <button onclick="scrollToLearnSection('ls-purpose')">Purpose</button>
+    <button onclick="scrollToLearnSection('ls-anatomy')">Anatomy</button>
+    <button onclick="scrollToLearnSection('ls-keypoints')">Key Points</button>
+    <button onclick="scrollToLearnSection('ls-decision')">Decision</button>
+    <button onclick="scrollToLearnSection('ls-params')">Parameters</button>
+    <button onclick="scrollToLearnSection('ls-evidence')">Evidence</button>
+  </div>`;
+
+  // === CLINICAL PURPOSE ===
+  let purposeHtml = '';
+  purposeHtml += '<h4 style="font-size:0.85rem;color:var(--primary);margin-bottom:10px;">Why is this scan done?</h4>';
+  purposeHtml += `<ul class="learn-list">${teaching.clinicalPurpose.whyDone.map(w => `<li>${w}</li>`).join('')}</ul>`;
+  if (teaching.clinicalPurpose.patientScenarios && teaching.clinicalPurpose.patientScenarios.length) {
+    purposeHtml += '<h4 style="font-size:0.85rem;color:var(--primary);margin-top:16px;margin-bottom:10px;">Example Patient Scenarios</h4>';
+    purposeHtml += teaching.clinicalPurpose.patientScenarios.map((s, i) =>
+      `<div class="learn-scenario-card"><strong>Scenario ${i + 1}</strong><br>${s}</div>`
+    ).join('');
+  }
+  html += buildLearnSection('ls-purpose', 'Clinical Purpose', purposeHtml, true);
+
+  // === ANATOMY & PATHOLOGY ===
+  let anatomyHtml = '';
+  anatomyHtml += '<h4 style="font-size:0.85rem;color:var(--primary);margin-bottom:10px;">Structures Assessed</h4>';
+  anatomyHtml += `<ul class="learn-list">${teaching.anatomy.structures.map(s => `<li>${s}</li>`).join('')}</ul>`;
+  anatomyHtml += '<h4 style="font-size:0.85rem;color:var(--primary);margin-top:16px;margin-bottom:10px;">Pathology to Identify</h4>';
+  anatomyHtml += `<ul class="learn-list">${teaching.anatomy.pathology.map(p => `<li>${p}</li>`).join('')}</ul>`;
+  html += buildLearnSection('ls-anatomy', 'Anatomy & Pathology', anatomyHtml, false);
+
+  // === KEY LEARNING POINTS ===
+  let keypointsHtml = `<ol class="learn-numbered-list">${teaching.keyLearningPoints.map(p => `<li>${p}</li>`).join('')}</ol>`;
+  html += buildLearnSection('ls-keypoints', 'Key Learning Points', keypointsHtml, false);
+
+  // === DECISION GUIDE ===
+  let decisionHtml = '';
+  decisionHtml += `<div class="learn-decision-use"><h4>Use This Protocol When</h4><ul class="learn-list">${teaching.decisionGuide.useWhen.map(u => `<li>${u}</li>`).join('')}</ul></div>`;
+  decisionHtml += `<div class="learn-decision-avoid"><h4>Do NOT Use When</h4><ul class="learn-list">${teaching.decisionGuide.doNotUseWhen.map(d => `<li>${d}</li>`).join('')}</ul></div>`;
+  if (teaching.decisionGuide.alternatives && teaching.decisionGuide.alternatives.length) {
+    decisionHtml += '<h4 style="font-size:0.85rem;color:var(--primary);margin-top:14px;margin-bottom:10px;">Consider Instead</h4>';
+    decisionHtml += teaching.decisionGuide.alternatives.map(a => {
+      const altProtocol = protocols[a.protocol];
+      const altTitle = altProtocol ? altProtocol.title : a.protocol;
+      return `<div class="learn-alternative-card" onclick="navigateTo('learn/${a.protocol}')">
+        <div><div class="alt-name">${altTitle}</div><div class="alt-reason">${a.reason}</div></div>
+      </div>`;
+    }).join('');
+  }
+  html += buildLearnSection('ls-decision', 'Decision Guide', decisionHtml, false);
+
+  // === PARAMETER RATIONALE ===
+  let paramsHtml = '';
+  if (teaching.parameterRationale.acquisitionMode) {
+    paramsHtml += `<div class="learn-rationale-block"><h4>Acquisition Mode</h4><p>${teaching.parameterRationale.acquisitionMode}</p></div>`;
+  }
+  if (teaching.parameterRationale.contrastProtocol) {
+    paramsHtml += `<div class="learn-rationale-block"><h4>Contrast Protocol</h4><p>${teaching.parameterRationale.contrastProtocol}</p></div>`;
+  }
+  if (teaching.parameterRationale.breathHold) {
+    paramsHtml += `<div class="learn-rationale-block"><h4>Breath Hold</h4><p>${teaching.parameterRationale.breathHold}</p></div>`;
+  }
+  if (teaching.parameterRationale.gating) {
+    paramsHtml += `<div class="learn-rationale-block"><h4>ECG Gating</h4><p>${teaching.parameterRationale.gating}</p></div>`;
+  }
+  if (teaching.parameterRationale.hrControl) {
+    paramsHtml += `<div class="learn-rationale-block"><h4>Heart Rate Control</h4><p>${teaching.parameterRationale.hrControl}</p></div>`;
+  }
+  html += buildLearnSection('ls-params', 'Parameter Rationale', paramsHtml, false);
+
+  // === GUIDELINES & EVIDENCE ===
+  let evidenceHtml = '';
+  evidenceHtml += teaching.guidelines.references.map(r =>
+    `<div class="learn-guideline-card"><div class="guide-name">${r.name}</div><div class="guide-relevance">${r.relevance}</div></div>`
+  ).join('');
+  evidenceHtml += `<div class="learn-evidence-summary"><strong>Evidence Summary:</strong> ${teaching.guidelines.evidenceSummary}</div>`;
+  html += buildLearnSection('ls-evidence', 'Guidelines & Evidence', evidenceHtml, false);
+
+  // CTA — View Protocol Parameters
+  html += `<div class="learn-to-protocol-link" onclick="openProtocolFromLearn('${slug}')">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+    View Protocol Parameters
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+function buildLearnSection(id, title, contentHtml, startOpen) {
+  const openClass = startOpen ? ' open' : '';
+  const chevron = `<svg class="learn-section-chevron" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
+  return `<div class="learn-section${openClass}" id="${id}">
+    <div class="learn-section-header" onclick="toggleLearnSection('${id}')">
+      <h3>${title}</h3>
+      ${chevron}
+    </div>
+    <div class="learn-section-body">${contentHtml}</div>
+  </div>`;
+}
+
+function toggleLearnSection(id) {
+  const section = document.getElementById(id);
+  if (section) section.classList.toggle('open');
+}
+
+function scrollToLearnSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    // Open it first
+    if (!el.classList.contains('open')) el.classList.add('open');
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }
+}
+
+function openProtocolFromLearn(slug) {
+  const btn = document.querySelector(`.indication-btn[data-protocol="${slug}"]`);
+  if (btn) {
+    selectIndication(btn);
+  }
 }
 
 // ============================================================
@@ -3348,6 +5195,20 @@ function renderProtocol() {
   }
 
   html += '</div>';
+
+  // "Why this protocol?" link to learning page
+  if (teachingContent[state.protocol]) {
+    html += `<div class="learn-why-link" onclick="navigateTo('learn/${state.protocol}')">
+      <div class="why-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <div class="why-text">
+        <strong>Why this protocol?</strong>
+        <span>Learn about the clinical rationale and key decisions</span>
+      </div>
+    </div>`;
+  }
+
   bodyEl.innerHTML = html;
 
   const resultSection = document.getElementById('resultSection');
