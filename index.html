@@ -1476,6 +1476,317 @@
     .learn-to-protocol-link { display: none; }
     .learn-why-link { display: none; }
   }
+
+  /* ============================================================
+     CLINICAL TOOLS HUB
+     ============================================================ */
+  .tools-entry-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(135deg, #065f46 0%, #0d9488 100%);
+    color: white; border-radius: var(--radius);
+    padding: 18px 22px; margin-bottom: 12px;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: var(--shadow-md);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tools-entry-banner:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .tools-entry-banner:active { transform: translateY(0); }
+
+  .quiz-entry-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%);
+    color: white; border-radius: var(--radius);
+    padding: 18px 22px; margin-bottom: 24px;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: var(--shadow-md);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .quiz-entry-banner:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .quiz-entry-banner:active { transform: translateY(0); }
+
+  .tools-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+
+  .tool-card {
+    background: var(--card-bg); border: 2px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    cursor: pointer; transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tool-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .tool-card.active { border-color: var(--accent); background: #f0fdfa; }
+  .tool-card .tool-icon {
+    width: 40px; height: 40px; background: var(--accent); color: white;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 1.2rem;
+  }
+  .tool-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .tool-card p { font-size: 0.82rem; color: var(--text-light); line-height: 1.5; }
+
+  .calc-section {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .calc-section h3 {
+    font-size: 1.05rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .calc-form-group { margin-bottom: 16px; }
+  .calc-form-group label {
+    display: block; font-size: 0.85rem; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .calc-input, .calc-select {
+    width: 100%; padding: 12px 14px; border: 2px solid var(--border);
+    border-radius: 8px; font-size: 0.95rem; font-family: inherit;
+    color: var(--text); background: var(--card-bg); transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  .calc-input:focus, .calc-select:focus {
+    outline: none; border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(26,75,140,0.1);
+  }
+  .calc-select { appearance: none; background-repeat: no-repeat; background-position: right 12px center; }
+  .calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .calc-btn {
+    background: var(--accent); color: white; border: none;
+    padding: 12px 24px; border-radius: 8px; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; transition: all 0.15s; width: 100%;
+  }
+  .calc-btn:hover { background: #0f766e; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .calc-result {
+    background: #f0fdfa; border: 2px solid #ccfbf1; border-radius: var(--radius);
+    padding: 20px; margin-top: 16px; display: none;
+  }
+  .calc-result.visible { display: block; }
+  .calc-result h4 { font-size: 0.9rem; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
+  .calc-result-row {
+    display: flex; justify-content: space-between; padding: 8px 0;
+    font-size: 0.9rem; border-bottom: 1px solid #e2e8f0;
+  }
+  .calc-result-row:last-child { border-bottom: none; }
+  .calc-result-label { color: var(--text-light); font-weight: 500; }
+  .calc-result-value { color: var(--text); font-weight: 700; text-align: right; }
+
+  .calc-warning {
+    background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px;
+    padding: 12px 16px; margin-top: 12px; font-size: 0.85rem; color: #92400e; line-height: 1.5;
+  }
+  .calc-danger {
+    background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+    padding: 12px 16px; margin-top: 12px; font-size: 0.85rem; color: #991b1b; line-height: 1.5; font-weight: 600;
+  }
+
+  .risk-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  }
+  .risk-badge.low { background: #d1fae5; color: #065f46; }
+  .risk-badge.moderate { background: #fef3c7; color: #92400e; }
+  .risk-badge.high { background: #fecaca; color: #991b1b; }
+
+  .calc-contra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .calc-contra-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.88rem;
+    padding: 8px 10px; background: #f8fafc; border-radius: 6px; cursor: pointer;
+  }
+  .calc-contra-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--danger); }
+
+  /* ============================================================
+     CHECKLISTS (protocol detail integration)
+     ============================================================ */
+  .checklist-container { margin-top: 24px; }
+  .checklist-container > h2 {
+    font-size: 1.05rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .checklist-phase {
+    background: var(--card-bg); border-radius: var(--radius);
+    box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden;
+  }
+  .checklist-phase-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px; cursor: pointer; transition: background 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .checklist-phase-header:hover { background: #f8fafc; }
+  .checklist-phase-header h3 {
+    font-size: 0.9rem; font-weight: 700; color: var(--primary);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .checklist-phase-header .cl-chevron {
+    transition: transform 0.25s; color: var(--text-light);
+  }
+  .checklist-phase.open .cl-chevron { transform: rotate(180deg); }
+  .checklist-progress {
+    font-size: 0.75rem; font-weight: 600; color: var(--text-light);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .checklist-progress-bar {
+    width: 80px; height: 6px; background: var(--border);
+    border-radius: 3px; overflow: hidden;
+  }
+  .checklist-progress-fill {
+    height: 100%; background: var(--success); border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  .checklist-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s ease;
+    padding: 0 18px;
+  }
+  .checklist-phase.open .checklist-body {
+    max-height: 2000px; padding: 0 18px 18px;
+  }
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid #f1f5f9;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item input[type="checkbox"] {
+    width: 20px; height: 20px; accent-color: var(--accent);
+    cursor: pointer; flex-shrink: 0; margin-top: 2px;
+  }
+  .checklist-item-label { font-size: 0.88rem; color: var(--text); line-height: 1.5; }
+  .checklist-item.checked .checklist-item-label {
+    text-decoration: line-through; color: var(--text-light);
+  }
+
+  /* ============================================================
+     QUIZ MODE
+     ============================================================ */
+  .quiz-hub-header {
+    border-left: 4px solid #7c3aed; background: var(--card-bg);
+    border-radius: var(--radius); padding: 20px 24px;
+    box-shadow: var(--shadow); margin-bottom: 20px;
+  }
+  .quiz-hub-header h2 { font-size: 1.15rem; font-weight: 700; color: #5b21b6; margin-bottom: 4px; }
+  .quiz-hub-header p { font-size: 0.85rem; color: var(--text-light); }
+
+  .quiz-progress-dashboard {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 20px 24px; box-shadow: var(--shadow); margin-bottom: 20px;
+  }
+  .quiz-progress-dashboard h3 {
+    font-size: 0.9rem; font-weight: 700; color: var(--primary); margin-bottom: 12px;
+  }
+  .quiz-progress-row {
+    display: flex; align-items: center; padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .quiz-progress-row:last-child { border-bottom: none; }
+  .quiz-progress-label { font-size: 0.85rem; font-weight: 600; min-width: 130px; }
+  .quiz-progress-bar-track {
+    flex: 1; height: 8px; background: var(--border);
+    border-radius: 4px; margin: 0 12px; overflow: hidden;
+  }
+  .quiz-progress-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s ease; }
+  .quiz-progress-pct { font-size: 0.8rem; font-weight: 600; color: var(--text-light); min-width: 45px; text-align: right; }
+
+  .quiz-section-label {
+    font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-light); margin: 24px 0 12px;
+  }
+  .quiz-hub-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .quiz-category-card {
+    background: var(--card-bg); border: 2px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    cursor: pointer; transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .quiz-category-card:hover { border-color: #7c3aed; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .quiz-category-card .quiz-cat-icon { font-size: 1.4rem; margin-bottom: 6px; }
+  .quiz-category-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .quiz-category-card p { font-size: 0.82rem; color: var(--text-light); }
+
+  .quiz-question-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .quiz-question-progress { font-size: 0.8rem; color: var(--text-light); margin-bottom: 8px; }
+  .quiz-question-text {
+    font-size: 1rem; font-weight: 600; color: var(--text);
+    margin-bottom: 16px; line-height: 1.6;
+  }
+  .quiz-option {
+    display: block; width: 100%; text-align: left;
+    padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 10px; background: var(--card-bg);
+    margin-bottom: 8px; cursor: pointer; transition: all 0.15s;
+    font-size: 0.9rem; font-family: inherit; color: var(--text);
+  }
+  .quiz-option:hover { border-color: #7c3aed; background: #faf5ff; }
+  .quiz-option.correct { border-color: var(--success); background: #f0fdf4; color: #166534; }
+  .quiz-option.incorrect { border-color: var(--danger); background: #fef2f2; color: #991b1b; }
+  .quiz-option.disabled { pointer-events: none; opacity: 0.7; }
+  .quiz-option.dimmed { opacity: 0.5; pointer-events: none; }
+
+  .quiz-feedback {
+    padding: 14px 18px; border-radius: 8px; margin-top: 12px;
+    font-size: 0.88rem; line-height: 1.5; display: none;
+  }
+  .quiz-feedback.visible { display: block; }
+  .quiz-feedback.correct-fb { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+  .quiz-feedback.incorrect-fb { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+
+  .quiz-next-btn {
+    background: #5b21b6; color: white; border: none;
+    padding: 12px 24px; border-radius: 8px; font-size: 0.95rem;
+    font-weight: 600; cursor: pointer; margin-top: 12px; transition: all 0.15s;
+  }
+  .quiz-next-btn:hover { background: #6d28d9; }
+  .quiz-next-btn.outline { background: transparent; color: #5b21b6; border: 2px solid #5b21b6; }
+
+  .case-patient-info {
+    background: #f8fafc; border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px; margin-bottom: 16px; font-size: 0.9rem; line-height: 1.6;
+  }
+  .case-step-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 24px; box-shadow: var(--shadow); margin-bottom: 16px;
+    border-left: 4px solid var(--accent);
+  }
+  .case-history-card {
+    background: var(--card-bg); border-radius: 8px;
+    padding: 12px 16px; margin-bottom: 8px; opacity: 0.7;
+    border-left: 4px solid var(--success); font-size: 0.85rem;
+  }
+  .case-history-card.wrong { border-left-color: var(--danger); }
+
+  .quiz-score-display {
+    font-size: 2.5rem; font-weight: 700; margin: 12px 0;
+  }
+
+  /* Responsive for tools/quiz/checklists */
+  @media (max-width: 768px) {
+    .tools-card-grid { grid-template-columns: 1fr; }
+    .calc-section { padding: 16px; }
+    .calc-row { grid-template-columns: 1fr; }
+    .calc-contra-grid { grid-template-columns: 1fr; }
+    .quiz-hub-grid { grid-template-columns: 1fr; }
+    .quiz-question-card { padding: 16px; }
+    .tools-entry-banner, .quiz-entry-banner { padding: 14px 16px; }
+    .checklist-phase-header { padding: 12px 14px; }
+    .checklist-phase.open .checklist-body { padding: 0 14px 14px; }
+  }
+
+  @media (max-width: 375px) {
+    .quiz-option { padding: 12px 14px; font-size: 0.85rem; }
+    .calc-input, .calc-select { font-size: 16px; }
+  }
+
+  @media print {
+    .tools-entry-banner, .quiz-entry-banner { display: none; }
+    .checklist-container { break-inside: avoid; }
+    .checklist-body { max-height: none !important; padding: 0 18px 18px !important; }
+    .checklist-phase .cl-chevron { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1515,6 +1826,34 @@
     <div class="learn-banner-text">
       <strong>Protocol Learning Centre</strong>
       <span>Understand why each protocol is used and when</span>
+    </div>
+    <div class="learn-banner-arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- Clinical Tools Entry -->
+  <div class="tools-entry-banner" onclick="navigateTo('tools')">
+    <div class="learn-banner-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    </div>
+    <div class="learn-banner-text">
+      <strong>Clinical Tools</strong>
+      <span>Calculators for contrast, renal risk, dosing &amp; radiation</span>
+    </div>
+    <div class="learn-banner-arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- Quiz Mode Entry -->
+  <div class="quiz-entry-banner" onclick="navigateTo('quiz')">
+    <div class="learn-banner-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+    </div>
+    <div class="learn-banner-text">
+      <strong>Quiz Mode</strong>
+      <span>Test your protocol knowledge with MCQs and clinical cases</span>
     </div>
     <div class="learn-banner-arrow">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
@@ -1778,6 +2117,41 @@
     <!-- Content rendered by JS -->
     <div id="learnDetailContent"></div>
   </div><!-- /learnDetailView -->
+
+  <!-- ===== VIEW 5: CLINICAL TOOLS HUB ===== -->
+  <div id="toolsView" class="view">
+    <button class="back-btn" onclick="navigateTo('browse', {slideBack:true})">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Protocols
+    </button>
+    <div class="selector-section" style="border-left:4px solid var(--accent);">
+      <h2 style="color:var(--accent);display:flex;align-items:center;gap:8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Clinical Tools
+      </h2>
+      <p style="font-size:0.85rem;color:var(--text-light);">Select a clinical calculator or dosing guide below.</p>
+    </div>
+    <div id="toolsCardGrid" class="tools-card-grid"></div>
+    <div id="toolActiveContent"></div>
+  </div><!-- /toolsView -->
+
+  <!-- ===== VIEW 6: QUIZ HUB ===== -->
+  <div id="quizView" class="view">
+    <button class="back-btn" onclick="navigateTo('browse', {slideBack:true})">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Protocols
+    </button>
+    <div id="quizHubContent"></div>
+  </div><!-- /quizView -->
+
+  <!-- ===== VIEW 7: QUIZ CASE ===== -->
+  <div id="quizCaseView" class="view">
+    <button class="back-btn" onclick="navigateTo('quiz', {slideBack:true})">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Quiz Hub
+    </button>
+    <div id="quizCaseContent"></div>
+  </div><!-- /quizCaseView -->
 
 </div>
 
@@ -4525,6 +4899,661 @@ const teachingContent = {
 
 };
 
+// ============================================================
+// CHECKLIST TEMPLATES (per protocol)
+// ============================================================
+const checklistTemplates = {
+  _defaults: {
+    preScan: [
+      { id: 'egfr', label: 'eGFR checked and documented' },
+      { id: 'allergies', label: 'Allergies verified (contrast and medications)' },
+      { id: 'fasting', label: 'Fasting status confirmed (if required)' },
+      { id: 'iv_access', label: 'IV access established (18–20G antecubital preferred)' },
+      { id: 'consent', label: 'Consent obtained and documented' },
+      { id: 'pregnancy', label: 'Pregnancy status confirmed (females of childbearing age)' }
+    ],
+    intraScan: [
+      { id: 'breathhold', label: 'Breath-hold coaching completed with patient' },
+      { id: 'ecg_signal', label: 'ECG gating signal adequate and stable' },
+      { id: 'positioning', label: 'Patient positioning verified (isocentre check)' },
+      { id: 'contrast_timing', label: 'Contrast timing / test bolus reviewed' }
+    ],
+    postScan: [
+      { id: 'cannula_removed', label: 'Cannula removed and site checked' },
+      { id: 'pacs_sent', label: 'Images sent to PACS (APS and Impax)' },
+      { id: 'recons_complete', label: 'All reconstructions completed and verified' },
+      { id: 'raw_data', label: 'Raw data exported' },
+      { id: 'discharge', label: 'Patient discharge criteria met' }
+    ]
+  },
+  coronary_arteries: {
+    preScanAdd: [
+      { id: 'beta_blocker', label: 'Beta-blocker administered (if HR >60 and no contraindications)' },
+      { id: 'gtn', label: 'GTN administered (if protocolled and no contraindications)' },
+      { id: 'baseline_obs', label: 'Baseline BP and SpO₂ recorded' }
+    ],
+    postScanAdd: [
+      { id: 'post_obs', label: 'Post-observation BP and SpO₂ (if beta-blocker/GTN given)' }
+    ]
+  },
+  calcium_score: {
+    preScanRemove: ['iv_access', 'fasting'],
+    intraScanRemove: ['contrast_timing'],
+    postScanRemove: ['cannula_removed']
+  },
+  grafts: {
+    preScanAdd: [
+      { id: 'beta_blocker', label: 'Beta-blocker administered (if HR >60 and no contraindications)' },
+      { id: 'gtn', label: 'GTN administered (if protocolled and no contraindications)' },
+      { id: 'baseline_obs', label: 'Baseline BP and SpO₂ recorded' },
+      { id: 'surgical_hx', label: 'Surgical history reviewed (graft type and number confirmed)' }
+    ],
+    postScanAdd: [
+      { id: 'post_obs', label: 'Post-observation BP and SpO₂ (if beta-blocker/GTN given)' }
+    ]
+  },
+  tavi_no_coros: {
+    preScanAdd: [
+      { id: 'tavi_referral', label: 'TAVI referral and clinical question confirmed with team' }
+    ]
+  },
+  tavi_plus_coros: {
+    preScanAdd: [
+      { id: 'beta_blocker', label: 'Beta-blocker administered (if HR >60 and no contraindications)' },
+      { id: 'gtn', label: 'GTN administered (if protocolled and no contraindications)' },
+      { id: 'baseline_obs', label: 'Baseline BP and SpO₂ recorded' },
+      { id: 'tavi_referral', label: 'TAVI referral confirmed — coronaries included in scan' }
+    ],
+    postScanAdd: [
+      { id: 'post_obs', label: 'Post-observation BP and SpO₂ (if beta-blocker/GTN given)' }
+    ]
+  },
+  '4d_valve': {
+    preScanAdd: [
+      { id: 'valve_question', label: 'Clinical question confirmed (which valve, what pathology)' }
+    ],
+    intraScanAdd: [
+      { id: 'retro_gating', label: 'Retrospective gating confirmed for 4D reconstruction' }
+    ]
+  },
+  mitral_valve: {
+    preScanAdd: [
+      { id: 'valve_question', label: 'Mitral valve pathology and clinical question confirmed' }
+    ]
+  },
+  evoque: {
+    preScanAdd: [
+      { id: 'evoque_team', label: 'Evoque valve team consultation documented' }
+    ]
+  },
+  tendyne: {
+    preScanAdd: [
+      { id: 'tendyne_team', label: 'Tendyne valve team consultation documented' }
+    ]
+  },
+  gated_thoracic_aorta: {
+    preScanAdd: [
+      { id: 'aorta_question', label: 'Aortic pathology and clinical question confirmed' }
+    ]
+  },
+  aortic_pears: {
+    preScanAdd: [
+      { id: 'pears_team', label: 'PEARS surgical team consultation confirmed' },
+      { id: 'beta_blocker', label: 'Beta-blocker administered (if HR >60 and no contraindications)' },
+      { id: 'baseline_obs', label: 'Baseline BP and SpO₂ recorded' }
+    ],
+    postScanAdd: [
+      { id: 'post_obs', label: 'Post-observation BP and SpO₂ (if beta-blocker given)' }
+    ]
+  },
+  ross_pears: {
+    preScanAdd: [
+      { id: 'ross_team', label: 'Ross/PEARS surgical team consultation confirmed' },
+      { id: 'beta_blocker', label: 'Beta-blocker administered (if HR >60 and no contraindications)' },
+      { id: 'baseline_obs', label: 'Baseline BP and SpO₂ recorded' }
+    ],
+    postScanAdd: [
+      { id: 'post_obs', label: 'Post-observation BP and SpO₂ (if beta-blocker given)' }
+    ]
+  },
+  access_routes: {
+    preScanAdd: [
+      { id: 'access_question', label: 'Access route assessment requirements confirmed (femoral, subclavian, etc.)' }
+    ]
+  },
+  carto: {
+    preScanAdd: [
+      { id: 'ep_team', label: 'EP team consultation — mapping requirements confirmed' },
+      { id: 'arch_decision', label: 'Arch inclusion decision confirmed with EP team' }
+    ],
+    intraScanRemove: ['ecg_signal']
+  },
+  vivo: {
+    preScanAdd: [
+      { id: 'ep_team', label: 'EP team consultation — Vivo mapping requirements confirmed' }
+    ],
+    intraScanRemove: ['ecg_signal']
+  },
+  inheart: {
+    preScanAdd: [
+      { id: 'ep_team', label: 'EP team consultation — InHeart mapping requirements confirmed' }
+    ],
+    intraScanRemove: ['ecg_signal']
+  },
+  gated_ctpa: {
+    preScanAdd: [
+      { id: 'clinical_question', label: 'Clinical question confirmed (PE vs right heart vs both)' }
+    ]
+  },
+  paediatric_cardiac: {
+    preScanAdd: [
+      { id: 'sedation', label: 'Sedation arranged if needed (per weight band and age)' },
+      { id: 'paed_cardio', label: 'Paediatric cardiologist consulted for scan plan' },
+      { id: 'weight_confirmed', label: 'Patient weight confirmed for dose and contrast calculation' },
+      { id: 'parent_consent', label: 'Parental consent obtained and documented' }
+    ],
+    preScanRemove: ['fasting']
+  },
+  ecmo_ct: {
+    preScanAdd: [
+      { id: 'perfusionist', label: 'CRITICAL: Perfusionist present and confirmed for transport' },
+      { id: 'ecmo_battery', label: 'ECMO pump battery life adequate for transport duration' },
+      { id: 'separate_iv', label: 'IV access SEPARATE from ECMO circuit confirmed' },
+      { id: 'transport_checklist', label: 'Transport checklist completed (monitoring, airway, meds)' },
+      { id: 'ecmo_type_confirmed', label: 'ECMO type confirmed (VV / VA / ECPELLA)' }
+    ],
+    preScanRemove: ['fasting'],
+    intraScanAdd: [
+      { id: 'ecmo_flow', label: 'ECMO flow rate adjustments discussed with perfusionist' }
+    ],
+    postScanAdd: [
+      { id: 'ecmo_flow_restored', label: 'ECMO flow restored to pre-scan settings' },
+      { id: 'safe_return', label: 'Patient safely returned to ICU/ward' }
+    ]
+  }
+};
+
+function getChecklistForProtocol(protocolKey) {
+  const d = checklistTemplates._defaults;
+  const o = checklistTemplates[protocolKey] || {};
+  function merge(defaults, add, remove) {
+    let items = [...defaults];
+    if (remove && remove.length) items = items.filter(i => !remove.includes(i.id));
+    if (add && add.length) items = items.concat(add);
+    return items;
+  }
+  return {
+    preScan: merge(d.preScan, o.preScanAdd, o.preScanRemove),
+    intraScan: merge(d.intraScan, o.intraScanAdd, o.intraScanRemove),
+    postScan: merge(d.postScan, o.postScanAdd, o.postScanRemove)
+  };
+}
+
+// ============================================================
+// CALCULATOR CONSTANTS
+// ============================================================
+const CKD_EPI = {
+  kappa: { male: 0.9, female: 0.7 },
+  alpha: { male: -0.302, female: -0.241 },
+  sexCoeff: { male: 1.0, female: 1.012 }
+};
+
+const DOSE_CONSTANTS = {
+  bgMsvYear: 2.4,
+  chestXrayMsv: 0.02,
+  kChest: 0.014,
+  kAbdomen: 0.015
+};
+
+// ============================================================
+// QUIZ BANK (MCQs by category)
+// ============================================================
+const quizBank = {
+  coronary: {
+    label: 'Coronary Protocols',
+    icon: '♥',
+    questions: [
+      {
+        id: 'qc1', question: 'A 52-year-old presents with atypical chest pain and intermediate pre-test probability of CAD. Which protocol is most appropriate?',
+        options: [
+          { text: 'Coronary Arteries CTCA', correct: true },
+          { text: 'Calcium Score only', correct: false },
+          { text: 'Grafts (CABG) protocol', correct: false },
+          { text: 'Gated CTPA', correct: false }
+        ],
+        explanation: 'NICE CG95 recommends CTCA as the first-line investigation for stable chest pain with intermediate pre-test probability. Calcium score alone cannot detect non-calcified (soft) plaque.', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qc2', question: 'For coronary CTCA, what acquisition mode gives the lowest radiation dose when HR is <60 bpm and regular?',
+        options: [
+          { text: 'Turbo Flash (single heartbeat)', correct: true },
+          { text: 'End-diastolic Adaptive Sequential', correct: false },
+          { text: 'End-systolic Adaptive Sequential', correct: false },
+          { text: 'Retrospective spiral', correct: false }
+        ],
+        explanation: 'Flash mode captures the entire heart in <0.5 seconds during a single diastolic pause. It requires HR <60 bpm with regular rhythm for optimal results and provides the lowest radiation dose.', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qc3', question: 'A patient who had CABG 10 years ago presents with recurrent chest pain. Which protocol should you use?',
+        options: [
+          { text: 'Grafts (CABG + Native Coronaries)', correct: true },
+          { text: 'Standard Coronary Arteries CTCA', correct: false },
+          { text: 'Calcium Score', correct: false },
+          { text: 'Gated Thoracic Aorta', correct: false }
+        ],
+        explanation: 'Patients with bypass grafts require the Grafts protocol which uses a wider scan range (from above the subclavian to below the diaphragm) to capture both graft origins and native coronaries.', protocolRef: 'grafts'
+      },
+      {
+        id: 'qc4', question: 'What is the primary purpose of a test bolus in coronary CTCA?',
+        options: [
+          { text: 'Determine individual contrast circulation time for optimal opacification', correct: true },
+          { text: 'Check for contrast allergy', correct: false },
+          { text: 'Measure cardiac output', correct: false },
+          { text: 'Calculate the required contrast volume', correct: false }
+        ],
+        explanation: 'A test bolus determines the time taken for contrast to travel from the injection site to the ascending aorta. This patient-specific timing ensures optimal coronary opacification during the scan acquisition.', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qc5', question: 'A patient has a resting HR of 72 bpm before coronary CTCA. What should you do?',
+        options: [
+          { text: 'Administer oral beta-blocker (if no contraindications) and recheck HR', correct: true },
+          { text: 'Proceed with Flash acquisition — it works at any HR', correct: false },
+          { text: 'Cancel the scan — HR is too high', correct: false },
+          { text: 'Switch to a non-gated protocol', correct: false }
+        ],
+        explanation: 'HR >65 bpm requires beta-blocker preparation for coronary CTCA. Oral metoprolol 50–100mg 1 hour pre-scan, or IV metoprolol 5mg increments (max 15mg). HR 72 is manageable with appropriate preparation.', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qc6', question: 'When is a Calcium Score study most appropriately used as a standalone investigation?',
+        options: [
+          { text: 'For cardiovascular risk stratification in asymptomatic patients', correct: true },
+          { text: 'To diagnose acute coronary syndrome', correct: false },
+          { text: 'To replace CTCA in patients with chest pain', correct: false },
+          { text: 'To assess bypass graft patency', correct: false }
+        ],
+        explanation: 'Calcium scoring is a non-contrast, low-dose scan used for cardiovascular risk stratification. It cannot detect soft plaque or assess graft patency, so it is not a replacement for CTCA in symptomatic patients.', protocolRef: 'calcium_score'
+      }
+    ]
+  },
+  valve: {
+    label: 'Valve & Structural',
+    icon: '⚙',
+    questions: [
+      {
+        id: 'qv1', question: 'A patient with severe aortic stenosis is being evaluated for TAVI. Coronary assessment was done by catheterisation. Which protocol?',
+        options: [
+          { text: 'Turbo Flash TAVI (No Coronaries)', correct: true },
+          { text: 'TAVI Plus Coronaries', correct: false },
+          { text: 'Standard Coronary Arteries CTCA', correct: false },
+          { text: 'Gated Thoracic Aorta', correct: false }
+        ],
+        explanation: 'When coronary arteries have already been assessed by catheterisation, the TAVI (No Coronaries) protocol is used. It focuses on aortic root dimensions, annular measurements, and access route suitability without the need for coronary-quality imaging.', protocolRef: 'tavi_no_coros'
+      },
+      {
+        id: 'qv2', question: 'What additional scan range is required for TAVI planning compared to standard coronary CTCA?',
+        options: [
+          { text: 'From above the aortic arch to the femoral arteries (access routes)', correct: true },
+          { text: 'Only the aortic root', correct: false },
+          { text: 'From the neck to the diaphragm', correct: false },
+          { text: 'The same range as coronary CTCA', correct: false }
+        ],
+        explanation: 'TAVI planning requires assessment of peripheral access routes (iliac and femoral arteries) for catheter delivery. The scan extends from the subclavian arteries down to the common femoral arteries.', protocolRef: 'tavi_no_coros'
+      },
+      {
+        id: 'qv3', question: 'For 4D valve assessment, which gating mode is required and why?',
+        options: [
+          { text: 'Retrospective gating — enables reconstruction at all phases of the cardiac cycle', correct: true },
+          { text: 'Prospective triggering — lower dose', correct: false },
+          { text: 'No gating needed — valve motion is slow', correct: false },
+          { text: 'Flash mode — captures the valve in one heartbeat', correct: false }
+        ],
+        explanation: '4D valve assessment requires retrospective gating to reconstruct images at multiple phases throughout the cardiac cycle. This allows dynamic assessment of valve opening, closing, and leaflet motion.', protocolRef: '4d_valve'
+      },
+      {
+        id: 'qv4', question: 'A patient needs both TAVI planning AND coronary assessment. No prior catheterisation has been done. Which protocol?',
+        options: [
+          { text: 'TAVI Plus Coronaries', correct: true },
+          { text: 'Turbo Flash TAVI (No Coronaries) followed by a separate Coronary CTCA', correct: false },
+          { text: 'Standard Coronary Arteries CTCA only', correct: false },
+          { text: 'Gated Thoracic Aorta', correct: false }
+        ],
+        explanation: 'TAVI Plus Coronaries combines TAVI planning with coronary assessment in a single scan session, requiring beta-blocker preparation for coronary quality imaging alongside the TAVI measurements.', protocolRef: 'tavi_plus_coros'
+      },
+      {
+        id: 'qv5', question: 'What key measurements are obtained from TAVI CT planning?',
+        options: [
+          { text: 'Aortic annulus dimensions, sinus of Valsalva heights, coronary ostial heights, access route diameters', correct: true },
+          { text: 'Coronary artery calcium score only', correct: false },
+          { text: 'Left ventricular ejection fraction only', correct: false },
+          { text: 'Pulmonary artery pressures', correct: false }
+        ],
+        explanation: 'TAVI CT provides critical measurements for prosthesis sizing (annulus), risk assessment (coronary heights, sinus dimensions), and procedural planning (access route diameters for catheter selection).', protocolRef: 'tavi_no_coros'
+      }
+    ]
+  },
+  aortic: {
+    label: 'Aortic Protocols',
+    icon: '🫀',
+    questions: [
+      {
+        id: 'qa1', question: 'Why is ECG gating used for thoracic aorta CT rather than a non-gated scan?',
+        options: [
+          { text: 'To eliminate cardiac motion artefact at the aortic root and ascending aorta', correct: true },
+          { text: 'To measure coronary arteries simultaneously', correct: false },
+          { text: 'To reduce radiation dose', correct: false },
+          { text: 'Gating is not needed for aortic imaging', correct: false }
+        ],
+        explanation: 'The ascending aorta and aortic root move significantly with each heartbeat. ECG gating freezes this motion, preventing pulsation artefact that can mimic or obscure dissection flaps, aneurysmal measurements, and root pathology.', protocolRef: 'gated_thoracic_aorta'
+      },
+      {
+        id: 'qa2', question: 'What is the PEARS procedure and why does it need specific CT planning?',
+        options: [
+          { text: 'Personalised External Aortic Root Support — requires a 3D model of the aortic root for custom mesh manufacture', correct: true },
+          { text: 'Percutaneous Endovascular Aortic Repair — standard CT angiography is sufficient', correct: false },
+          { text: 'Post-operative Evaluation of Aortic Root Stent — only needs a chest X-ray', correct: false },
+          { text: 'Pulmonary Embolism Assessment and Risk Scoring — uses a CTPA protocol', correct: false }
+        ],
+        explanation: 'PEARS is a patient-specific external aortic root support mesh used in Marfan syndrome and other connective tissue disorders. The CT scan provides a 3D model of the aortic root from which the custom support mesh is manufactured.', protocolRef: 'aortic_pears'
+      },
+      {
+        id: 'qa3', question: 'For access route assessment, what vessel territory must be covered?',
+        options: [
+          { text: 'From the subclavian arteries to the common femoral arteries bilaterally', correct: true },
+          { text: 'Only the thoracic aorta', correct: false },
+          { text: 'Only the iliac arteries', correct: false },
+          { text: 'From the aortic arch to the knees', correct: false }
+        ],
+        explanation: 'Access route assessment evaluates the entire path a TAVI/structural heart catheter would take: subclavian, aorta, iliac arteries, and femoral arteries. Vessel diameter, tortuosity, and calcification all affect catheter selection and approach.', protocolRef: 'access_routes'
+      }
+    ]
+  },
+  ep: {
+    label: 'Electrophysiology',
+    icon: '⚡',
+    questions: [
+      {
+        id: 'qe1', question: 'What is the primary purpose of CT for EP mapping (CARTO/Vivo/InHeart)?',
+        options: [
+          { text: 'Create a 3D anatomical model of cardiac chambers for electroanatomical mapping integration', correct: true },
+          { text: 'Assess coronary artery disease', correct: false },
+          { text: 'Measure cardiac valve function', correct: false },
+          { text: 'Detect pulmonary embolism', correct: false }
+        ],
+        explanation: 'EP mapping CT creates a detailed 3D model of the left atrium and pulmonary veins (or other chambers) that is imported into the electroanatomical mapping system. This allows the electrophysiologist to navigate catheters within an accurate anatomical framework.', protocolRef: 'carto'
+      },
+      {
+        id: 'qe2', question: 'When performing a CARTO CT, when should the aortic arch be included in the scan?',
+        options: [
+          { text: 'When the EP team plans a retrograde aortic approach for left-sided ablation', correct: true },
+          { text: 'Always — it is mandatory for all EP mapping CTs', correct: false },
+          { text: 'Never — only the heart is needed', correct: false },
+          { text: 'Only if the patient has aortic disease', correct: false }
+        ],
+        explanation: 'The arch is included when a retrograde aortic approach is planned, so the mapping system has anatomical data for catheter navigation through the aortic arch into the left ventricle.', protocolRef: 'carto'
+      },
+      {
+        id: 'qe3', question: 'Why is ECG gating less critical for EP mapping CT than for coronary CTCA?',
+        options: [
+          { text: 'EP mapping needs chamber shape/volume rather than coronary artery detail — some motion is acceptable', correct: true },
+          { text: 'EP mapping systems cannot use gated data', correct: false },
+          { text: 'Heart rate does not affect EP mapping quality', correct: false },
+          { text: 'Gating is equally critical for both', correct: false }
+        ],
+        explanation: 'EP mapping requires accurate chamber geometry (pulmonary vein anatomy, left atrial shape) rather than sub-millimetre coronary detail. While gating improves quality, the spatial resolution requirements are less demanding than for coronary assessment.', protocolRef: 'carto'
+      }
+    ]
+  },
+  general: {
+    label: 'General CT Knowledge',
+    icon: '📚',
+    questions: [
+      {
+        id: 'qg1', question: 'What eGFR threshold should prompt consideration of contrast dose reduction and hydration for cardiac CT?',
+        options: [
+          { text: 'eGFR <60 mL/min (CKD stage 3 and below)', correct: true },
+          { text: 'eGFR <90 mL/min', correct: false },
+          { text: 'eGFR <30 mL/min only', correct: false },
+          { text: 'eGFR is not relevant for IV contrast', correct: false }
+        ],
+        explanation: 'eGFR <60 mL/min (CKD stage 3+) increases the risk of contrast-induced nephropathy. Volume reduction (~20%) and pre/post hydration protocols should be considered. eGFR <30 requires senior discussion.', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qg2', question: 'Which of these is an absolute contraindication to beta-blocker administration before cardiac CT?',
+        options: [
+          { text: 'Acute decompensated heart failure', correct: true },
+          { text: 'Heart rate of 80 bpm', correct: false },
+          { text: 'Age over 70 years', correct: false },
+          { text: 'BMI over 30', correct: false }
+        ],
+        explanation: 'Acute decompensated heart failure is an absolute contraindication to beta-blockers. Other contraindications include severe asthma, second/third-degree heart block, and severe bradycardia (<50 bpm).', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qg3', question: 'What is the advantage of prospective ECG triggering over retrospective gating?',
+        options: [
+          { text: 'Significantly lower radiation dose (X-ray on only during target cardiac phase)', correct: true },
+          { text: 'Better image quality in all cases', correct: false },
+          { text: 'Allows scanning at any heart rate', correct: false },
+          { text: 'No ECG connection is required', correct: false }
+        ],
+        explanation: 'Prospective triggering only exposes the patient to radiation during the target cardiac phase window, resulting in significantly lower dose. Retrospective gating irradiates throughout the entire cardiac cycle but allows reconstruction at any phase.', protocolRef: 'coronary_arteries'
+      },
+      {
+        id: 'qg4', question: 'A child with suspected congenital heart disease needs cardiac CT. What special consideration is most important?',
+        options: [
+          { text: 'Weight-based contrast dosing and reduced tube voltage/current for radiation reduction', correct: true },
+          { text: 'Use the same adult protocol — children are small adults', correct: false },
+          { text: 'Calcium scoring should be done first', correct: false },
+          { text: 'Beta-blockers are always required in children', correct: false }
+        ],
+        explanation: 'Paediatric cardiac CT requires weight-based contrast dosing (typically 1.5–2 mL/kg), reduced kV (70–80kV for small children), and adapted scan parameters. The ALARA principle is particularly important in children due to higher lifetime radiation risk.', protocolRef: 'paediatric_cardiac'
+      },
+      {
+        id: 'qg5', question: 'Why is contrast injection via the ECMO circuit contraindicated for CT scanning?',
+        options: [
+          { text: 'The circuit would dilute and recirculate contrast, giving unpredictable opacification', correct: true },
+          { text: 'Contrast damages the ECMO membrane oxygenator', correct: false },
+          { text: 'The ECMO pump cannot handle the injection pressure', correct: false },
+          { text: 'It is not contraindicated — ECMO circuit injection is preferred', correct: false }
+        ],
+        explanation: 'Injecting contrast into the ECMO circuit results in dilution by the circuit volume and recirculation, making contrast timing unpredictable and opacification unreliable. A separate peripheral IV must be used for contrast injection.', protocolRef: 'ecmo_ct'
+      },
+      {
+        id: 'qg6', question: 'What post-scan monitoring is required after administering IV beta-blockers for cardiac CT?',
+        options: [
+          { text: 'Post-observation BP and SpO₂ until values return to baseline', correct: true },
+          { text: 'No monitoring is required for IV beta-blockers', correct: false },
+          { text: '24-hour Holter monitor', correct: false },
+          { text: 'Repeat ECG only', correct: false }
+        ],
+        explanation: 'After IV beta-blocker administration, patients must have post-observation BP and SpO₂ monitoring. Values should return to baseline before discharge. This is particularly important if GTN was also administered.', protocolRef: 'coronary_arteries'
+      }
+    ]
+  }
+};
+
+// ============================================================
+// CLINICAL CASES (branching vignettes)
+// ============================================================
+const clinicalCases = [
+  {
+    id: 'case_chest_pain',
+    title: 'Stable Chest Pain Assessment',
+    category: 'coronary',
+    difficulty: 'Foundation',
+    description: 'A 58-year-old man with a 3-month history of exertional chest tightness is referred for cardiac CT.',
+    steps: [
+      {
+        id: 's1',
+        prompt: 'The GP referral states: "Atypical chest pain, intermediate pre-test probability, please assess for CAD." Which protocol would you select?',
+        options: [
+          { text: 'Coronary Arteries CTCA', nextStep: 's2', correct: true, feedback: 'Correct! NICE CG95 recommends CTCA as the first-line investigation for stable chest pain with intermediate pre-test probability of CAD.' },
+          { text: 'Calcium Score only', nextStep: null, correct: false, feedback: 'Calcium score alone cannot detect non-calcified (soft) plaque, which is a significant cause of ACS. For symptomatic patients with intermediate risk, CTCA is the appropriate investigation.' },
+          { text: 'Gated CTPA', nextStep: null, correct: false, feedback: 'Gated CTPA is used for suspected pulmonary embolism with right heart assessment, not for coronary artery disease evaluation.' }
+        ]
+      },
+      {
+        id: 's2',
+        prompt: 'On arrival, the patient\'s resting heart rate is 74 bpm and regular. Systolic BP is 138 mmHg. He has no known asthma, no heart failure, and no heart block. What is your next step?',
+        options: [
+          { text: 'Administer oral metoprolol 50–100mg and recheck HR in 1 hour', nextStep: 's3', correct: true, feedback: 'Correct! HR >65 bpm requires beta-blocker preparation. With no contraindications and adequate BP, oral metoprolol is appropriate. Recheck in 1 hour.' },
+          { text: 'Proceed directly with Flash acquisition', nextStep: null, correct: false, feedback: 'Flash mode requires HR <60 bpm. At 74 bpm, motion artefact would significantly degrade coronary image quality.' },
+          { text: 'Administer IV metoprolol 15mg immediately', nextStep: null, correct: false, feedback: 'Starting with the maximum IV dose is inappropriate. Oral metoprolol first is safer; IV is used for fine-tuning if oral is insufficient.' }
+        ]
+      },
+      {
+        id: 's3',
+        prompt: 'After metoprolol, HR is now 56 bpm. The blood results show eGFR 42 mL/min. How should you proceed?',
+        options: [
+          { text: 'Proceed with reduced contrast volume (~20% less) and ensure hydration protocol', nextStep: 's4', correct: true, feedback: 'Correct! eGFR 42 = CKD stage 3b. The scan can proceed, but contrast volume should be reduced by ~20% and pre/post hydration ensured to minimise nephropathy risk.' },
+          { text: 'Cancel the scan — eGFR is too low', nextStep: null, correct: false, feedback: 'eGFR 42 is not an absolute contraindication. With contrast volume reduction and hydration, the scan can safely proceed. Cancellation would deny the patient a clinically indicated investigation.' },
+          { text: 'Use standard contrast volume — eGFR 42 is fine', nextStep: null, correct: false, feedback: 'eGFR <60 requires precautions. Standard contrast volume increases the risk of contrast-induced nephropathy. Volume reduction and hydration are recommended.' }
+        ]
+      },
+      {
+        id: 's4',
+        prompt: 'HR is 56 bpm, regular rhythm. Contrast adjusted. Which acquisition mode will you use?',
+        options: [
+          { text: 'Turbo Flash — HR <60 and regular', nextStep: 'complete', correct: true, feedback: 'Excellent! HR <60 bpm with regular rhythm is ideal for Flash acquisition. This gives the lowest radiation dose and best image quality in a single heartbeat.' },
+          { text: 'Adaptive Sequential — safer option', nextStep: null, correct: false, feedback: 'Adaptive Sequential is used for HR 60–65 bpm. At HR 56 with regular rhythm, Flash mode is optimal and delivers lower dose.' },
+          { text: 'Retrospective spiral — covers all phases', nextStep: null, correct: false, feedback: 'Retrospective spiral delivers the highest radiation dose and is reserved for high/irregular heart rates where prospective methods would fail.' }
+        ]
+      },
+      {
+        id: 'complete',
+        prompt: null,
+        summary: 'Excellent work! You correctly identified the Coronary Arteries protocol, managed the heart rate with oral beta-blocker, adjusted contrast for renal impairment (CKD 3b), and selected the optimal acquisition mode. This patient received a safe, low-dose, high-quality coronary CTCA.',
+        protocolRef: 'coronary_arteries'
+      }
+    ]
+  },
+  {
+    id: 'case_tavi',
+    title: 'TAVI Planning Decision',
+    category: 'valve',
+    difficulty: 'Intermediate',
+    description: 'An 82-year-old woman with severe aortic stenosis is being assessed by the structural heart team for TAVI.',
+    steps: [
+      {
+        id: 's1',
+        prompt: 'The structural heart team referral says: "TAVI assessment please. Patient had diagnostic angiography last week — coronaries are normal." Which protocol?',
+        options: [
+          { text: 'Turbo Flash TAVI (No Coronaries)', nextStep: 's2', correct: true, feedback: 'Correct! Coronaries have already been assessed by catheterisation, so the TAVI protocol without coronary assessment is appropriate. This avoids unnecessary beta-blocker preparation in an elderly patient.' },
+          { text: 'TAVI Plus Coronaries', nextStep: null, correct: false, feedback: 'Since coronary arteries were already assessed by catheterisation and found to be normal, adding coronary assessment would mean unnecessary beta-blocker preparation and additional radiation.' },
+          { text: 'Standard Coronary CTCA', nextStep: null, correct: false, feedback: 'This patient needs TAVI planning measurements (aortic root, annulus, access routes), not just coronary assessment. The wrong protocol entirely.' }
+        ]
+      },
+      {
+        id: 's2',
+        prompt: 'The scan is completed. Which of the following is NOT a standard measurement from the TAVI planning CT?',
+        options: [
+          { text: 'Left ventricular ejection fraction', nextStep: 's3', correct: true, feedback: 'Correct! LVEF is measured by echocardiography, not CT TAVI planning. Key CT measurements include: annulus dimensions (area, perimeter), sinus of Valsalva dimensions, coronary ostial heights, sinotubular junction, and access route diameters.' },
+          { text: 'Aortic annulus perimeter and area', nextStep: null, correct: false, feedback: 'Annulus measurements are one of the most critical TAVI CT measurements — they determine prosthesis sizing.' },
+          { text: 'Coronary ostial heights above the annulus', nextStep: null, correct: false, feedback: 'Coronary ostial heights are essential — low coronary ostia increase the risk of coronary obstruction during valve deployment.' }
+        ]
+      },
+      {
+        id: 's3',
+        prompt: 'The iliac artery measurements show the right common iliac is 5.8mm minimum diameter with moderate calcification. The left is 7.2mm with minimal calcification. The proposed valve requires a 14Fr (4.7mm outer diameter) delivery system. What is your assessment?',
+        options: [
+          { text: 'Left femoral approach preferred — wider lumen and less calcification', nextStep: 'complete', correct: true, feedback: 'Correct! The left iliac artery has adequate diameter (7.2mm > 4.7mm) with minimal calcification. The right side, while technically passable, has more calcification which increases the risk of vascular complications.' },
+          { text: 'Both sides are too small — alternative access needed', nextStep: null, correct: false, feedback: 'Both sides have lumens larger than the 4.7mm sheath. The left side at 7.2mm provides comfortable clearance. Vessel size alone does not necessitate alternative access.' },
+          { text: 'Right side is preferred because it is the standard approach', nextStep: null, correct: false, feedback: 'While right femoral is conventionally preferred, the left side has a wider lumen and less calcification, making it the safer choice in this patient.' }
+        ]
+      },
+      {
+        id: 'complete',
+        prompt: null,
+        summary: 'Well done! You correctly selected the TAVI (No Coronaries) protocol based on prior catheterisation, identified that LVEF is not a CT measurement, and made an appropriate access route recommendation based on vessel size and calcification.',
+        protocolRef: 'tavi_no_coros'
+      }
+    ]
+  },
+  {
+    id: 'case_ep_mapping',
+    title: 'EP Mapping Request',
+    category: 'ep',
+    difficulty: 'Intermediate',
+    description: 'A 45-year-old with drug-refractory paroxysmal atrial fibrillation is scheduled for pulmonary vein isolation ablation.',
+    steps: [
+      {
+        id: 's1',
+        prompt: 'The EP team requests: "Pre-ablation CT for CARTO mapping — we plan transseptal access for PVI." Which protocol do you select?',
+        options: [
+          { text: 'CARTO mapping protocol', nextStep: 's2', correct: true, feedback: 'Correct! The CARTO protocol creates a 3D model of the left atrium and pulmonary veins for import into the CARTO electroanatomical mapping system.' },
+          { text: 'Standard Coronary CTCA', nextStep: null, correct: false, feedback: 'Coronary CTCA focuses on coronary artery visualisation, not chamber anatomy. EP mapping requires specific reconstruction parameters for the mapping system import.' },
+          { text: 'Gated CTPA', nextStep: null, correct: false, feedback: 'CTPA assesses for pulmonary embolism and right heart function. It does not provide the specific left atrial and pulmonary vein detail needed for ablation planning.' }
+        ]
+      },
+      {
+        id: 's2',
+        prompt: 'The EP consultant asks: "We may need a retrograde aortic approach as a backup. Should we include the arch?" What is your answer?',
+        options: [
+          { text: 'Yes — include the aortic arch so the mapping system has anatomical data for retrograde catheter navigation', nextStep: 's3', correct: true, feedback: 'Correct! When a retrograde aortic approach is possible, including the arch provides the mapping system with the anatomical framework needed for catheter navigation through the aortic arch into the left ventricle.' },
+          { text: 'No — the arch is never needed for EP mapping', nextStep: null, correct: false, feedback: 'The arch should be included when a retrograde aortic approach is planned. The CARTO protocol has this as a configurable option specifically for this reason.' },
+          { text: 'Always include the arch regardless of approach', nextStep: null, correct: false, feedback: 'The arch is only included when a retrograde approach is planned. Including it unnecessarily adds radiation dose without clinical benefit for transseptal-only procedures.' }
+        ]
+      },
+      {
+        id: 's3',
+        prompt: 'The scan is complete. What key anatomical structures must be clearly visualised for the EP team to plan PVI ablation?',
+        options: [
+          { text: 'Pulmonary vein number, branching pattern, ostial dimensions, and left atrial anatomy', nextStep: 'complete', correct: true, feedback: 'Correct! The EP team needs: number of pulmonary veins (variants include common ostia), branching patterns, ostial dimensions for catheter selection, and overall left atrial anatomy including any ridges or pouches near the veins.' },
+          { text: 'Coronary artery anatomy only', nextStep: null, correct: false, feedback: 'PVI ablation targets the pulmonary vein ostia in the left atrium. While coronary proximity is relevant for safety, the primary structures of interest are the pulmonary veins and left atrium.' },
+          { text: 'Aortic valve morphology', nextStep: null, correct: false, feedback: 'Aortic valve assessment is not the purpose of EP mapping CT. The focus is on left atrial and pulmonary vein anatomy for ablation planning.' }
+        ]
+      },
+      {
+        id: 'complete',
+        prompt: null,
+        summary: 'Great work! You correctly selected the CARTO mapping protocol, made the right decision about arch inclusion for retrograde access, and identified the key anatomical structures for PVI ablation planning.',
+        protocolRef: 'carto'
+      }
+    ]
+  },
+  {
+    id: 'case_ecmo',
+    title: 'ECMO Patient CT',
+    category: 'specialist',
+    difficulty: 'Advanced',
+    description: 'A 38-year-old on VA-ECMO in the cardiac ICU needs urgent cardiac CT to assess LV recovery.',
+    steps: [
+      {
+        id: 's1',
+        prompt: 'The ICU team requests cardiac CT for a patient on VA-ECMO. What is your first critical action before any scan planning?',
+        options: [
+          { text: 'Confirm perfusionist availability and agree transport plan', nextStep: 's2', correct: true, feedback: 'Correct! An ECMO patient CANNOT be transported to CT without a perfusionist present. The perfusionist manages circuit flows during transport and any required adjustments during scanning.' },
+          { text: 'Immediately book the CT scanner slot', nextStep: null, correct: false, feedback: 'Before booking anything, you must confirm perfusionist availability. No perfusionist = no scan. This is a patient safety critical requirement.' },
+          { text: 'Order contrast and prepare the standard protocol', nextStep: null, correct: false, feedback: 'ECMO CT requires specific planning around circuit configuration and IV access. Standard protocols are not appropriate without circuit-specific modifications.' }
+        ]
+      },
+      {
+        id: 's2',
+        prompt: 'The perfusionist is confirmed. For contrast injection, where should the IV cannula be placed?',
+        options: [
+          { text: 'In a peripheral vein SEPARATE from the ECMO circuit', nextStep: 's3', correct: true, feedback: 'Correct! Contrast must NEVER be injected via the ECMO circuit. The circuit would dilute the bolus and recirculate contrast unpredictably. A separate peripheral IV is essential for reliable contrast timing.' },
+          { text: 'Into the ECMO circuit venous line — faster delivery', nextStep: null, correct: false, feedback: 'NEVER inject contrast into the ECMO circuit. The large circuit volume would dilute the contrast bolus, and recirculation would make timing completely unpredictable.' },
+          { text: 'It does not matter — any access point is fine', nextStep: null, correct: false, feedback: 'Access point is critical for ECMO patients. Only a separate peripheral IV will give predictable contrast opacification.' }
+        ]
+      },
+      {
+        id: 's3',
+        prompt: 'The patient is on VA-ECMO with femoral cannulation. For the cardiac CT assessment, the perfusionist can temporarily reduce ECMO flow. Why might this be necessary?',
+        options: [
+          { text: 'Reduced ECMO flow allows more blood to pass through the heart, improving cardiac opacification', nextStep: 'complete', correct: true, feedback: 'Correct! In VA-ECMO, blood is diverted away from the heart. High ECMO flows mean less blood (and contrast) passes through the cardiac chambers, resulting in poor opacification. Temporary flow reduction allows more contrast to pass through the heart for diagnostic imaging.' },
+          { text: 'To save power on the ECMO battery during transport', nextStep: null, correct: false, feedback: 'While battery life matters for transport, flow reduction during scanning is specifically to improve cardiac opacification by allowing more contrast-bearing blood to pass through the heart.' },
+          { text: 'ECMO flow should never be adjusted during CT', nextStep: null, correct: false, feedback: 'ECMO flow adjustment is a recognised technique for improving cardiac CT image quality in VA-ECMO patients, done under perfusionist supervision.' }
+        ]
+      },
+      {
+        id: 'complete',
+        prompt: null,
+        summary: 'Excellent! You demonstrated understanding of the critical safety requirements for ECMO CT: perfusionist involvement, separate IV access for contrast, and the rationale for temporary flow reduction in VA-ECMO. These are high-stakes decisions that directly affect patient safety.',
+        protocolRef: 'ecmo_ct'
+      }
+    ]
+  }
+];
+
 // Protocol to category mapping for learning pages
 const protocolCategories = {
   coronary_arteries: 'coronary', calcium_score: 'coronary', grafts: 'coronary',
@@ -4584,6 +5613,8 @@ function getCurrentView() {
   const hash = location.hash.slice(2) || 'browse';
   if (hash.startsWith('learn')) return 'learn';
   if (hash.startsWith('detail')) return 'detail';
+  if (hash.startsWith('tools')) return 'tools';
+  if (hash.startsWith('quiz')) return 'quiz';
   return 'browse';
 }
 
@@ -4614,6 +5645,22 @@ function renderView() {
   } else if (hash.startsWith('detail')) {
     const el = document.getElementById('detailView');
     el.classList.add('active');
+    window.scrollTo(0, 0);
+  } else if (hash === 'tools') {
+    const el = document.getElementById('toolsView');
+    el.classList.add('active');
+    renderToolsHub();
+    window.scrollTo(0, 0);
+  } else if (hash === 'quiz') {
+    const el = document.getElementById('quizView');
+    el.classList.add('active');
+    renderQuizHub();
+    window.scrollTo(0, 0);
+  } else if (hash.startsWith('quiz/case/')) {
+    const caseId = hash.replace('quiz/case/', '');
+    const el = document.getElementById('quizCaseView');
+    el.classList.add('active');
+    renderQuizCase(caseId);
     window.scrollTo(0, 0);
   }
 }
@@ -4744,6 +5791,8 @@ function resetAll() {
   document.getElementById('queryResults').innerHTML = '';
   // Navigate back to browse view
   browseScrollPos = 0;
+  // Clear checklist session data
+  sessionStorage.removeItem('ctca_checklists');
   navigateTo('browse');
 }
 
@@ -5209,12 +6258,540 @@ function renderProtocol() {
     </div>`;
   }
 
+  // Scan checklists
+  html += renderChecklistSection(state.protocol);
+
   bodyEl.innerHTML = html;
 
   const resultSection = document.getElementById('resultSection');
   resultSection.classList.add('visible');
   // Smooth scroll to protocol card within the detail view
   setTimeout(() => resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+// ============================================================
+// CLINICAL TOOLS HUB
+// ============================================================
+let activeToolId = null;
+
+function renderToolsHub() {
+  const grid = document.getElementById('toolsCardGrid');
+  const tools = [
+    { id: 'contrast', title: 'Contrast Volume Calculator', desc: 'Recommended contrast volume adjusted for protocol and renal function', icon: '💉' },
+    { id: 'betablocker', title: 'Beta-Blocker Dosing', desc: 'Dosing recommendations based on HR, BP, and contraindications', icon: '💊' },
+    { id: 'egfr', title: 'eGFR & Renal Risk', desc: 'CKD-EPI 2021 equation with CKD staging and hydration advice', icon: '🧪' },
+    { id: 'radiation', title: 'Radiation Dose Estimator', desc: 'Estimated dose with chest X-ray and background radiation comparisons', icon: '☢️' }
+  ];
+  grid.innerHTML = tools.map(t => `
+    <div class="tool-card ${activeToolId === t.id ? 'active' : ''}" onclick="selectTool('${t.id}')">
+      <div class="tool-icon">${t.icon}</div>
+      <h3>${t.title}</h3>
+      <p>${t.desc}</p>
+    </div>
+  `).join('');
+  if (activeToolId) renderActiveTool(activeToolId);
+  else document.getElementById('toolActiveContent').innerHTML = '';
+}
+
+function selectTool(id) {
+  activeToolId = id;
+  renderToolsHub();
+}
+
+function renderActiveTool(id) {
+  const c = document.getElementById('toolActiveContent');
+  if (id === 'contrast') c.innerHTML = renderContrastCalc();
+  else if (id === 'betablocker') c.innerHTML = renderBetaBlockerGuide();
+  else if (id === 'egfr') c.innerHTML = renderEgfrCalc();
+  else if (id === 'radiation') c.innerHTML = renderRadiationCalc();
+  setTimeout(() => c.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+// --- Contrast Calculator ---
+function renderContrastCalc() {
+  const opts = Object.keys(protocols).map(k =>
+    `<option value="${k}">${protocols[k].title}</option>`
+  ).join('');
+  return `<div class="calc-section">
+    <h3>💉 Contrast Volume Calculator</h3>
+    <div class="calc-row">
+      <div class="calc-form-group"><label>Patient Weight (kg)</label><input class="calc-input" type="number" id="ccWeight" placeholder="e.g. 70" min="20" max="250"></div>
+      <div class="calc-form-group"><label>eGFR (mL/min)</label><input class="calc-input" type="number" id="ccEgfr" placeholder="e.g. 60" min="5" max="150"></div>
+    </div>
+    <div class="calc-form-group"><label>Protocol</label><select class="calc-select" id="ccProtocol">${opts}</select></div>
+    <button class="calc-btn" onclick="calculateContrast()">Calculate</button>
+    <div class="calc-result" id="ccResult"></div>
+  </div>`;
+}
+
+function calculateContrast() {
+  const weight = parseFloat(document.getElementById('ccWeight').value);
+  const egfr = parseFloat(document.getElementById('ccEgfr').value);
+  const pk = document.getElementById('ccProtocol').value;
+  if (!weight || !egfr) { alert('Please enter weight and eGFR'); return; }
+  const p = protocols[pk];
+  let baseVol = 0, flowRate = '', saline = '';
+  // Try to extract from injection data
+  let inj = p.injection;
+  if (p.getInjection) inj = p.getInjection('20-28');
+  if (inj && inj.scan) {
+    inj.scan.forEach(row => {
+      const txt = (row.contrast || row.volume || '').toString().toLowerCase();
+      const m = txt.match(/([\d.]+)\s*ml/);
+      if (m) baseVol += parseFloat(m[1]);
+      const rm = txt.match(/([\d.]+)\s*ml\/s/);
+      if (rm && !flowRate) flowRate = rm[1] + ' mL/s';
+    });
+    if (inj.scan.length > 0) {
+      const lastRow = inj.scan[inj.scan.length - 1];
+      const salTxt = (lastRow.contrast || lastRow.volume || '').toString().toLowerCase();
+      if (salTxt.includes('saline')) {
+        const sm = salTxt.match(/([\d.]+)\s*ml/);
+        if (sm) saline = sm[1] + ' mL';
+      }
+    }
+  }
+  if (baseVol === 0) baseVol = Math.round(weight * 1.0);
+  let adjVol = baseVol, warning = '';
+  if (egfr >= 30 && egfr < 60) {
+    adjVol = Math.round(baseVol * 0.8);
+    warning = `<div class="calc-warning">⚠️ <strong>eGFR ${Math.round(egfr)} (CKD stage 3):</strong> Contrast volume reduced by 20%. Ensure pre- and post-hydration protocol (IV NaCl 0.9% 1 mL/kg/hr for 6–12 hours).</div>`;
+  } else if (egfr < 30) {
+    adjVol = Math.round(baseVol * 0.6);
+    warning = `<div class="calc-danger">🚨 <strong>eGFR ${Math.round(egfr)} (CKD stage 4/5):</strong> HIGH RISK for contrast-induced nephropathy. Discuss with reporting consultant. Consider alternative imaging. If proceeding: aggressive hydration mandatory.</div>`;
+  }
+  const r = document.getElementById('ccResult');
+  r.className = 'calc-result visible';
+  r.innerHTML = `<h4>Results for ${p.title}</h4>
+    <div class="calc-result-row"><span class="calc-result-label">Base contrast volume</span><span class="calc-result-value">${baseVol} mL</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Adjusted volume</span><span class="calc-result-value" style="color:var(--accent);font-size:1.1rem;">${adjVol} mL</span></div>
+    ${flowRate ? `<div class="calc-result-row"><span class="calc-result-label">Flow rate</span><span class="calc-result-value">${flowRate}</span></div>` : ''}
+    ${saline ? `<div class="calc-result-row"><span class="calc-result-label">Saline chase</span><span class="calc-result-value">${saline}</span></div>` : ''}
+    <div class="calc-result-row"><span class="calc-result-label">Patient weight</span><span class="calc-result-value">${weight} kg</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Contrast-to-weight ratio</span><span class="calc-result-value">${(adjVol/weight).toFixed(1)} mL/kg</span></div>
+    ${warning}`;
+}
+
+// --- Beta-Blocker Dosing Guide ---
+function renderBetaBlockerGuide() {
+  return `<div class="calc-section">
+    <h3>💊 Beta-Blocker Dosing Guide</h3>
+    <div class="calc-row">
+      <div class="calc-form-group"><label>Current Heart Rate (bpm)</label><input class="calc-input" type="number" id="bbHr" placeholder="e.g. 72" min="30" max="200"></div>
+      <div class="calc-form-group"><label>Systolic BP (mmHg)</label><input class="calc-input" type="number" id="bbSbp" placeholder="e.g. 130" min="60" max="250"></div>
+    </div>
+    <div class="calc-form-group"><label style="margin-bottom:10px;">Contraindications (check all that apply)</label>
+      <div class="calc-contra-grid">
+        <label class="calc-contra-item"><input type="checkbox" id="bbAsthma"> Asthma / severe COPD</label>
+        <label class="calc-contra-item"><input type="checkbox" id="bbBrady"> Severe bradycardia (&lt;50)</label>
+        <label class="calc-contra-item"><input type="checkbox" id="bbBlock"> 2nd/3rd degree heart block</label>
+        <label class="calc-contra-item"><input type="checkbox" id="bbHf"> Decompensated heart failure</label>
+      </div>
+    </div>
+    <button class="calc-btn" onclick="calculateBetaBlocker()">Get Recommendation</button>
+    <div class="calc-result" id="bbResult"></div>
+  </div>`;
+}
+
+function calculateBetaBlocker() {
+  const hr = parseInt(document.getElementById('bbHr').value);
+  const sbp = parseInt(document.getElementById('bbSbp').value);
+  if (!hr || !sbp) { alert('Please enter heart rate and systolic BP'); return; }
+  const contras = [];
+  if (document.getElementById('bbAsthma').checked) contras.push('Asthma / severe COPD');
+  if (document.getElementById('bbBrady').checked) contras.push('Severe bradycardia');
+  if (document.getElementById('bbBlock').checked) contras.push('2nd/3rd degree heart block');
+  if (document.getElementById('bbHf').checked) contras.push('Decompensated heart failure');
+  const r = document.getElementById('bbResult');
+  r.className = 'calc-result visible';
+  if (contras.length > 0) {
+    r.innerHTML = `<div class="calc-danger">🚫 <strong>DO NOT ADMINISTER BETA-BLOCKER</strong><br>Contraindication(s) identified:<ul style="margin:8px 0 0 16px;">${contras.map(c => `<li>${c}</li>`).join('')}</ul><br>Consider alternative HR control strategies or proceed with higher HR acquisition mode (Adaptive Sequential or Systolic).</div>`;
+    return;
+  }
+  let html = '';
+  if (hr < 60) {
+    html = `<h4>Recommendation</h4>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:14px;color:#166534;font-size:0.9rem;">
+      ✅ <strong>No beta-blocker needed.</strong> HR ${hr} bpm is within target range (&lt;60 bpm). Flash acquisition can be used if rhythm is regular.</div>`;
+  } else if (hr >= 60 && hr <= 65) {
+    html = `<h4>Recommendation</h4>
+      <div style="background:#fefce8;border:1px solid #fde68a;border-radius:8px;padding:14px;color:#854d0e;font-size:0.9rem;">
+      ⚠️ <strong>HR ${hr} bpm — borderline.</strong> Consider oral metoprolol 25–50mg if rhythm is irregular. Adaptive Sequential acquisition may be suitable. Recheck HR before scanning.</div>`;
+  } else {
+    html = `<h4>Recommendation</h4>`;
+    if (sbp < 100) {
+      html += `<div class="calc-warning">⚠️ <strong>Caution: Systolic BP ${sbp} mmHg is low.</strong> Start with lower oral dose (25mg) and monitor closely. Avoid IV beta-blocker.</div>`;
+    }
+    html += `<div class="calc-result-row"><span class="calc-result-label">Oral route (preferred)</span><span class="calc-result-value">Metoprolol 50–100mg PO, 1hr pre-scan</span></div>
+      <div class="calc-result-row"><span class="calc-result-label">IV route (if oral insufficient)</span><span class="calc-result-value">Metoprolol 5mg IV, repeat q5min (max 15mg)</span></div>
+      <div class="calc-result-row"><span class="calc-result-label">Target HR</span><span class="calc-result-value">&lt;60 bpm, regular rhythm</span></div>
+      <div class="calc-result-row"><span class="calc-result-label">Monitor</span><span class="calc-result-value">BP and HR before, during, and after administration</span></div>
+      <div style="margin-top:12px;font-size:0.82rem;color:var(--text-light);">
+        Also consider sublingual GTN 400μg × 2 sprays (if SBP &gt;100mmHg) for coronary vasodilation, administered 3–5 minutes before scan.
+      </div>`;
+  }
+  r.innerHTML = html;
+}
+
+// --- eGFR Calculator ---
+function renderEgfrCalc() {
+  return `<div class="calc-section">
+    <h3>🧪 eGFR & Renal Risk Calculator</h3>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:16px;">CKD-EPI 2021 (race-free equation)</p>
+    <div class="calc-row">
+      <div class="calc-form-group"><label>Serum Creatinine (μmol/L)</label><input class="calc-input" type="number" id="egfrCreat" placeholder="e.g. 90" min="20" max="2000"></div>
+      <div class="calc-form-group"><label>Age (years)</label><input class="calc-input" type="number" id="egfrAge" placeholder="e.g. 55" min="18" max="110"></div>
+    </div>
+    <div class="calc-form-group"><label>Sex</label>
+      <select class="calc-select" id="egfrSex"><option value="male">Male</option><option value="female">Female</option></select>
+    </div>
+    <button class="calc-btn" onclick="calculateEgfr()">Calculate eGFR</button>
+    <div class="calc-result" id="egfrResult"></div>
+  </div>`;
+}
+
+function calculateEgfr() {
+  const creat = parseFloat(document.getElementById('egfrCreat').value);
+  const age = parseInt(document.getElementById('egfrAge').value);
+  const sex = document.getElementById('egfrSex').value;
+  if (!creat || !age) { alert('Please enter creatinine and age'); return; }
+  const kappa = CKD_EPI.kappa[sex];
+  const alpha = CKD_EPI.alpha[sex];
+  const sexC = CKD_EPI.sexCoeff[sex];
+  const creatMgDl = creat / 88.4;
+  const minR = Math.min(creatMgDl / kappa, 1);
+  const maxR = Math.max(creatMgDl / kappa, 1);
+  const egfr = Math.round(142 * Math.pow(minR, alpha) * Math.pow(maxR, -1.200) * Math.pow(0.9938, age) * sexC);
+  let stage, risk, hydration = '';
+  if (egfr >= 90) { stage = 'G1 (Normal)'; risk = 'low'; }
+  else if (egfr >= 60) { stage = 'G2 (Mildly decreased)'; risk = 'low'; }
+  else if (egfr >= 45) { stage = 'G3a (Mild-moderate)'; risk = 'moderate'; hydration = 'Pre/post hydration: IV NaCl 0.9% at 1 mL/kg/hr for 6–12 hours. Reduce contrast volume by ~20%.'; }
+  else if (egfr >= 30) { stage = 'G3b (Moderate-severe)'; risk = 'moderate'; hydration = 'Pre/post hydration: IV NaCl 0.9% at 1 mL/kg/hr for 6–12 hours. Reduce contrast volume by ~20%. Close monitoring of renal function post-procedure.'; }
+  else if (egfr >= 15) { stage = 'G4 (Severe)'; risk = 'high'; hydration = 'HIGH RISK: Discuss with nephrologist. Aggressive IV hydration mandatory if proceeding. Consider withholding nephrotoxic drugs 48hrs pre/post. Check creatinine at 48–72hrs.'; }
+  else { stage = 'G5 (Kidney failure)'; risk = 'high'; hydration = 'CRITICAL: Discuss with nephrologist urgently. Consider alternative non-contrast imaging. If contrast essential: dialysis coordination may be required.'; }
+  const r = document.getElementById('egfrResult');
+  r.className = 'calc-result visible';
+  r.innerHTML = `<h4>Results</h4>
+    <div class="calc-result-row"><span class="calc-result-label">Estimated GFR</span><span class="calc-result-value" style="font-size:1.2rem;">${egfr} mL/min/1.73m²</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">CKD Stage</span><span class="calc-result-value">${stage}</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Contrast Risk</span><span class="calc-result-value"><span class="risk-badge ${risk}">${risk}</span></span></div>
+    ${hydration ? `<div style="margin-top:12px;padding:12px 16px;background:${risk==='high'?'#fef2f2':'#fefce8'};border-radius:8px;font-size:0.85rem;color:${risk==='high'?'#991b1b':'#854d0e'};line-height:1.5;">
+      <strong>${risk==='high'?'🚨':'⚠️'} Hydration Protocol:</strong> ${hydration}</div>` : ''}`;
+}
+
+// --- Radiation Dose Estimator ---
+function renderRadiationCalc() {
+  const opts = Object.keys(protocols).filter(k => protocols[k].dose && protocols[k].dose.length > 0)
+    .map(k => `<option value="${k}">${protocols[k].title}</option>`).join('');
+  return `<div class="calc-section">
+    <h3>☢️ Radiation Dose Estimator</h3>
+    <div class="calc-form-group"><label>Protocol</label><select class="calc-select" id="radProtocol">${opts}</select></div>
+    <div class="calc-form-group"><label>Patient BMI Category</label>
+      <select class="calc-select" id="radBmi">
+        <option value="lt20">&lt;20 (Small)</option>
+        <option value="20-28" selected>20–28 (Average)</option>
+        <option value="28-30">28–30 (Above average)</option>
+        <option value="gt30">&gt;30 (Large)</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="calculateRadiation()">Estimate Dose</button>
+    <div class="calc-result" id="radResult"></div>
+  </div>`;
+}
+
+function calculateRadiation() {
+  const pk = document.getElementById('radProtocol').value;
+  const bmiCat = document.getElementById('radBmi').value;
+  const p = protocols[pk];
+  if (!p.dose || p.dose.length === 0) return;
+  let totalDlp = 0;
+  p.dose.forEach(d => {
+    const dlpStr = (d.dlp || '').toString();
+    const m = dlpStr.match(/([\d.]+)/);
+    if (m) totalDlp += parseFloat(m[1]);
+  });
+  const bmiFactors = { 'lt20': 0.7, '20-28': 1.0, '28-30': 1.3, 'gt30': 1.6 };
+  const adjDlp = Math.round(totalDlp * (bmiFactors[bmiCat] || 1.0));
+  const effDose = (adjDlp * DOSE_CONSTANTS.kChest).toFixed(1);
+  const xrayEquiv = Math.round(effDose / DOSE_CONSTANTS.chestXrayMsv);
+  const bgDays = Math.round((effDose / DOSE_CONSTANTS.bgMsvYear) * 365);
+  const r = document.getElementById('radResult');
+  r.className = 'calc-result visible';
+  r.innerHTML = `<h4>Dose Estimate for ${p.title}</h4>
+    <div class="calc-result-row"><span class="calc-result-label">Reference DLP</span><span class="calc-result-value">${totalDlp} mGy·cm</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">BMI-adjusted DLP</span><span class="calc-result-value">${adjDlp} mGy·cm</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Estimated effective dose</span><span class="calc-result-value" style="font-size:1.1rem;color:var(--accent);">${effDose} mSv</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Chest X-ray equivalent</span><span class="calc-result-value">≈ ${xrayEquiv} chest X-rays</span></div>
+    <div class="calc-result-row"><span class="calc-result-label">Background radiation equivalent</span><span class="calc-result-value">≈ ${bgDays} days of natural background</span></div>
+    <div style="margin-top:12px;font-size:0.78rem;color:var(--text-light);line-height:1.5;">
+      Note: This is an estimate based on diagnostic reference levels. Actual dose depends on scanner settings, scan range, and patient habitus. Individual DRLs should be verified on the scanner console.
+    </div>`;
+}
+
+// ============================================================
+// CHECKLISTS (protocol detail integration)
+// ============================================================
+function renderChecklistSection(protocolKey) {
+  const cl = getChecklistForProtocol(protocolKey);
+  const sd = JSON.parse(sessionStorage.getItem('ctca_checklists') || '{}');
+  const pc = sd[protocolKey] || {};
+  let html = '<div class="checklist-container"><h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Scan Checklists</h2>';
+  const phases = [
+    { key: 'preScan', title: 'Pre-Scan Checklist', open: true },
+    { key: 'intraScan', title: 'Intra-Scan Prompts', open: false },
+    { key: 'postScan', title: 'Post-Scan Checklist', open: false }
+  ];
+  phases.forEach(phase => {
+    const items = cl[phase.key];
+    const checks = pc[phase.key] || {};
+    const done = items.filter(i => checks[i.id]).length;
+    const pct = items.length ? Math.round((done / items.length) * 100) : 0;
+    html += `<div class="checklist-phase ${phase.open ? 'open' : ''}" id="cl-${phase.key}">
+      <div class="checklist-phase-header" onclick="toggleChecklistPhase('cl-${phase.key}')">
+        <h3>${phase.title}</h3>
+        <span class="checklist-progress">${done}/${items.length}
+          <span class="checklist-progress-bar"><span class="checklist-progress-fill" style="width:${pct}%"></span></span>
+          <svg class="cl-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="checklist-body">`;
+    items.forEach(item => {
+      const chk = checks[item.id] ? 'checked' : '';
+      const cls = checks[item.id] ? ' checked' : '';
+      html += `<div class="checklist-item${cls}" id="cli-${item.id}">
+        <input type="checkbox" ${chk} onchange="toggleChecklistItem('${protocolKey}','${phase.key}','${item.id}',this.checked)">
+        <span class="checklist-item-label">${item.label}</span>
+      </div>`;
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function toggleChecklistPhase(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
+function toggleChecklistItem(pk, phase, itemId, checked) {
+  const sd = JSON.parse(sessionStorage.getItem('ctca_checklists') || '{}');
+  if (!sd[pk]) sd[pk] = {};
+  if (!sd[pk][phase]) sd[pk][phase] = {};
+  sd[pk][phase][itemId] = checked;
+  sessionStorage.setItem('ctca_checklists', JSON.stringify(sd));
+  const item = document.getElementById('cli-' + itemId);
+  if (item) { if (checked) item.classList.add('checked'); else item.classList.remove('checked'); }
+  updateChecklistProgress(pk, phase);
+}
+
+function updateChecklistProgress(pk, phase) {
+  const cl = getChecklistForProtocol(pk);
+  const sd = JSON.parse(sessionStorage.getItem('ctca_checklists') || '{}');
+  const checks = (sd[pk] || {})[phase] || {};
+  const items = cl[phase];
+  const done = items.filter(i => checks[i.id]).length;
+  const pct = items.length ? Math.round((done / items.length) * 100) : 0;
+  const phaseEl = document.getElementById('cl-' + phase);
+  if (phaseEl) {
+    const ps = phaseEl.querySelector('.checklist-progress');
+    if (ps) ps.innerHTML = `${done}/${items.length} <span class="checklist-progress-bar"><span class="checklist-progress-fill" style="width:${pct}%"></span></span> <svg class="cl-chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
+  }
+}
+
+// ============================================================
+// QUIZ MODE
+// ============================================================
+let currentQuiz = null;
+
+function renderQuizHub() {
+  const container = document.getElementById('quizHubContent');
+  const progress = JSON.parse(localStorage.getItem('ctca_quiz_progress') || '{}');
+  let html = '<div class="quiz-hub-header"><h2>🧠 Quiz Mode</h2><p>Test your protocol knowledge with MCQs and clinical scenarios</p></div>';
+  // Progress dashboard
+  html += '<div class="quiz-progress-dashboard"><h3>Your Progress</h3>';
+  const cats = Object.keys(quizBank);
+  cats.forEach(cat => {
+    const d = quizBank[cat];
+    const p = progress[cat] || { attempted: 0, correct: 0 };
+    const pct = p.attempted > 0 ? Math.round((p.correct / p.attempted) * 100) : 0;
+    html += `<div class="quiz-progress-row">
+      <span class="quiz-progress-label">${d.icon} ${d.label}</span>
+      <div class="quiz-progress-bar-track"><div class="quiz-progress-bar-fill" style="width:${pct}%;background:${pct >= 70 ? 'var(--success)' : pct >= 40 ? '#eab308' : 'var(--danger)'}"></div></div>
+      <span class="quiz-progress-pct">${pct}%</span>
+    </div>`;
+  });
+  html += '</div>';
+  // Quick Quiz
+  html += '<div class="quiz-section-label">Quick Quiz by Category</div><div class="quiz-hub-grid">';
+  cats.forEach(cat => {
+    const d = quizBank[cat];
+    html += `<div class="quiz-category-card" onclick="startQuiz('${cat}')">
+      <div class="quiz-cat-icon">${d.icon}</div>
+      <h3>${d.label}</h3>
+      <p>${d.questions.length} questions</p>
+    </div>`;
+  });
+  html += '</div>';
+  // Clinical Cases
+  html += '<div class="quiz-section-label">Clinical Scenarios</div><div class="quiz-hub-grid">';
+  clinicalCases.forEach(c => {
+    html += `<div class="quiz-category-card" onclick="navigateTo('quiz/case/${c.id}')">
+      <h3>${c.title}</h3>
+      <p>${c.description}</p>
+      <span class="risk-badge ${c.difficulty === 'Foundation' ? 'low' : c.difficulty === 'Intermediate' ? 'moderate' : 'high'}" style="margin-top:8px;">${c.difficulty}</span>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function startQuiz(category) {
+  const d = quizBank[category];
+  const shuffled = [...d.questions].sort(() => Math.random() - 0.5);
+  const count = Math.min(shuffled.length, 10);
+  currentQuiz = { category, label: d.label, questions: shuffled.slice(0, count), idx: 0, score: 0, answers: [] };
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const container = document.getElementById('quizHubContent');
+  const q = currentQuiz.questions[currentQuiz.idx];
+  const total = currentQuiz.questions.length;
+  const cur = currentQuiz.idx + 1;
+  const shuffOpts = [...q.options].sort(() => Math.random() - 0.5);
+  currentQuiz._opts = shuffOpts;
+  let html = `<div class="quiz-question-card">
+    <div class="quiz-question-progress">Question ${cur} of ${total} — ${currentQuiz.label}</div>
+    <div class="checklist-progress-bar" style="width:100%;margin-bottom:16px;"><div class="checklist-progress-fill" style="width:${(cur/total)*100}%;background:#7c3aed;"></div></div>
+    <div class="quiz-question-text">${q.question}</div>`;
+  shuffOpts.forEach((o, i) => {
+    html += `<button class="quiz-option" id="qopt${i}" onclick="answerQuiz(${i})">${o.text}</button>`;
+  });
+  html += `<div class="quiz-feedback" id="quizFb"></div>
+    <button class="quiz-next-btn" id="quizNextBtn" style="display:none;" onclick="nextQuizQuestion()">${cur >= total ? 'See Results' : 'Next Question'}</button>
+  </div>`;
+  container.innerHTML = html;
+}
+
+function answerQuiz(idx) {
+  const q = currentQuiz.questions[currentQuiz.idx];
+  const opts = currentQuiz._opts;
+  const isCorrect = opts[idx].correct;
+  if (isCorrect) currentQuiz.score++;
+  currentQuiz.answers.push({ qid: q.id, correct: isCorrect });
+  // Disable & highlight
+  opts.forEach((o, i) => {
+    const btn = document.getElementById('qopt' + i);
+    btn.classList.add('disabled');
+    if (o.correct) btn.classList.add('correct');
+    if (i === idx && !isCorrect) btn.classList.add('incorrect');
+    if (!o.correct && i !== idx) btn.classList.add('dimmed');
+  });
+  const fb = document.getElementById('quizFb');
+  fb.className = `quiz-feedback visible ${isCorrect ? 'correct-fb' : 'incorrect-fb'}`;
+  fb.innerHTML = `<strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong> ${q.explanation}`;
+  document.getElementById('quizNextBtn').style.display = 'inline-block';
+}
+
+function nextQuizQuestion() {
+  currentQuiz.idx++;
+  if (currentQuiz.idx >= currentQuiz.questions.length) renderQuizResults();
+  else renderQuizQuestion();
+}
+
+function renderQuizResults() {
+  const container = document.getElementById('quizHubContent');
+  const pct = Math.round((currentQuiz.score / currentQuiz.questions.length) * 100);
+  // Save progress
+  const progress = JSON.parse(localStorage.getItem('ctca_quiz_progress') || '{}');
+  if (!progress[currentQuiz.category]) progress[currentQuiz.category] = { attempted: 0, correct: 0 };
+  progress[currentQuiz.category].attempted += currentQuiz.questions.length;
+  progress[currentQuiz.category].correct += currentQuiz.score;
+  localStorage.setItem('ctca_quiz_progress', JSON.stringify(progress));
+  const color = pct >= 70 ? 'var(--success)' : pct >= 40 ? '#eab308' : 'var(--danger)';
+  const msg = pct >= 80 ? 'Excellent!' : pct >= 60 ? 'Good work!' : pct >= 40 ? 'Keep practising!' : 'Review the learning content and try again.';
+  container.innerHTML = `<div class="quiz-question-card" style="text-align:center;">
+    <h2 style="font-size:1.2rem;margin-bottom:4px;">Quiz Complete — ${currentQuiz.label}</h2>
+    <div class="quiz-score-display" style="color:${color};">${pct}%</div>
+    <p style="font-size:0.95rem;color:var(--text-light);margin-bottom:20px;">You scored ${currentQuiz.score} out of ${currentQuiz.questions.length}. ${msg}</p>
+    <button class="calc-btn" onclick="startQuiz('${currentQuiz.category}')" style="margin-bottom:8px;">Try Again</button><br>
+    <button class="quiz-next-btn outline" onclick="renderQuizHub()" style="display:inline-block;margin-top:4px;">Back to Quiz Hub</button>
+  </div>`;
+}
+
+// --- Clinical Case Engine ---
+function renderQuizCase(caseId) {
+  const c = clinicalCases.find(x => x.id === caseId);
+  if (!c) { navigateTo('quiz'); return; }
+  if (!window._caseState || window._caseState.caseId !== caseId) {
+    window._caseState = { caseId, stepId: c.steps[0].id, history: [] };
+  }
+  renderCaseStep(c);
+}
+
+function renderCaseStep(c) {
+  const container = document.getElementById('quizCaseContent');
+  const step = c.steps.find(s => s.id === window._caseState.stepId);
+  if (!step) return;
+  let html = `<div class="case-patient-info"><strong>${c.title}</strong> (${c.difficulty})<br>${c.description}</div>`;
+  // History trail
+  window._caseState.history.forEach(h => {
+    html += `<div class="case-history-card ${h.correct ? '' : 'wrong'}">
+      <span style="color:var(--text-light);font-size:0.8rem;">${h.prompt.substring(0, 80)}...</span><br>
+      <strong style="color:${h.correct ? '#166534' : '#991b1b'};">${h.correct ? '✅' : '❌'} ${h.text}</strong>
+    </div>`;
+  });
+  // Current step
+  if (step.summary) {
+    html += `<div class="case-step-card" style="text-align:center;border-left-color:var(--success);">
+      <h3 style="margin-bottom:8px;color:var(--success);">🎉 Case Complete!</h3>
+      <p style="font-size:0.95rem;margin-bottom:16px;line-height:1.6;">${step.summary}</p>
+      ${step.protocolRef ? `<button class="calc-btn" onclick="navigateTo('learn/${step.protocolRef}')" style="margin-bottom:8px;">📖 Review Protocol Learning</button><br>` : ''}
+      <button class="quiz-next-btn outline" onclick="window._caseState=null;navigateTo('quiz',{slideBack:true})" style="display:inline-block;margin-top:4px;">Back to Quiz Hub</button>
+    </div>`;
+  } else {
+    html += `<div class="case-step-card"><div class="quiz-question-text">${step.prompt}</div>`;
+    step.options.forEach((o, i) => {
+      html += `<button class="quiz-option" id="copt${i}" onclick="answerCaseStep('${c.id}','${step.id}',${i})">${o.text}</button>`;
+    });
+    html += '<div class="quiz-feedback" id="caseFb"></div></div>';
+  }
+  container.innerHTML = html;
+}
+
+function answerCaseStep(caseId, stepId, optIdx) {
+  const c = clinicalCases.find(x => x.id === caseId);
+  const step = c.steps.find(s => s.id === stepId);
+  const opt = step.options[optIdx];
+  // Disable all
+  step.options.forEach((o, i) => {
+    const btn = document.getElementById('copt' + i);
+    btn.classList.add('disabled');
+    if (o.correct) btn.classList.add('correct');
+    if (i === optIdx && !opt.correct) btn.classList.add('incorrect');
+    if (!o.correct && i !== optIdx) btn.classList.add('dimmed');
+  });
+  const fb = document.getElementById('caseFb');
+  fb.className = `quiz-feedback visible ${opt.correct ? 'correct-fb' : 'incorrect-fb'}`;
+  let fbHtml = opt.feedback;
+  if (!opt.correct && !opt.nextStep) {
+    fbHtml += '<br><button class="quiz-next-btn" onclick="retryCaseStep()" style="display:inline-block;margin-top:10px;font-size:0.85rem;">Try Again</button>';
+  }
+  fb.innerHTML = fbHtml;
+  window._caseState.history.push({ prompt: step.prompt, text: opt.text, correct: opt.correct });
+  if (opt.correct && opt.nextStep) {
+    setTimeout(() => {
+      window._caseState.stepId = opt.nextStep;
+      renderCaseStep(c);
+    }, 2000);
+  }
+}
+
+function retryCaseStep() {
+  window._caseState.history.pop();
+  const c = clinicalCases.find(x => x.id === window._caseState.caseId);
+  renderCaseStep(c);
 }
 
 // ============================================================
