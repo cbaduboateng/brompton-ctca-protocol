@@ -1588,6 +1588,113 @@
   .risk-badge.moderate { background: #fef3c7; color: #92400e; }
   .risk-badge.high { background: #fecaca; color: #991b1b; }
 
+  /* ============================================================
+     SCAN RANGE & CONTRAST TIMING HIGHLIGHTS
+     ============================================================ */
+  .scan-range-highlight {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 2px solid #3b82f6;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .scan-range-highlight .hl-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1;
+  }
+  .scan-range-highlight .hl-content { flex: 1; }
+  .scan-range-highlight .hl-label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: #1d4ed8; margin-bottom: 3px;
+  }
+  .scan-range-highlight .hl-value {
+    font-size: 0.98rem; font-weight: 600; color: #1e3a5f; line-height: 1.4;
+  }
+
+  .contrast-timing-highlight {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 2px solid #f59e0b;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .contrast-timing-highlight .hl-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1;
+  }
+  .contrast-timing-highlight .hl-content { flex: 1; }
+  .contrast-timing-highlight .hl-label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: #b45309; margin-bottom: 3px;
+  }
+  .contrast-timing-highlight .hl-value {
+    font-size: 0.98rem; font-weight: 600; color: #78350f; line-height: 1.4;
+  }
+  .contrast-timing-highlight .hl-sub {
+    font-size: 0.82rem; font-weight: 400; color: #92400e; margin-top: 4px; line-height: 1.35;
+  }
+
+  .injection-type-highlight {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 2px solid #22c55e;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .injection-type-highlight .hl-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+    line-height: 1;
+  }
+  .injection-type-highlight .hl-content { flex: 1; }
+  .injection-type-highlight .hl-label {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: #15803d; margin-bottom: 3px;
+  }
+  .injection-type-highlight .hl-value {
+    font-size: 0.98rem; font-weight: 600; color: #14532d; line-height: 1.4;
+  }
+  .injection-type-highlight .hl-sub {
+    font-size: 0.82rem; font-weight: 400; color: #166534; margin-top: 4px; line-height: 1.35;
+  }
+  .injection-type-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.4px; margin-left: 8px; vertical-align: middle;
+  }
+  .injection-type-badge.standard { background: #d1fae5; color: #065f46; }
+  .injection-type-badge.long-injection { background: #dbeafe; color: #1e40af; }
+  .injection-type-badge.bastion-wheel { background: #fce7f3; color: #9d174d; }
+  .injection-type-badge.erasmus { background: #ede9fe; color: #5b21b6; }
+  .injection-type-badge.flash { background: #fef3c7; color: #92400e; }
+  .injection-type-badge.weight-based { background: #e0e7ff; color: #3730a3; }
+  .injection-type-badge.none { background: #f1f5f9; color: #475569; }
+  .injection-type-badge.manual { background: #fef2f2; color: #991b1b; }
+
+  .highlight-row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .highlight-row > div { flex: 1; min-width: 260px; }
+
+  @media (max-width: 768px) {
+    .highlight-row { flex-direction: column; }
+    .highlight-row > div { min-width: unset; }
+  }
+
   .calc-contra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .calc-contra-item {
     display: flex; align-items: center; gap: 8px; font-size: 0.88rem;
@@ -5106,6 +5213,189 @@ const DOSE_CONSTANTS = {
 };
 
 // ============================================================
+// CONTRAST & TIMING METADATA (per-protocol classification)
+// ============================================================
+const contrastMetadata = {
+  coronary_arteries: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: function(hr) {
+      if (hr < 60) return "Test bolus timing + 5 seconds delay";
+      return "Test bolus timing + 3 seconds delay";
+    },
+    contrastAgent: "Iomeron 400",
+    notes: "BMI-dependent volume: Standard (<28 BMI) or Large (≥28 BMI). Always use test bolus with 10s dynamic evaluation at carina level, ROI ascending aorta."
+  },
+  calcium_score: {
+    injectionType: "Non-Contrast",
+    injectionClass: "none",
+    phaseType: "N/A",
+    timingMethod: "N/A",
+    timingDetail: "No contrast injection required",
+    contrastAgent: "None",
+    notes: "Non-contrast prospective ECG-gated sequential acquisition for calcium scoring."
+  },
+  grafts: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: function(hr) {
+      if (hr < 65) return "Test bolus timing — no extra delay (diastolic adaptive)";
+      return "Test bolus timing + 3 seconds delay (systolic adaptive)";
+    },
+    contrastAgent: "Iomeron 400",
+    notes: "Standard cardiac injection for grafts. For congenital patients requiring R+L heart + coronaries: switch to Cardiac Long Injection (150ml)."
+  },
+  tavi_no_coros: {
+    injectionType: "Flash TAVI",
+    injectionClass: "flash",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing + 8 seconds delay",
+    contrastAgent: "Iomeron 400",
+    notes: "Three-phase injection: 10ml at 3 ml/s, then 60ml at 5-6 ml/s contrast, followed by 40ml saline chase. Test bolus at L1 level, ROI in descending aorta."
+  },
+  tavi_plus_coros: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial (dual-phase)",
+    timingMethod: "Test Bolus",
+    timingDetail: "CTCA: Test bolus + 3s | Body angio: minimum 6 seconds after CTCA complete",
+    contrastAgent: "Iomeron 400",
+    notes: "Two-stage acquisition: cardiac phase with CTCA delay, then body angiogram with minimum 6s inter-scan delay. Test bolus at carina, ROI in descending aorta."
+  },
+  '4d_valve': {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing + 3 seconds delay",
+    contrastAgent: "Iomeron 400",
+    notes: "Adaptive Sequential 0%-100% full cardiac cycle. Single adaptive block through valve only. Multiphase reconstruction at every 5% R-R interval."
+  },
+  mitral_valve: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing (cardiac phase)",
+    contrastAgent: "Iomeron 400",
+    notes: "Adaptive Sequential 30%-90% R-R for end systole + end diastole. Test bolus at carina, ROI in ascending aorta."
+  },
+  evoque: {
+    injectionType: "Long Injection",
+    injectionClass: "long-injection",
+    phaseType: "Arterial + Venous (dual-phase)",
+    timingMethod: "Test Bolus + Set Delay",
+    timingDetail: "Cardiac: Test bolus timing | Venogram: 90 seconds post-contrast start",
+    contrastAgent: "Iomeron 400",
+    notes: "Two linked scans — first cardiac with full retrospective spiral (0-100% R-R), then delayed venogram at 90 seconds for iliofemoral access planning."
+  },
+  tendyne: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial + Delayed",
+    timingMethod: "Test Bolus + Set Delay",
+    timingDetail: "Cardiac: Test bolus timing | Low-dose thorax: 40 seconds post-contrast",
+    contrastAgent: "Iomeron 400",
+    notes: "BMI-dependent volume. Full Retrospective Spiral 0-100%. Research protocol with additional low-dose thorax at 40s delay."
+  },
+  gated_thoracic_aorta: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing — no extra delay",
+    contrastAgent: "Iomeron 400",
+    notes: "Turbo Flash Gated. Test bolus at carina level, ROI in descending aorta. No additional delay beyond test bolus timing."
+  },
+  aortic_pears: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing + 8 seconds delay",
+    contrastAgent: "Iomeron 400",
+    notes: "Flash Gated acquisition. Aortic valve imaging 60-80% R-R interval. Exstent-specific DICOM requirements."
+  },
+  ross_pears: {
+    injectionType: "Bastion Wheel",
+    injectionClass: "bastion-wheel",
+    phaseType: "Set Delay",
+    timingMethod: "Set Delay (Bastion Wheel)",
+    timingDetail: "80 seconds fixed delay — per Bastion Wheel chart",
+    contrastAgent: "Iomeron 400",
+    notes: "Uses Bastion Wheel chart for injection parameters and timing. Millisecond timings as per chart. Cardiac gating 10%-40% R-R (preferably 10%-25%) for ventricular systole."
+  },
+  access_routes: {
+    injectionType: "Flash TAVI",
+    injectionClass: "flash",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing + 8 seconds delay",
+    contrastAgent: "Iomeron 400",
+    notes: "Flash TAVI injection protocol. Test bolus at L1 level, ROI in descending aorta. Three-phase injection strategy for access route coverage."
+  },
+  carto: {
+    injectionType: "Standard Cardiac",
+    injectionClass: "standard",
+    phaseType: "Arterial + Delayed",
+    timingMethod: "Test Bolus + Set Delay",
+    timingDetail: "Main scan: Test bolus timing (no extra delay) | Delayed LAA: 60 seconds after first scan",
+    contrastAgent: "Iomeron 400",
+    notes: "Gated Adaptive Sequential for pulmonary veins. Delayed LAA scan at 60s to assess left atrial appendage filling/thrombus."
+  },
+  vivo: {
+    injectionType: "Long Injection",
+    injectionClass: "long-injection",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing (no specified extra delay)",
+    contrastAgent: "Iomeron 400",
+    notes: "Cardiac Long Injection protocol (150ml). Extended injection time for comprehensive cardiovascular assessment. Test bolus at carina, ROI in descending aorta."
+  },
+  inheart: {
+    injectionType: "Bastion Wheel",
+    injectionClass: "bastion-wheel",
+    phaseType: "Arterial + Late Enhancement",
+    timingMethod: "Set Delay (Bastion Wheel)",
+    timingDetail: "Arterial scan: 70 seconds (Bastion Wheel) | Late CTCA: 8 minutes post-contrast",
+    contrastAgent: "Iomeron 400",
+    notes: "Two-phase Bastion Wheel protocol: arterial phase at 60-80% R-R for ventricular filling, then late CTCA at 8 minutes for myocardial late enhancement. Heart only for late phase."
+  },
+  gated_ctpa: {
+    injectionType: "Long Injection",
+    injectionClass: "long-injection",
+    phaseType: "Arterial",
+    timingMethod: "Test Bolus",
+    timingDetail: "Test bolus timing + 8 seconds delay",
+    contrastAgent: "Iomeron 400",
+    notes: "Cardiac Long Injection (150ml) for congenital heart or triple rule out (PE, aortic dissection, CAD). Test bolus at carina, ROI in ascending aorta."
+  },
+  paediatric_cardiac: {
+    injectionType: "Weight-Based Paediatric",
+    injectionClass: "weight-based",
+    phaseType: "Arterial",
+    timingMethod: "Bolus Tracking",
+    timingDetail: "Manual bolus tracking — 100 HU threshold in descending aorta",
+    contrastAgent: "Iomeron 350 or 400",
+    notes: "Weight-based contrast volume (1.5-2 ml/kg). Manual bolus tracking preferred over test bolus in paediatrics. Monitor descending aorta for 100 HU trigger."
+  },
+  ecmo_ct: {
+    injectionType: "Manual ECMO",
+    injectionClass: "manual",
+    phaseType: "Manual ROI Trigger",
+    timingMethod: "Manual ROI",
+    timingDetail: "Manual ROI triggering at peak enhancement — standard timing UNRELIABLE",
+    contrastAgent: "Iomeron 400",
+    notes: "ECMO haemodynamics make standard test bolus unreliable. VA-ECMO: retrograde/antegrade mixing requires manual peak detection. VV-ECMO: more predictable timing but still manual ROI recommended."
+  }
+};
+
+// ============================================================
 // QUIZ BANK (MCQs by category)
 // ============================================================
 const quizBank = {
@@ -6079,6 +6369,98 @@ function renderProtocol() {
   // ACQUISITION
   html += `<div class="param-group full-width"><h3>Scan Acquisition</h3>`;
 
+  // ── SCAN RANGE & CONTRAST TIMING HIGHLIGHTS ──
+  const cm = contrastMetadata[state.protocol];
+  let _hlRange = null;
+  let _hlDelay = null;
+
+  // Extract scan range from protocol data
+  if (state.protocol === 'paediatric_cardiac' && p.getAcquisitionByWeight) {
+    _hlRange = 'Weight-dependent — see acquisition parameters below';
+  } else if (state.protocol === 'ecmo_ct' && p.getAcquisitionByECMOType) {
+    const _ea = p.getAcquisitionByECMOType(state.ecmo_type);
+    _hlRange = _ea.range;
+    _hlDelay = _ea.timing;
+  } else if (p.getAcquisition) {
+    const _acq = p.getAcquisition(state.hr);
+    _hlRange = _acq.range;
+    _hlDelay = _acq.delay;
+  } else if (p.acquisition) {
+    const _sa = p.acquisition;
+    // Multi-range protocols
+    const _ranges = [];
+    if (_sa.range) _ranges.push(_sa.range);
+    if (_sa.ctca) _ranges.push('CTCA: ' + _sa.ctca);
+    if (_sa.bodyAngio) _ranges.push('Body Angio: ' + _sa.bodyAngio);
+    if (_sa.cardiac) _ranges.push('Cardiac: ' + _sa.cardiac);
+    if (_sa.venogram) _ranges.push('Venogram: ' + _sa.venogram);
+    if (_sa.arterial && _sa.arterial.range) _ranges.push('Arterial: ' + _sa.arterial.range);
+    if (_ranges.length > 0) _hlRange = _ranges.join('<br>');
+
+    // Multi-delay protocols
+    const _delays = [];
+    if (_sa.delay) _delays.push(_sa.delay);
+    if (_sa.ctcaDelay) _delays.push('CTCA: ' + _sa.ctcaDelay);
+    if (_sa.bodyAngioDelay) _delays.push('Body Angio: ' + _sa.bodyAngioDelay);
+    if (_sa.venogramDelay) _delays.push('Venogram: ' + _sa.venogramDelay);
+    if (_sa.delayed) _delays.push('Delayed: ' + _sa.delayed);
+    if (_sa.arterial && _sa.arterial.notes) _delays.push('Arterial: ' + _sa.arterial.notes);
+    if (_sa.late) _delays.push('Late Enhancement: ' + _sa.late);
+    if (_delays.length > 0) _hlDelay = _delays.join('<br>');
+  } else if (p.scanRange) {
+    _hlRange = p.scanRange;
+  }
+
+  // Build the highlight row
+  if (_hlRange || (cm && cm.timingDetail)) {
+    html += `<div class="highlight-row">`;
+
+    // Scan Range highlight
+    if (_hlRange) {
+      html += `<div class="scan-range-highlight">
+        <span class="hl-icon">📍</span>
+        <div class="hl-content">
+          <div class="hl-label">Scan Range</div>
+          <div class="hl-value">${_hlRange}</div>
+        </div>
+      </div>`;
+    }
+
+    // Contrast Timing highlight
+    if (cm && cm.timingDetail) {
+      let _timingText = typeof cm.timingDetail === 'function' ? cm.timingDetail(state.hr) : cm.timingDetail;
+      html += `<div class="contrast-timing-highlight">
+        <span class="hl-icon">⏱️</span>
+        <div class="hl-content">
+          <div class="hl-label">Contrast Timing — ${cm.phaseType}</div>
+          <div class="hl-value">${_timingText}</div>
+          ${cm.timingMethod !== 'N/A' ? `<div class="hl-sub">Method: ${cm.timingMethod}</div>` : ''}
+        </div>
+      </div>`;
+    }
+
+    html += `</div>`;
+  }
+
+  // Injection Protocol Type highlight
+  if (cm && cm.injectionType !== 'Non-Contrast') {
+    html += `<div class="injection-type-highlight">
+      <span class="hl-icon">💉</span>
+      <div class="hl-content">
+        <div class="hl-label">Injection Protocol<span class="injection-type-badge ${cm.injectionClass}">${cm.injectionType}</span></div>
+        <div class="hl-value">${cm.contrastAgent}${cm.notes ? ` — ${cm.notes}` : ''}</div>
+      </div>
+    </div>`;
+  } else if (cm && cm.injectionType === 'Non-Contrast') {
+    html += `<div class="injection-type-highlight" style="border-color:#94a3b8;background:linear-gradient(135deg,#f8fafc,#e2e8f0);">
+      <span class="hl-icon">🚫</span>
+      <div class="hl-content">
+        <div class="hl-label" style="color:#475569;">Injection Protocol<span class="injection-type-badge none">Non-Contrast</span></div>
+        <div class="hl-value" style="color:#334155;">${cm.notes}</div>
+      </div>
+    </div>`;
+  }
+
   // PAEDIATRIC weight-based acquisition
   if (state.protocol === 'paediatric_cardiac' && p.getAcquisitionByWeight) {
     const wacq = p.getAcquisitionByWeight(state.paed_weight);
@@ -6280,7 +6662,8 @@ function renderToolsHub() {
     { id: 'contrast', title: 'Contrast Volume Calculator', desc: 'Recommended contrast volume adjusted for protocol and renal function', icon: '💉' },
     { id: 'betablocker', title: 'Beta-Blocker Dosing', desc: 'Dosing recommendations based on HR, BP, and contraindications', icon: '💊' },
     { id: 'egfr', title: 'eGFR & Renal Risk', desc: 'CKD-EPI 2021 equation with CKD staging and hydration advice', icon: '🧪' },
-    { id: 'radiation', title: 'Radiation Dose Estimator', desc: 'Estimated dose with chest X-ray and background radiation comparisons', icon: '☢️' }
+    { id: 'radiation', title: 'Radiation Dose Estimator', desc: 'Estimated dose with chest X-ray and background radiation comparisons', icon: '☢️' },
+    { id: 'contrastref', title: 'Contrast Protocol Reference', desc: 'Injection types, timing methods, and protocol-specific contrast guidance', icon: '📋' }
   ];
   grid.innerHTML = tools.map(t => `
     <div class="tool-card ${activeToolId === t.id ? 'active' : ''}" onclick="selectTool('${t.id}')">
@@ -6304,6 +6687,7 @@ function renderActiveTool(id) {
   else if (id === 'betablocker') c.innerHTML = renderBetaBlockerGuide();
   else if (id === 'egfr') c.innerHTML = renderEgfrCalc();
   else if (id === 'radiation') c.innerHTML = renderRadiationCalc();
+  else if (id === 'contrastref') c.innerHTML = renderContrastReference();
   setTimeout(() => c.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
 }
 
@@ -6526,6 +6910,137 @@ function calculateRadiation() {
     <div style="margin-top:12px;font-size:0.78rem;color:var(--text-light);line-height:1.5;">
       Note: This is an estimate based on diagnostic reference levels. Actual dose depends on scanner settings, scan range, and patient habitus. Individual DRLs should be verified on the scanner console.
     </div>`;
+}
+
+// --- Contrast Protocol Reference ---
+function renderContrastReference() {
+  // Build protocol-to-injection-type lookup table
+  const injTypeRows = Object.keys(contrastMetadata).map(pk => {
+    const cm = contrastMetadata[pk];
+    const p = protocols[pk];
+    if (!p) return '';
+    return `<tr>
+      <td style="font-weight:600;">${p.title}</td>
+      <td><span class="injection-type-badge ${cm.injectionClass}" style="font-size:0.68rem;">${cm.injectionType}</span></td>
+      <td>${cm.phaseType}</td>
+      <td style="font-size:0.82rem;">${typeof cm.timingDetail === 'function' ? cm.timingDetail(65) : cm.timingDetail}</td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="calc-section">
+    <h3>📋 Contrast Protocol Reference Guide</h3>
+    <p style="color:var(--text-light);font-size:0.88rem;margin-bottom:20px;">
+      This reference guide documents all contrast injection protocol types and timing methods used at the Royal Brompton.
+    </p>
+
+    <h4 style="color:var(--primary);margin:20px 0 12px;font-size:0.95rem;">Injection Protocol Types</h4>
+
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+      <div style="background:#f0fdf4;border-left:4px solid #22c55e;padding:12px 16px;border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span class="injection-type-badge standard">Standard Cardiac</span>
+        </div>
+        <div style="font-size:0.85rem;color:#334155;line-height:1.5;">
+          <strong>Typical volume:</strong> 80–100 ml Iomeron 400 (BMI-dependent).<br>
+          <strong>Used for:</strong> Coronary arteries, grafts, mitral valve, TAVI + coros, 4D valve, tendyne, thoracic aorta, PEARS, CARTO.<br>
+          <strong>Method:</strong> Single-phase bolus with saline chase. Flow rate 5–6 ml/s via antecubital 18G cannula. Standard test bolus evaluation.
+        </div>
+      </div>
+
+      <div style="background:#eff6ff;border-left:4px solid #3b82f6;padding:12px 16px;border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span class="injection-type-badge long-injection">Long Injection</span>
+        </div>
+        <div style="font-size:0.85rem;color:#334155;line-height:1.5;">
+          <strong>Typical volume:</strong> 120–150 ml Iomeron 400.<br>
+          <strong>Used for:</strong> EVOQUE, VIVO, Gated CTPA, congenital heart patients requiring R+L heart + coronaries.<br>
+          <strong>Method:</strong> Extended injection duration for sustained opacification of both right and left heart chambers. Higher total contrast volume to maintain enhancement throughout longer acquisition windows. Essential for protocols requiring simultaneous arterial and venous opacification.
+        </div>
+      </div>
+
+      <div style="background:#fdf2f8;border-left:4px solid #ec4899;padding:12px 16px;border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span class="injection-type-badge bastion-wheel">Bastion Wheel</span>
+        </div>
+        <div style="font-size:0.85rem;color:#334155;line-height:1.5;">
+          <strong>Typical volume:</strong> 100–150 ml Iomeron 400 (per chart).<br>
+          <strong>Used for:</strong> Ross PEARS, INHEART.<br>
+          <strong>Method:</strong> Injection parameters determined from the Bastion Wheel chart based on patient weight, scan duration, and desired enhancement. Uses fixed delay timing (e.g. 70–80 seconds) rather than test bolus. Provides optimised contrast timing for complex multi-phase acquisitions including late myocardial enhancement.
+        </div>
+      </div>
+
+      <div style="background:#f5f3ff;border-left:4px solid #8b5cf6;padding:12px 16px;border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span class="injection-type-badge erasmus">Erasmus</span>
+        </div>
+        <div style="font-size:0.85rem;color:#334155;line-height:1.5;">
+          <strong>Typical volume:</strong> Variable (split-bolus technique).<br>
+          <strong>Used for:</strong> Not currently standard at Brompton — available as alternative for combined arterial + portal venous phase imaging.<br>
+          <strong>Method:</strong> Split-bolus (biphasic) injection technique originating from Erasmus MC. First bolus for portal venous/parenchymal phase, followed by second bolus for arterial phase. Allows single-acquisition combined arterial and portal venous imaging, reducing total contrast volume and scan passes. Particularly useful when both vascular and parenchymal enhancement are required simultaneously.
+        </div>
+      </div>
+
+      <div style="background:#fffbeb;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:6px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <span class="injection-type-badge flash">Flash</span>
+        </div>
+        <div style="font-size:0.85rem;color:#334155;line-height:1.5;">
+          <strong>Typical volume:</strong> 100 ml Iomeron 400 (triphasic).<br>
+          <strong>Used for:</strong> TAVI (no coronaries), Access Routes.<br>
+          <strong>Method:</strong> Three-phase injection: initial slow bolus (3 ml/s), followed by main contrast phase (5–6 ml/s), then saline chase. Optimised for flash (high-pitch spiral) acquisition requiring rapid, high-concentration bolus. Test bolus at L1 level with ROI in descending aorta.
+        </div>
+      </div>
+    </div>
+
+    <h4 style="color:var(--primary);margin:20px 0 12px;font-size:0.95rem;">Contrast Timing Methods</h4>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px 16px;border-radius:6px;">
+        <strong style="color:#1e40af;">Arterial (Test Bolus)</strong>
+        <div style="font-size:0.85rem;color:#475569;margin-top:4px;line-height:1.5;">
+          Most common timing method. Small test bolus (10–15 ml) injected first to measure contrast transit time. Dynamic evaluation with ROI in target vessel (ascending or descending aorta). Scan delay = test bolus peak time + protocol-specific offset (typically +3s to +8s). Provides patient-specific timing accuracy.
+        </div>
+      </div>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px 16px;border-radius:6px;">
+        <strong style="color:#b45309;">Set Delay (Fixed Timing)</strong>
+        <div style="font-size:0.85rem;color:#475569;margin-top:4px;line-height:1.5;">
+          Fixed delay from contrast injection start — no test bolus. Used with Bastion Wheel protocols (70–80 seconds) and for delayed/late enhancement phases (e.g. CARTO LAA at 60s, EVOQUE venogram at 90s, INHEART late phase at 8 minutes). Delay determined by chart, clinical evidence, or protocol design rather than individual patient transit time.
+        </div>
+      </div>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px 16px;border-radius:6px;">
+        <strong style="color:#059669;">Portal Venous</strong>
+        <div style="font-size:0.85rem;color:#475569;margin-top:4px;line-height:1.5;">
+          Typically 60–80 seconds post-injection for hepatic/abdominal parenchymal enhancement. Not routinely used in dedicated cardiac protocols, but may be relevant in combined cardiac + abdominal imaging (e.g. extended TAVI access route assessment including abdominal organs). Can be achieved with Erasmus split-bolus technique or standard delayed acquisition.
+        </div>
+      </div>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px 16px;border-radius:6px;">
+        <strong style="color:#dc2626;">Manual ROI Triggering</strong>
+        <div style="font-size:0.85rem;color:#475569;margin-top:4px;line-height:1.5;">
+          Used when standard test bolus timing is unreliable — primarily ECMO patients. Place ROI in target vessel and manually trigger scan at visual peak enhancement. Essential for VA-ECMO (retrograde/antegrade mixing creates unpredictable transit times) and recommended for VV-ECMO.
+        </div>
+      </div>
+
+      <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:12px 16px;border-radius:6px;">
+        <strong style="color:#7c3aed;">Bolus Tracking</strong>
+        <div style="font-size:0.85rem;color:#475569;margin-top:4px;line-height:1.5;">
+          Automated triggering at a pre-set HU threshold (e.g. 100 HU in descending aorta). Preferred in paediatrics where test bolus may waste limited IV access or contrast volume. Also useful for non-cardiac CT applications requiring precise arterial phase triggering.
+        </div>
+      </div>
+    </div>
+
+    <h4 style="color:var(--primary);margin:20px 0 12px;font-size:0.95rem;">Protocol Injection Map</h4>
+    <div style="overflow-x:auto;">
+      <table class="injection-table" style="font-size:0.82rem;">
+        <thead>
+          <tr><th>Protocol</th><th>Injection Type</th><th>Phase</th><th>Timing</th></tr>
+        </thead>
+        <tbody>${injTypeRows}</tbody>
+      </table>
+    </div>
+  </div>`;
 }
 
 // ============================================================
