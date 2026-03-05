@@ -5533,8 +5533,10 @@ function renderFovDiagram(ranges) {
   let svg = `<div class="fov-diagram-container">
     <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" class="fov-diagram-svg">
     <defs>
-    <filter id="xraySoft"><feGaussianBlur stdDeviation="0.6"/></filter>
-    <filter id="xrayBone"><feGaussianBlur stdDeviation="0.3"/></filter>`;
+    <filter id="xSoft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.8"/></filter>
+    <filter id="xMed" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.0"/></filter>
+    <filter id="xFine" x="-3%" y="-3%" width="106%" height="106%"><feGaussianBlur stdDeviation="0.5"/></filter>
+    <filter id="xEdge" x="-8%" y="-2%" width="116%" height="104%"><feGaussianBlur stdDeviation="2.5"/></filter>`;
 
   // Anatomically contoured body outline path
   const bodyOutline = `
@@ -5563,180 +5565,168 @@ function renderFovDiagram(ranges) {
     C${cx-14} ${yP(9.5)},${cx-19} ${yP(8)},${cx-20} ${yP(5)}
     C${cx-21} ${yP(3)},${cx-20} ${yP(-1)},${cx} ${yP(-1)} Z`;
 
-  svg += `<clipPath id="bodyClip"><path d="${bodyOutline}"/></clipPath></defs>`;
+  svg += `<clipPath id="bodyClip"><path d="${bodyOutline}"/></clipPath>`;
+  // Radial gradient for natural X-ray density falloff
+  svg += `<radialGradient id="bodyGrad" cx="50%" cy="40%" r="55%">
+    <stop offset="0%" stop-color="#686868"/>
+    <stop offset="50%" stop-color="#585858"/>
+    <stop offset="100%" stop-color="#404040"/>
+  </radialGradient>`;
+  // Abdomen density - slightly brighter than thorax (more tissue)
+  svg += `<linearGradient id="abdGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#505050"/>
+    <stop offset="100%" stop-color="#606060"/>
+  </linearGradient>`;
+  svg += `</defs>`;
 
   // --- CT TOPOGRAM / SCOUT APPEARANCE ---
-  // Black background
-  svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="#080808"/>`;
+  // Black background (like real topogram)
+  svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="#050505"/>`;
 
-  // Body silhouette (soft tissue density - dark grey)
-  svg += `<path d="${bodyOutline}" fill="#383838" stroke="#2a2a2a" stroke-width="0.5"/>`;
+  // Body silhouette - base soft tissue density with gradient
+  svg += `<path d="${bodyOutline}" fill="url(#bodyGrad)" stroke="none"/>`;
+  // Soft edge glow around body (scatter radiation appearance)
+  svg += `<path d="${bodyOutline}" fill="#303030" stroke="none" filter="url(#xEdge)" opacity="0.4"/>`;
 
-  // H and F markers (like real CT scanner)
-  svg += `<text x="${cx}" y="${yP(-3)}" font-size="14" font-weight="700" fill="#cccc00" text-anchor="middle" font-family="system-ui,sans-serif">H</text>`;
-  svg += `<text x="${cx}" y="${yP(103)}" font-size="14" font-weight="700" fill="#cccc00" text-anchor="middle" font-family="system-ui,sans-serif">F</text>`;
+  // Abdomen density layer - brighter below diaphragm (liver, bowel, solid organs)
+  svg += `<rect x="${cx-50}" y="${yP(54)}" width="100" height="${yP(72)-yP(54)}" rx="4"
+    fill="url(#abdGrad)" opacity="0.35" clip-path="url(#bodyClip)" filter="url(#xSoft)"/>`;
 
-  // --- X-RAY DENSITY STRUCTURES ---
+  // H and F markers (like real CT scanner display)
+  svg += `<text x="${cx}" y="${yP(-3)}" font-size="13" font-weight="700" fill="#cccc00" text-anchor="middle" font-family="monospace">H</text>`;
+  svg += `<text x="${cx}" y="${yP(103)}" font-size="13" font-weight="700" fill="#cccc00" text-anchor="middle" font-family="monospace">F</text>`;
 
-  // === LUNG FIELDS (air density - very dark) ===
+  // --- X-RAY DENSITY STRUCTURES (photographic appearance) ---
 
+  // === LUNG FIELDS (air density - dark but not black, with subtle gradient) ===
   // Right lung
-  svg += `<path d="M${cx+8} ${yP(22)}
-    C${cx+14} ${yP(20.5)},${cx+28} ${yP(21)},${cx+38} ${yP(23)}
-    C${cx+46} ${yP(25)},${cx+48} ${yP(30)},${cx+48} ${yP(38)}
-    C${cx+48} ${yP(44)},${cx+47} ${yP(50)},${cx+40} ${yP(54)}
-    C${cx+34} ${yP(55)},${cx+22} ${yP(55)},${cx+10} ${yP(53)}
-    C${cx+8} ${yP(48)},${cx+8} ${yP(35)},${cx+8} ${yP(22)} Z"
-    fill="#101010" stroke="none" filter="url(#xraySoft)"/>`;
-  // Left lung (with cardiac notch - adjusted for wider heart)
-  svg += `<path d="M${cx-8} ${yP(22)}
-    C${cx-14} ${yP(20.5)},${cx-28} ${yP(21)},${cx-38} ${yP(23)}
-    C${cx-46} ${yP(25)},${cx-48} ${yP(30)},${cx-48} ${yP(38)}
-    C${cx-48} ${yP(44)},${cx-47} ${yP(50)},${cx-40} ${yP(54)}
-    C${cx-36} ${yP(55)},${cx-28} ${yP(53)},${cx-24} ${yP(50)}
-    C${cx-20} ${yP(46)},${cx-18} ${yP(42)},${cx-16} ${yP(38)}
-    C${cx-12} ${yP(32)},${cx-10} ${yP(28)},${cx-8} ${yP(22)} Z"
-    fill="#101010" stroke="none" filter="url(#xraySoft)"/>`;
+  svg += `<path d="M${cx+7} ${yP(21)}
+    C${cx+14} ${yP(20)},${cx+30} ${yP(20.5)},${cx+40} ${yP(23)}
+    C${cx+47} ${yP(26)},${cx+48} ${yP(32)},${cx+47} ${yP(40)}
+    C${cx+46} ${yP(47)},${cx+44} ${yP(52)},${cx+38} ${yP(54)}
+    C${cx+30} ${yP(55.5)},${cx+18} ${yP(55)},${cx+10} ${yP(53)}
+    C${cx+7} ${yP(46)},${cx+7} ${yP(32)},${cx+7} ${yP(21)} Z"
+    fill="#161616" stroke="none" filter="url(#xMed)"/>`;
+  // Left lung (cardiac notch)
+  svg += `<path d="M${cx-7} ${yP(21)}
+    C${cx-14} ${yP(20)},${cx-30} ${yP(20.5)},${cx-40} ${yP(23)}
+    C${cx-47} ${yP(26)},${cx-48} ${yP(32)},${cx-48} ${yP(40)}
+    C${cx-47} ${yP(47)},${cx-44} ${yP(52)},${cx-38} ${yP(54)}
+    C${cx-32} ${yP(55)},${cx-26} ${yP(53)},${cx-22} ${yP(50)}
+    C${cx-18} ${yP(46)},${cx-16} ${yP(42)},${cx-14} ${yP(37)}
+    C${cx-10} ${yP(30)},${cx-8} ${yP(25)},${cx-7} ${yP(21)} Z"
+    fill="#161616" stroke="none" filter="url(#xMed)"/>`;
 
-  // === HEART / MEDIASTINUM (soft tissue density - medium grey) ===
-  // Heart - wider and shorter like real AP topogram cardiac silhouette
-  // Right heart border (RA) - modest rightward bulge
-  // Left heart border (LV) - larger leftward extent
-  svg += `<path d="M${cx+4} ${yP(36)}
-    C${cx+12} ${yP(36)},${cx+18} ${yP(37.5)},${cx+20} ${yP(40)}
-    C${cx+22} ${yP(43)},${cx+20} ${yP(46)},${cx+16} ${yP(48)}
-    C${cx+10} ${yP(50)},${cx} ${yP(51)},${cx-8} ${yP(51)}
-    C${cx-20} ${yP(51)},${cx-30} ${yP(48)},${cx-34} ${yP(44)}
-    C${cx-36} ${yP(41)},${cx-34} ${yP(38)},${cx-28} ${yP(36.5)}
-    C${cx-20} ${yP(35)},${cx-8} ${yP(35)},${cx+4} ${yP(36)} Z"
-    fill="#4a4a4a" stroke="none" filter="url(#xraySoft)"/>`;
+  // === MEDIASTINUM / HEART (continuous soft tissue shadow) ===
+  // Superior mediastinum (blends into heart)
+  svg += `<rect x="${cx-14}" y="${yP(15)}" width="28" height="${yP(38)-yP(15)}" rx="10"
+    fill="#585858" stroke="none" filter="url(#xSoft)"/>`;
+  // Heart shadow - wider than tall, prominent LV border
+  svg += `<ellipse cx="${cx-6}" cy="${yP(43)}" rx="32" ry="16"
+    fill="#606060" stroke="none" filter="url(#xSoft)"/>`;
+  // Aortic knob density
+  svg += `<ellipse cx="${cx-14}" cy="${yP(26)}" rx="10" ry="6"
+    fill="#585858" stroke="none" filter="url(#xSoft)"/>`;
 
-  // Mediastinum (superior - above heart)
-  svg += `<rect x="${cx-12}" y="${yP(16)}" width="24" height="${yP(36)-yP(16)}" rx="8"
-    fill="#404040" stroke="none" filter="url(#xraySoft)"/>`;
+  // === SKELETAL STRUCTURES (bright white/grey bone density) ===
 
-  // === SKELETAL STRUCTURES (bone density - bright) ===
-
-  // Skull
-  svg += `<ellipse cx="${cx}" cy="${yP(4)}" rx="17" ry="19" fill="none" stroke="#c8c8c8" stroke-width="1.8"/>`;
+  // Skull - bright oval with brain density fill
+  svg += `<ellipse cx="${cx}" cy="${yP(4)}" rx="17" ry="19"
+    fill="#505050" stroke="#d8d8d8" stroke-width="2" filter="url(#xFine)"/>`;
+  // Orbits (dark)
+  svg += `<ellipse cx="${cx-7}" cy="${yP(4.5)}" rx="4" ry="3.5" fill="#1a1a1a" opacity="0.5" filter="url(#xFine)"/>`;
+  svg += `<ellipse cx="${cx+7}" cy="${yP(4.5)}" rx="4" ry="3.5" fill="#1a1a1a" opacity="0.5" filter="url(#xFine)"/>`;
   // Mandible
-  svg += `<path d="M${cx-12} ${yP(7)} C${cx-14} ${yP(9)},${cx-8} ${yP(10)},${cx} ${yP(10.5)}
-    C${cx+8} ${yP(10)},${cx+14} ${yP(9)},${cx+12} ${yP(7)}"
-    fill="none" stroke="#b0b0b0" stroke-width="1" opacity="0.6"/>`;
-  // Skull contents (brain density - slightly brighter than soft tissue)
-  svg += `<ellipse cx="${cx}" cy="${yP(4)}" rx="14" ry="16" fill="#484848" stroke="none"/>`;
+  svg += `<path d="M${cx-13} ${yP(7)} C${cx-15} ${yP(9.5)},${cx-8} ${yP(11)},${cx} ${yP(11.5)}
+    C${cx+8} ${yP(11)},${cx+15} ${yP(9.5)},${cx+13} ${yP(7)}"
+    fill="none" stroke="#c0c0c0" stroke-width="1.5" filter="url(#xFine)"/>`;
 
-  // Spine - vertebral bodies (bright bone density)
-  for (let v = 12; v <= 76; v += 3.2) {
-    const vH = yP(v+2.2) - yP(v);
-    svg += `<rect x="${cx-4}" y="${yP(v)}" width="8" height="${vH}" rx="1.5"
-      fill="#b0b0b0" stroke="#909090" stroke-width="0.4" opacity="0.7"/>`;
-    svg += `<line x1="${cx-4}" y1="${yP(v+1.1)}" x2="${cx-9}" y2="${yP(v+1.1)}"
-      stroke="#909090" stroke-width="0.7" opacity="0.4"/>`;
-    svg += `<line x1="${cx+4}" y1="${yP(v+1.1)}" x2="${cx+9}" y2="${yP(v+1.1)}"
-      stroke="#909090" stroke-width="0.7" opacity="0.4"/>`;
+  // Spine - bright vertebral column
+  for (let v = 12; v <= 76; v += 3.0) {
+    const vH = yP(v+2) - yP(v);
+    svg += `<rect x="${cx-5}" y="${yP(v)}" width="10" height="${vH}" rx="2"
+      fill="#c8c8c8" stroke="none" opacity="0.6" filter="url(#xFine)"/>`;
   }
 
-  // Clavicles (bright bone)
-  svg += `<path d="M${cx-4} ${yP(19)} C${cx-16} ${yP(17.5)},${cx-32} ${yP(17)},${cx-44} ${yP(20)}"
-    fill="none" stroke="#b8b8b8" stroke-width="2.2" stroke-linecap="round"/>`;
-  svg += `<path d="M${cx+4} ${yP(19)} C${cx+16} ${yP(17.5)},${cx+32} ${yP(17)},${cx+44} ${yP(20)}"
-    fill="none" stroke="#b8b8b8" stroke-width="2.2" stroke-linecap="round"/>`;
+  // Clavicles (bright white bone)
+  svg += `<path d="M${cx-4} ${yP(18.5)} C${cx-18} ${yP(17)},${cx-34} ${yP(16.5)},${cx-46} ${yP(19.5)}"
+    fill="none" stroke="#d8d8d8" stroke-width="2.5" stroke-linecap="round" filter="url(#xFine)"/>`;
+  svg += `<path d="M${cx+4} ${yP(18.5)} C${cx+18} ${yP(17)},${cx+34} ${yP(16.5)},${cx+46} ${yP(19.5)}"
+    fill="none" stroke="#d8d8d8" stroke-width="2.5" stroke-linecap="round" filter="url(#xFine)"/>`;
 
-  // Sternum (bone density)
-  svg += `<path d="M${cx-6} ${yP(20)} L${cx+6} ${yP(20)} L${cx+5} ${yP(26)} L${cx-5} ${yP(26)} Z"
-    fill="#a0a0a0" stroke="#808080" stroke-width="0.6"/>`;
-  svg += `<path d="M${cx-4.5} ${yP(26)} L${cx+4.5} ${yP(26)} L${cx+4} ${yP(45)} L${cx-4} ${yP(45)} Z"
-    fill="#a0a0a0" stroke="#808080" stroke-width="0.6"/>`;
-  svg += `<path d="M${cx-2} ${yP(45)} L${cx+2} ${yP(45)} L${cx} ${yP(48)} Z"
-    fill="#a0a0a0" stroke="#808080" stroke-width="0.6"/>`;
+  // Scapulae (faint triangular bone shadows)
+  svg += `<path d="M${cx+28} ${yP(21)} C${cx+36} ${yP(22)},${cx+42} ${yP(28)},${cx+44} ${yP(40)}
+    L${cx+32} ${yP(42)} Z" fill="#707070" fill-opacity="0.2" stroke="none" filter="url(#xSoft)"/>`;
+  svg += `<path d="M${cx-28} ${yP(21)} C${cx-36} ${yP(22)},${cx-42} ${yP(28)},${cx-44} ${yP(40)}
+    L${cx-32} ${yP(42)} Z" fill="#707070" fill-opacity="0.2" stroke="none" filter="url(#xSoft)"/>`;
 
-  // Scapulae (bone density - faint)
-  svg += `<path d="M${cx+26} ${yP(22)} C${cx+34} ${yP(23)},${cx+40} ${yP(28)},${cx+42} ${yP(38)}
-    L${cx+30} ${yP(42)} L${cx+26} ${yP(22)} Z"
-    fill="none" stroke="#808080" stroke-width="0.7" opacity="0.3"/>`;
-  svg += `<path d="M${cx-26} ${yP(22)} C${cx-34} ${yP(23)},${cx-40} ${yP(28)},${cx-42} ${yP(38)}
-    L${cx-30} ${yP(42)} L${cx-26} ${yP(22)} Z"
-    fill="none" stroke="#808080" stroke-width="0.7" opacity="0.3"/>`;
-
-  // Ribs - 12 pairs (bright bone density curves)
+  // Ribs - 12 pairs (white bone arcs, blurred for photographic look)
   const ribData = [
-    { spY: 22, w: 30, slope: 1.5, costal: true },
-    { spY: 24.5, w: 35, slope: 2.5, costal: true },
-    { spY: 27, w: 38, slope: 3.5, costal: true },
-    { spY: 29.5, w: 40, slope: 4.5, costal: true },
-    { spY: 32, w: 42, slope: 5.5, costal: true },
-    { spY: 34.5, w: 44, slope: 6.5, costal: true },
-    { spY: 37, w: 45, slope: 7.5, costal: true },
-    { spY: 39.5, w: 44, slope: 8, costal: false },
-    { spY: 42, w: 42, slope: 8, costal: false },
-    { spY: 44.5, w: 40, slope: 7, costal: false },
-    { spY: 47, w: 32, slope: 4, costal: false },
-    { spY: 49, w: 26, slope: 3, costal: false }
+    { spY: 21, w: 32, slope: 1.5, costal: true },
+    { spY: 23.5, w: 36, slope: 2.5, costal: true },
+    { spY: 26, w: 39, slope: 3.5, costal: true },
+    { spY: 28.5, w: 41, slope: 4.5, costal: true },
+    { spY: 31, w: 43, slope: 5.5, costal: true },
+    { spY: 33.5, w: 44, slope: 6.5, costal: true },
+    { spY: 36, w: 45, slope: 7.5, costal: true },
+    { spY: 38.5, w: 44, slope: 8, costal: false },
+    { spY: 41, w: 42, slope: 8, costal: false },
+    { spY: 43.5, w: 39, slope: 7, costal: false },
+    { spY: 46, w: 32, slope: 5, costal: false },
+    { spY: 48.5, w: 26, slope: 3, costal: false }
   ];
   ribData.forEach((rib, i) => {
-    const op = i < 10 ? 0.55 : 0.4;
-    const ribCol = '#b0b0b0';
+    const op = i < 10 ? 0.45 : 0.3;
     svg += `<path d="M${cx+5} ${yP(rib.spY)}
       C${cx+rib.w*0.4} ${yP(rib.spY+rib.slope*0.2)},${cx+rib.w*0.8} ${yP(rib.spY+rib.slope*0.5)},${cx+rib.w} ${yP(rib.spY+rib.slope)}"
-      fill="none" stroke="${ribCol}" stroke-width="1.3" opacity="${op}"/>`;
+      fill="none" stroke="#d0d0d0" stroke-width="1.5" opacity="${op}" filter="url(#xFine)"/>`;
     svg += `<path d="M${cx-5} ${yP(rib.spY)}
       C${cx-rib.w*0.4} ${yP(rib.spY+rib.slope*0.2)},${cx-rib.w*0.8} ${yP(rib.spY+rib.slope*0.5)},${cx-rib.w} ${yP(rib.spY+rib.slope)}"
-      fill="none" stroke="${ribCol}" stroke-width="1.3" opacity="${op}"/>`;
-    if (rib.costal) {
-      const antY = rib.spY + rib.slope;
-      svg += `<path d="M${cx+rib.w} ${yP(antY)} C${cx+rib.w*0.5} ${yP(antY+1)},${cx+12} ${yP(antY+0.5)},${cx+5} ${yP(rib.spY+rib.slope*0.3)}"
-        fill="none" stroke="#707070" stroke-width="0.7" opacity="0.25"/>`;
-      svg += `<path d="M${cx-rib.w} ${yP(antY)} C${cx-rib.w*0.5} ${yP(antY+1)},${cx-12} ${yP(antY+0.5)},${cx-5} ${yP(rib.spY+rib.slope*0.3)}"
-        fill="none" stroke="#707070" stroke-width="0.7" opacity="0.25"/>`;
-    }
+      fill="none" stroke="#d0d0d0" stroke-width="1.5" opacity="${op}" filter="url(#xFine)"/>`;
   });
 
-  // Pelvis (bright bone density)
-  svg += `<path d="M${cx-5} ${yP(69)}
-    C${cx-10} ${yP(67)},${cx-26} ${yP(66)},${cx-38} ${yP(68)}
-    C${cx-46} ${yP(70)},${cx-48} ${yP(74)},${cx-46} ${yP(78)}
-    C${cx-44} ${yP(82)},${cx-38} ${yP(84)},${cx-30} ${yP(84)}
-    C${cx-22} ${yP(84)},${cx-12} ${yP(82)},${cx-5} ${yP(80)} Z"
-    fill="#808080" fill-opacity="0.5" stroke="#a0a0a0" stroke-width="1"/>`;
-  svg += `<path d="M${cx+5} ${yP(69)}
-    C${cx+10} ${yP(67)},${cx+26} ${yP(66)},${cx+38} ${yP(68)}
-    C${cx+46} ${yP(70)},${cx+48} ${yP(74)},${cx+46} ${yP(78)}
-    C${cx+44} ${yP(82)},${cx+38} ${yP(84)},${cx+30} ${yP(84)}
-    C${cx+22} ${yP(84)},${cx+12} ${yP(82)},${cx+5} ${yP(80)} Z"
-    fill="#808080" fill-opacity="0.5" stroke="#a0a0a0" stroke-width="1"/>`;
+  // Sternum (faint midline bone shadow - only visible as mild density on AP)
+  svg += `<rect x="${cx-3}" y="${yP(20)}" width="6" height="${yP(47)-yP(20)}" rx="2"
+    fill="#888" opacity="0.15" filter="url(#xFine)"/>`;
+
+  // Pelvis (bright bone density wings)
+  svg += `<path d="M${cx-5} ${yP(68)}
+    C${cx-12} ${yP(66)},${cx-28} ${yP(65)},${cx-40} ${yP(68)}
+    C${cx-48} ${yP(71)},${cx-48} ${yP(76)},${cx-46} ${yP(80)}
+    C${cx-44} ${yP(83)},${cx-36} ${yP(85)},${cx-28} ${yP(85)}
+    C${cx-20} ${yP(85)},${cx-10} ${yP(83)},${cx-5} ${yP(80)} Z"
+    fill="#909090" fill-opacity="0.45" stroke="#b0b0b0" stroke-width="0.8" filter="url(#xFine)"/>`;
+  svg += `<path d="M${cx+5} ${yP(68)}
+    C${cx+12} ${yP(66)},${cx+28} ${yP(65)},${cx+40} ${yP(68)}
+    C${cx+48} ${yP(71)},${cx+48} ${yP(76)},${cx+46} ${yP(80)}
+    C${cx+44} ${yP(83)},${cx+36} ${yP(85)},${cx+28} ${yP(85)}
+    C${cx+20} ${yP(85)},${cx+10} ${yP(83)},${cx+5} ${yP(80)} Z"
+    fill="#909090" fill-opacity="0.45" stroke="#b0b0b0" stroke-width="0.8" filter="url(#xFine)"/>`;
   // Sacrum
-  svg += `<path d="M${cx-7} ${yP(71)} L${cx+7} ${yP(71)} C${cx+5} ${yP(76)},${cx+3} ${yP(80)},${cx} ${yP(82)}
-    C${cx-3} ${yP(80)},${cx-5} ${yP(76)},${cx-7} ${yP(71)} Z"
-    fill="#808080" fill-opacity="0.45" stroke="#a0a0a0" stroke-width="0.6"/>`;
-  // Obturator foramina
-  svg += `<ellipse cx="${cx-18}" cy="${yP(82)}" rx="6" ry="4" fill="#202020" stroke="#707070" stroke-width="0.5" opacity="0.4"/>`;
-  svg += `<ellipse cx="${cx+18}" cy="${yP(82)}" rx="6" ry="4" fill="#202020" stroke="#707070" stroke-width="0.5" opacity="0.4"/>`;
+  svg += `<path d="M${cx-8} ${yP(70)} L${cx+8} ${yP(70)} C${cx+6} ${yP(76)},${cx+3} ${yP(81)},${cx} ${yP(83)}
+    C${cx-3} ${yP(81)},${cx-6} ${yP(76)},${cx-8} ${yP(70)} Z"
+    fill="#909090" fill-opacity="0.35" stroke="none" filter="url(#xFine)"/>`;
+  // Obturator foramina (dark holes)
+  svg += `<ellipse cx="${cx-18}" cy="${yP(82)}" rx="7" ry="5" fill="#1a1a1a" opacity="0.35" filter="url(#xFine)"/>`;
+  svg += `<ellipse cx="${cx+18}" cy="${yP(82)}" rx="7" ry="5" fill="#1a1a1a" opacity="0.35" filter="url(#xFine)"/>`;
+  // Femoral heads (bright round)
+  svg += `<circle cx="${cx-18}" cy="${yP(82)}" r="5" fill="#a0a0a0" opacity="0.25" filter="url(#xFine)"/>`;
+  svg += `<circle cx="${cx+18}" cy="${yP(82)}" r="5" fill="#a0a0a0" opacity="0.25" filter="url(#xFine)"/>`;
 
-  // Femur shafts (bright bone in legs)
-  svg += `<line x1="${cx-18}" y1="${yP(84)}" x2="${cx-19}" y2="${yP(99)}" stroke="#a0a0a0" stroke-width="3" opacity="0.4"/>`;
-  svg += `<line x1="${cx+18}" y1="${yP(84)}" x2="${cx+19}" y2="${yP(99)}" stroke="#a0a0a0" stroke-width="3" opacity="0.4"/>`;
+  // Femur shafts
+  svg += `<line x1="${cx-18}" y1="${yP(85)}" x2="${cx-19}" y2="${yP(99)}" stroke="#b0b0b0" stroke-width="4" opacity="0.35" filter="url(#xFine)"/>`;
+  svg += `<line x1="${cx+18}" y1="${yP(85)}" x2="${cx+19}" y2="${yP(99)}" stroke="#b0b0b0" stroke-width="4" opacity="0.35" filter="url(#xFine)"/>`;
 
-  // === AORTA (calcified wall visible on topogram) ===
-  svg += `<path d="M${cx-1} ${yP(34)} L${cx-1} ${yP(27)}" fill="none" stroke="#888" stroke-width="3" opacity="0.25"/>`;
-  svg += `<path d="M${cx-1} ${yP(27)} C${cx-1} ${yP(23.5)},${cx-6} ${yP(22)},${cx-12} ${yP(22)}
-    C${cx-18} ${yP(22)},${cx-18} ${yP(25)},${cx-16} ${yP(28)}"
-    fill="none" stroke="#888" stroke-width="3" opacity="0.25"/>`;
-  svg += `<path d="M${cx-16} ${yP(28)} C${cx-14} ${yP(36)},${cx-12} ${yP(44)},${cx-10} ${yP(55)}"
-    fill="none" stroke="#888" stroke-width="2.5" opacity="0.2"/>`;
-  svg += `<path d="M${cx-10} ${yP(55)} C${cx-8} ${yP(62)},${cx-6} ${yP(68)},${cx-4} ${yP(72)}"
-    fill="none" stroke="#888" stroke-width="2" opacity="0.15"/>`;
+  // Trachea/main bronchi (dark air column)
+  svg += `<rect x="${cx-3}" y="${yP(13)}" width="6" height="${yP(34)-yP(13)}" rx="3"
+    fill="#161616" opacity="0.6" filter="url(#xFine)"/>`;
 
-  // === TRACHEA (air column - dark on topogram) ===
-  svg += `<rect x="${cx-3}" y="${yP(14)}" width="6" height="${yP(40)-yP(14)}" rx="3"
-    fill="#141414" stroke="#555" stroke-width="0.5"/>`;
-
-  // Diaphragm dome (visible density transition)
-  svg += `<path d="M${cx-46} ${yP(56)}
-    C${cx-36} ${yP(55)},${cx-24} ${yP(53)},${cx-10} ${yP(55)}
-    C${cx} ${yP(56)},${cx+10} ${yP(53)},${cx+24} ${yP(52)}
-    C${cx+36} ${yP(53)},${cx+46} ${yP(55)},${cx+48} ${yP(56)}"
-    fill="none" stroke="#666" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>`;
+  // Diaphragm dome (subtle density transition line)
+  svg += `<path d="M${cx-46} ${yP(55)}
+    C${cx-34} ${yP(53)},${cx-20} ${yP(52)},${cx-6} ${yP(54)}
+    C${cx+6} ${yP(55)},${cx+20} ${yP(52)},${cx+34} ${yP(52)}
+    C${cx+44} ${yP(53)},${cx+48} ${yP(54)},${cx+48} ${yP(55)}"
+    fill="none" stroke="#888" stroke-width="1" opacity="0.3" filter="url(#xFine)"/>`;
 
   // --- ACQUISITION ZONE OVERLAYS (scanner-style) ---
   const fovOverlayColors = {
