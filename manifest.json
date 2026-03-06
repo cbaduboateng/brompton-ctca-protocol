@@ -1,7 +1,7 @@
 {
-  "name": "Brompton CTCA Protocol Selector",
-  "short_name": "CTCA Protocols",
-  "description": "Royal Brompton Hospital CT Cardiac Protocol Selector",
+  "name": "Brompton Cardiac CT Protocol Selector",
+  "short_name": "Cardiac CT",
+  "description": "Royal Brompton Hospital Cardiac CT Protocol Selector",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#1a4b8c",
