@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ctca-v14';
+const CACHE_NAME = 'ctca-v15';
 const ASSETS = [
   '/',
   '/index.html',
