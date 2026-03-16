@@ -327,6 +327,9 @@
   .gc-decision-table td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; }
   .gc-decision-table tr:nth-child(even) td { background: #f8fafc; }
   .gc-source { font-size: 0.75rem; color: var(--text-light); font-style: italic; padding-top: 8px; border-top: 1px solid #e2e8f0; }
+  .gc-source a { color: var(--accent); text-decoration: none; }
+  .gc-source a:hover { text-decoration: underline; }
+  .gc-source a::after { content: ' ↗'; font-size: 0.65rem; opacity: 0.6; }
   .guidelines-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
 
   /* Verification badge for guideline-based protocols */
@@ -1524,6 +1527,19 @@
     font-weight: 600;
     font-size: 0.88rem;
     color: var(--text);
+  }
+
+  .learn-guideline-card .guide-name a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .learn-guideline-card .guide-name a:hover {
+    text-decoration: underline;
+  }
+  .learn-guideline-card .guide-name a::after {
+    content: ' ↗';
+    font-size: 0.7rem;
+    opacity: 0.6;
   }
 
   .learn-guideline-card .guide-relevance {
@@ -4474,9 +4490,9 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT 2022 Appropriate Use Criteria", relevance: "Defines which patients benefit most from coronary CTA" },
-        { name: "NICE CG95", relevance: "Recommends CTCA as first-line investigation for stable chest pain" },
-        { name: "BSCI Standards 2014", relevance: "UK national standards for cardiac CT practice and quality" }
+        { name: "SCCT 2022 Appropriate Use Criteria", relevance: "Defines which patients benefit most from coronary CTA", url: "https://doi.org/10.1016/j.jcct.2022.09.001" },
+        { name: "NICE CG95", relevance: "Recommends CTCA as first-line investigation for stable chest pain", url: "https://www.nice.org.uk/guidance/cg95" },
+        { name: "BSCI Standards 2014", relevance: "UK national standards for cardiac CT practice and quality", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "NICE CG95 recommends CTCA as the first-line investigation for patients with stable chest pain and suspected CAD. The SCCT 2022 criteria support its use in low-to-intermediate risk patients. High negative predictive value (>99%) makes it excellent for ruling out significant CAD."
     }
@@ -4523,9 +4539,9 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT 2022 Calcium Scoring Guidelines", relevance: "Standardised methodology for calcium quantification" },
-        { name: "BSCI Calcium Scoring Standards", relevance: "UK practice standards for calcium score acquisition and reporting" },
-        { name: "ACC/AHA 2019 Primary Prevention", relevance: "Supports calcium scoring in intermediate-risk adults for shared decision-making" }
+        { name: "SCCT 2022 Calcium Scoring Guidelines", relevance: "Standardised methodology for calcium quantification", url: "https://doi.org/10.1016/j.jcct.2022.09.001" },
+        { name: "BSCI Calcium Scoring Standards", relevance: "UK practice standards for calcium score acquisition and reporting", url: "https://doi.org/10.1016/j.crad.2014.09.002" },
+        { name: "ACC/AHA 2019 Primary Prevention", relevance: "Supports calcium scoring in intermediate-risk adults for shared decision-making", url: "https://doi.org/10.1161/CIR.0000000000000678" }
       ],
       evidenceSummary: "Coronary artery calcium scoring is a powerful risk stratification tool. The ACC/AHA 2019 guidelines support its use in adults aged 40-75 at intermediate risk to guide preventive therapy decisions. A score of 0 reclassifies many patients to lower risk."
     }
@@ -4573,8 +4589,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT 2022 Appropriate Use", relevance: "Supports CTCA for graft assessment in symptomatic post-CABG patients" },
-        { name: "BSCI Standards", relevance: "UK standards for post-surgical cardiac CT imaging" }
+        { name: "SCCT 2022 Appropriate Use", relevance: "Supports CTCA for graft assessment in symptomatic post-CABG patients", url: "https://doi.org/10.1016/j.jcct.2022.09.001" },
+        { name: "BSCI Standards", relevance: "UK standards for post-surgical cardiac CT imaging", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "CTCA has excellent sensitivity and specificity for detecting graft occlusion (>95%). Assessment of native coronary arteries beyond anastomoses is more challenging, particularly with heavy calcification."
     }
@@ -4622,8 +4638,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT/BSCI TAVI Planning Guidelines", relevance: "Standardised approach to pre-TAVI CT assessment and measurements" },
-        { name: "BSCI Standards for Structural Heart Imaging", relevance: "UK standards for valve intervention planning CT" }
+        { name: "SCCT/BSCI TAVI Planning Guidelines", relevance: "Standardised approach to pre-TAVI CT assessment and measurements", url: "https://doi.org/10.1016/j.jcct.2019.04.012" },
+        { name: "BSCI Standards for Structural Heart Imaging", relevance: "UK standards for valve intervention planning CT", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Pre-procedural CT is the gold standard for TAVI sizing. CT-guided annular sizing has been shown to significantly reduce paravalvular leak compared to echo-only sizing."
     }
@@ -4670,8 +4686,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT/BSCI TAVI Planning Guidelines", relevance: "Supports combined coronary + TAVI assessment in a single CT" },
-        { name: "NICE CG95 / ESC 2021", relevance: "CT as alternative to invasive angiography for coronary assessment pre-TAVI" }
+        { name: "SCCT/BSCI TAVI Planning Guidelines", relevance: "Supports combined coronary + TAVI assessment in a single CT", url: "https://doi.org/10.1016/j.jcct.2019.04.012" },
+        { name: "NICE CG95 / ESC 2021", relevance: "CT as alternative to invasive angiography for coronary assessment pre-TAVI", url: "https://doi.org/10.1093/eurheartj/ehab395" }
       ],
       evidenceSummary: "Recent evidence supports CT coronary assessment as a non-inferior alternative to invasive angiography in TAVI candidates. This one-stop approach reduces procedures and is particularly beneficial for frail elderly patients."
     }
@@ -4718,8 +4734,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Expert Consensus on CT After TAVI", relevance: "Defines HALT/RELM assessment methodology" },
-        { name: "BSCI Structural Heart Standards", relevance: "UK standards for post-procedural valve imaging" }
+        { name: "SCCT Expert Consensus on CT After TAVI", relevance: "Defines HALT/RELM assessment methodology", url: "https://doi.org/10.1016/j.jcct.2020.01.005" },
+        { name: "BSCI Structural Heart Standards", relevance: "UK standards for post-procedural valve imaging", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Subclinical leaflet thrombosis (HALT) is detected in 10-15% of patients post-TAVI. CT is the only imaging modality that can reliably detect leaflet thrombus. Most cases resolve with anticoagulation."
     }
@@ -4766,8 +4782,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Structural Heart Guidelines", relevance: "Standards for mitral valve CT assessment" },
-        { name: "BSCI Standards for Valve Imaging", relevance: "UK approach to pre-surgical cardiac CT for valves" }
+        { name: "SCCT Structural Heart Guidelines", relevance: "Standards for mitral valve CT assessment", url: "https://doi.org/10.1016/j.jcct.2019.04.012" },
+        { name: "BSCI Standards for Valve Imaging", relevance: "UK approach to pre-surgical cardiac CT for valves", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "CT provides complementary information to echocardiography for mitral valve assessment, particularly for calcification quantification, annular sizing, and 3D spatial relationships critical for surgical planning."
     }
@@ -4813,8 +4829,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Structural Heart Guidelines", relevance: "Framework for tricuspid valve CT assessment" },
-        { name: "BSCI Emerging Techniques", relevance: "Evolving standards for transcatheter tricuspid interventions" }
+        { name: "SCCT Structural Heart Guidelines", relevance: "Framework for tricuspid valve CT assessment", url: "https://doi.org/10.1016/j.jcct.2019.04.012" },
+        { name: "BSCI Emerging Techniques", relevance: "Evolving standards for transcatheter tricuspid interventions", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Transcatheter tricuspid valve replacement is an emerging field. CT planning follows similar principles to TAVI but with right-heart optimisation. Protocols are being refined as device experience grows."
     }
@@ -4860,7 +4876,7 @@ const teachingContent = {
     guidelines: {
       references: [
         { name: "Tendyne GFS Protocol Requirements", relevance: "Research-specific imaging requirements for device sizing" },
-        { name: "SCCT Structural Heart Guidelines", relevance: "General framework for transcatheter mitral CT planning" }
+        { name: "SCCT Structural Heart Guidelines", relevance: "General framework for transcatheter mitral CT planning", url: "https://doi.org/10.1016/j.jcct.2019.04.012" }
       ],
       evidenceSummary: "Tendyne is one of several transcatheter mitral valve replacement devices under investigation. CT-based neo-LVOT prediction is essential to avoid life-threatening outflow obstruction post-deployment."
     }
@@ -4908,9 +4924,9 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Aortic Imaging Guidelines", relevance: "Standardised approach to thoracic aortic CT" },
-        { name: "ESC 2014 Aortic Diseases", relevance: "European guidelines for aortic disease management and surveillance intervals" },
-        { name: "BSCI Standards", relevance: "UK standards for aortic CT including gated techniques" }
+        { name: "SCCT Aortic Imaging Guidelines", relevance: "Standardised approach to thoracic aortic CT", url: "https://doi.org/10.1016/j.jcct.2021.11.002" },
+        { name: "ESC 2014 Aortic Diseases", relevance: "European guidelines for aortic disease management and surveillance intervals", url: "https://doi.org/10.1093/eurheartj/ehu281" },
+        { name: "BSCI Standards", relevance: "UK standards for aortic CT including gated techniques", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "ECG-gated CT is the gold standard for ascending aortic measurement. Ungated CT can overestimate aortic dimensions by 2-4mm due to cardiac motion, which can significantly impact surgical decision-making at threshold measurements."
     }
@@ -4955,7 +4971,7 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "ExoVasc PEARS Imaging Protocol", relevance: "Device-specific imaging requirements for manufacturing" },
+        { name: "ExoVasc PEARS Imaging Protocol", relevance: "Device-specific imaging requirements for manufacturing", url: "https://doi.org/10.1093/icvts/ivt461" },
         { name: "Brompton PEARS Programme", relevance: "Local institutional protocol for PEARS CT acquisition" }
       ],
       evidenceSummary: "PEARS is an innovative approach to preventing aortic root complications in connective tissue disorders. Long-term data shows stable aortic dimensions post-procedure with preservation of the native aortic valve."
@@ -5001,7 +5017,7 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "ExoVasc PEARS Programme", relevance: "Device manufacturing imaging requirements" },
+        { name: "ExoVasc PEARS Programme", relevance: "Device manufacturing imaging requirements", url: "https://doi.org/10.1093/icvts/ivt461" },
         { name: "Brompton Ross Surgery Programme", relevance: "Institutional expertise in Ross procedure follow-up" }
       ],
       evidenceSummary: "Ross-PEARS combines two Brompton specialisms: the Ross procedure and ExoVasc PEARS technology. Supporting the pulmonary autograft with an external sleeve may extend autograft longevity and avoid re-operation."
@@ -5050,8 +5066,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Guidelines for Vascular CT", relevance: "Standards for peripheral vascular CT assessment" },
-        { name: "BSCI Standards", relevance: "UK approach to vascular access CT imaging" }
+        { name: "SCCT Guidelines for Vascular CT", relevance: "Standards for peripheral vascular CT assessment", url: "https://doi.org/10.1016/j.jcct.2022.09.001" },
+        { name: "BSCI Standards", relevance: "UK approach to vascular access CT imaging", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "CT angiography is the gold standard for pre-procedural access route assessment. It has largely replaced diagnostic catheter angiography for vascular mapping."
     }
@@ -5099,9 +5115,9 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "HRS/EHRA/ECAS Expert Consensus on AF Ablation", relevance: "Recommends pre-procedural imaging for PV anatomy" },
-        { name: "SCCT EP Imaging Guidelines", relevance: "Standards for pre-ablation cardiac CT" },
-        { name: "BSCI Standards for EP CT", relevance: "UK approach to electrophysiology CT imaging" }
+        { name: "HRS/EHRA/ECAS Expert Consensus on AF Ablation", relevance: "Recommends pre-procedural imaging for PV anatomy", url: "https://doi.org/10.1016/j.hrthm.2017.05.012" },
+        { name: "SCCT EP Imaging Guidelines", relevance: "Standards for pre-ablation cardiac CT", url: "https://doi.org/10.1016/j.jcct.2019.06.003" },
+        { name: "BSCI Standards for EP CT", relevance: "UK approach to electrophysiology CT imaging", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Pre-procedural CT significantly reduces ablation time and improves outcomes by providing detailed anatomical information. Knowledge of PV variants and LA anatomy is essential for safe and effective ablation."
     }
@@ -5146,7 +5162,7 @@ const teachingContent = {
     guidelines: {
       references: [
         { name: "VIVO System Technical Requirements", relevance: "System-specific imaging parameters" },
-        { name: "BSCI EP Standards", relevance: "UK standards for pre-ablation imaging" }
+        { name: "BSCI EP Standards", relevance: "UK standards for pre-ablation imaging", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Different EP mapping systems have different CT data requirements. Using the wrong protocol may result in incompatible data that cannot be imported. Always verify the system being used."
     }
@@ -5192,7 +5208,7 @@ const teachingContent = {
     guidelines: {
       references: [
         { name: "INHEART System Requirements", relevance: "System-specific dual-phase imaging protocol" },
-        { name: "SCCT EP Imaging Guidelines", relevance: "Standards for substrate assessment with CT" }
+        { name: "SCCT EP Imaging Guidelines", relevance: "Standards for substrate assessment with CT", url: "https://doi.org/10.1016/j.jcct.2019.06.003" }
       ],
       evidenceSummary: "CT late enhancement for myocardial scar detection is an emerging technique that provides complementary information to MRI. The INHEART system integrates both anatomical and substrate data for comprehensive ablation planning."
     }
@@ -5238,8 +5254,8 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Triple Rule-Out Guidelines", relevance: "Appropriate use criteria for combined cardiac/vascular CT" },
-        { name: "BSCI Standards", relevance: "UK standards for cardiac CT in acute settings and congenital disease" }
+        { name: "SCCT Triple Rule-Out Guidelines", relevance: "Appropriate use criteria for combined cardiac/vascular CT", url: "https://doi.org/10.1016/j.jcct.2022.09.001" },
+        { name: "BSCI Standards", relevance: "UK standards for cardiac CT in acute settings and congenital disease", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Triple rule-out CT can be valuable in selected patients with acute undifferentiated chest pain. However, it should not replace targeted imaging when the clinical probability favours a specific diagnosis."
     }
@@ -5287,9 +5303,9 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "SCCT Paediatric CT Guidelines", relevance: "Standards for paediatric cardiac CT acquisition and dose management" },
-        { name: "Image Gently Campaign", relevance: "Radiation dose reduction principles for paediatric imaging" },
-        { name: "BSCI Paediatric Standards", relevance: "UK standards for paediatric cardiac CT" }
+        { name: "SCCT Paediatric CT Guidelines", relevance: "Standards for paediatric cardiac CT acquisition and dose management", url: "https://doi.org/10.1016/j.jcct.2022.09.001" },
+        { name: "Image Gently Campaign", relevance: "Radiation dose reduction principles for paediatric imaging", url: "https://www.imagegently.org" },
+        { name: "BSCI Paediatric Standards", relevance: "UK standards for paediatric cardiac CT", url: "https://doi.org/10.1016/j.crad.2014.09.002" }
       ],
       evidenceSummary: "Cardiac CT is increasingly used in paediatric congenital heart disease as an alternative to invasive catheterisation. Weight-based protocols and modern CT scanners can achieve diagnostic quality at sub-millisievert doses."
     }
@@ -5338,9 +5354,9 @@ const teachingContent = {
     },
     guidelines: {
       references: [
-        { name: "RadioGraphics VA-ECMO CTA Guidelines", relevance: "Published approach to CT imaging during VA-ECMO support" },
+        { name: "RadioGraphics VA-ECMO CTA Guidelines", relevance: "Published approach to CT imaging during VA-ECMO support", url: "https://doi.org/10.1148/rg.2020190174" },
         { name: "Alfred ICU ECMO Imaging Protocol", relevance: "Established institutional ECMO imaging guidelines" },
-        { name: "ELSO Guidelines", relevance: "Extracorporeal Life Support Organization imaging recommendations" }
+        { name: "ELSO Guidelines", relevance: "Extracorporeal Life Support Organization imaging recommendations", url: "https://www.elso.org/resources/guidelines" }
       ],
       evidenceSummary: "CT imaging on ECMO requires close coordination with the perfusion team. The altered haemodynamics significantly affect contrast opacification. VA-ECMO low-flow technique has been shown to provide diagnostic quality cardiac imaging."
     }
@@ -7711,7 +7727,7 @@ function renderLearnDetail(slug) {
   // === GUIDELINES & EVIDENCE ===
   let evidenceHtml = '';
   evidenceHtml += teaching.guidelines.references.map(r =>
-    `<div class="learn-guideline-card"><div class="guide-name">${r.name}</div><div class="guide-relevance">${r.relevance}</div></div>`
+    `<div class="learn-guideline-card"><div class="guide-name">${r.url ? `<a href="${r.url}" target="_blank" rel="noopener noreferrer">${r.name}</a>` : r.name}</div><div class="guide-relevance">${r.relevance}</div></div>`
   ).join('');
   evidenceHtml += `<div class="learn-evidence-summary"><strong>Evidence Summary:</strong> ${teaching.guidelines.evidenceSummary}</div>`;
   html += buildLearnSection('ls-evidence', 'Guidelines & Evidence', evidenceHtml, false);
@@ -9685,7 +9701,8 @@ const relatedGuidelines = [
         ['>8mm', 'CT at 3 months, PET-CT or biopsy']
       ]
     },
-    source: 'Callister ME et al. Thorax 2015;70(Suppl 2):ii1-ii54'
+    source: 'Callister ME et al. Thorax 2015;70(Suppl 2):ii1-ii54',
+    sourceUrl: 'https://doi.org/10.1136/thoraxjnl-2015-207221'
   },
   {
     id: 'fleischner_2017',
@@ -9712,7 +9729,8 @@ const relatedGuidelines = [
         ['Multiple GGN', '<6mm', 'CT 3–6 mo, then q2yr × 5yr']
       ]
     },
-    source: 'MacMahon H et al. Radiology 2017;284(1):228-243'
+    source: 'MacMahon H et al. Radiology 2017;284(1):228-243',
+    sourceUrl: 'https://doi.org/10.1148/radiol.2017161659'
   },
   {
     id: 'acr_thyroid',
@@ -9728,7 +9746,8 @@ const relatedGuidelines = [
       'Purely cystic lesions (0 HU): almost always benign, no follow-up needed',
       'Document the finding and include recommendation in the CT report'
     ],
-    source: 'Hoang JK et al. J Am Coll Radiol 2015;12(2):143-150'
+    source: 'Hoang JK et al. J Am Coll Radiol 2015;12(2):143-150',
+    sourceUrl: 'https://doi.org/10.1016/j.jacr.2014.09.038'
   },
   {
     id: 'acr_adrenal',
@@ -9744,7 +9763,8 @@ const relatedGuidelines = [
       'If contrast-enhanced only (no non-contrast): absolute washout >60% or relative washout >40% suggests adenoma',
       'All patients: consider clinical assessment for hormone excess (Cushing\'s, phaeochromocytoma, Conn\'s)'
     ],
-    source: 'Mayo-Smith WW et al. J Am Coll Radiol 2017;14(10):1272-1279'
+    source: 'Mayo-Smith WW et al. J Am Coll Radiol 2017;14(10):1272-1279',
+    sourceUrl: 'https://doi.org/10.1016/j.jacr.2017.05.001'
   },
   {
     id: 'acr_liver',
@@ -9760,7 +9780,8 @@ const relatedGuidelines = [
       'Simple cyst criteria on CT: homogeneous, water density (~0 HU), thin wall, no enhancement → benign',
       'Flash-filling lesion with centripetal fill-in: typical haemangioma pattern'
     ],
-    source: 'Gore RM et al. J Am Coll Radiol 2017;14(11):1429-1437'
+    source: 'Gore RM et al. J Am Coll Radiol 2017;14(11):1429-1437',
+    sourceUrl: 'https://doi.org/10.1016/j.jacr.2017.06.022'
   },
   {
     id: 'esc_aortic_dilation',
@@ -9787,7 +9808,8 @@ const relatedGuidelines = [
         ['≥50mm (≥45mm BAV/Marfan)', 'Surgical referral for prophylactic repair']
       ]
     },
-    source: 'Defined ESC/EACTS Guidelines on Aortic Diseases 2024'
+    source: 'ESC/EACTS Guidelines on Aortic Diseases 2024',
+    sourceUrl: 'https://doi.org/10.1093/eurheartj/ehae179'
   },
   {
     id: 'esc_pericardial',
@@ -9803,7 +9825,8 @@ const relatedGuidelines = [
       'Pericardial thickening >4mm: consider constrictive pericarditis, especially if calcified',
       'Associated findings: look for mediastinal lymphadenopathy, pleural effusions, lung masses'
     ],
-    source: 'Adler Y et al. Eur Heart J 2015;36(42):2921-2964'
+    source: 'Adler Y et al. Eur Heart J 2015;36(42):2921-2964',
+    sourceUrl: 'https://doi.org/10.1093/eurheartj/ehv318'
   },
   {
     id: 'acc_aha_cac_statin',
@@ -9830,7 +9853,8 @@ const relatedGuidelines = [
         ['≥400', 'Severe', 'High-intensity statin strongly recommended']
       ]
     },
-    source: 'Arnett DK et al. Circulation 2019;140(11):e596-e646'
+    source: 'Arnett DK et al. Circulation 2019;140(11):e596-e646',
+    sourceUrl: 'https://doi.org/10.1161/CIR.0000000000000678'
   },
   {
     id: 'nice_cg95',
@@ -9847,7 +9871,8 @@ const relatedGuidelines = [
       'Patients with known CAD or previous revascularisation: ICA preferred over CTCA',
       'All chest pain patients should receive initial clinical assessment including ECG and bloods'
     ],
-    source: 'NICE Clinical Guideline CG95: Chest pain of recent onset (updated 2016)'
+    source: 'NICE Clinical Guideline CG95: Chest pain of recent onset (updated 2016)',
+    sourceUrl: 'https://www.nice.org.uk/guidance/cg95'
   }
 ];
 
@@ -9892,7 +9917,7 @@ function renderGuidelinesHub() {
         <h4 style="font-size:0.85rem;color:var(--primary);margin:0 0 8px 0;">Key Recommendations</h4>
         <ul class="gc-keypoints">${g.keyPoints.map(p => `<li>${p}</li>`).join('')}</ul>
         ${g.decisionAid ? renderDecisionAid(g.decisionAid) : ''}
-        <div class="gc-source">${g.source}</div>
+        <div class="gc-source">${g.sourceUrl ? `<a href="${g.sourceUrl}" target="_blank" rel="noopener noreferrer">${g.source}</a>` : g.source}</div>
       </div>
     </div>`;
   });
